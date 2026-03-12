@@ -19,8 +19,10 @@ const year = new Date().getFullYear();
   <body>
 
     <div class="page">
+      <div class="overlay"></div>
+
       <div class="content">
-        <a href="/" class="logo" aria-label="Clearline Capital home">
+        <a href="/" aria-label="Clearline Capital home">
           <img src="/logo.png" alt="Clearline Capital" class="logo-img" />
         </a>
 
@@ -31,7 +33,8 @@ const year = new Date().getFullYear();
 
         <p class="body">
           All requests are reviewed internally.<br /><br />
-          If your profile aligns with our current allocation parameters, a member of our team will contact you directly.
+          If your profile aligns with our current allocation parameters,<br />
+          a member of our team will contact you directly.
         </p>
 
         <p class="closing">Discretion is fundamental to our process.</p>
@@ -58,40 +61,43 @@ const year = new Date().getFullYear();
     --gold:      #c9a96e;
     --gold-dim:  rgba(201, 169, 110, 0.45);
     --dark:      #0c0c0c;
-    --off-white: #fafaf8;
-    --muted:     #4a4845;
     --serif:     'Cormorant Garamond', Georgia, serif;
     --sans:      'Inter', system-ui, sans-serif;
   }
 
-  html {
+  html, body {
     height: 100%;
-  }
-
-  body {
-    font-family: var(--sans);
-    background: var(--off-white);
-    color: var(--dark);
     -webkit-font-smoothing: antialiased;
-    min-height: 100%;
-    display: flex;
-    flex-direction: column;
   }
 
   .page {
-    flex: 1;
+    position: relative;
+    min-height: 100vh;
+    background-image: url('/hero.png');
+    background-size: cover;
+    background-position: center top;
+    background-color: #111;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 4rem 2rem;
-    min-height: 100vh;
+    text-align: center;
+  }
+
+  .overlay {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 55% at 50% 48%, rgba(201, 169, 110, 0.07) 0%, transparent 70%),
+      linear-gradient(180deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.65) 100%);
   }
 
   .content {
-    max-width: 560px;
+    position: relative;
+    z-index: 1;
+    max-width: 600px;
     width: 100%;
-    text-align: center;
   }
 
   .logo-img {
@@ -125,25 +131,25 @@ const year = new Date().getFullYear();
     font-size: clamp(1.8rem, 4vw, 2.8rem);
     font-weight: 300;
     line-height: 1.25;
-    color: var(--dark);
+    color: #fff;
     margin-bottom: 2.5rem;
   }
 
   .body {
-    font-size: 0.9rem;
+    font-size: 0.875rem;
     font-weight: 300;
-    color: var(--muted);
+    color: rgba(255,255,255,0.65);
     line-height: 1.9;
     margin-bottom: 2.5rem;
   }
 
   .closing {
     font-family: var(--serif);
-    font-size: 1rem;
+    font-size: 1.05rem;
     font-style: italic;
     font-weight: 300;
-    color: var(--dark);
-    margin-bottom: 3rem;
+    color: rgba(255,255,255,0.85);
+    margin-bottom: 3.5rem;
   }
 
   .back-link {
@@ -154,8 +160,8 @@ const year = new Date().getFullYear();
     letter-spacing: 0.25em;
     text-transform: uppercase;
     text-decoration: none;
-    color: var(--dark);
-    border: 1px solid var(--dark);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.4);
     padding: 0.65rem 2rem;
     transition: background 0.22s ease, color 0.22s ease, border-color 0.22s ease;
   }
@@ -168,13 +174,14 @@ const year = new Date().getFullYear();
   }
 
   footer {
+    position: relative;
+    z-index: 1;
     margin-top: 4rem;
-    text-align: center;
   }
 
   footer p {
     font-size: 0.68rem;
     letter-spacing: 0.12em;
-    color: #aaa;
+    color: rgba(255,255,255,0.25);
   }
 </style>
