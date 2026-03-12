@@ -319,13 +319,13 @@ const year = new Date().getFullYear();
     z-index: 1;
   }
 
-  /* Subtle radial gold glow behind the headline */
+  /* Subtle radial gold glow + permanent black anchor at the bottom */
   .hero-overlay {
     position: absolute;
     inset: 0;
     background:
       radial-gradient(ellipse 70% 55% at 50% 48%, rgba(201, 169, 110, 0.07) 0%, transparent 70%),
-      linear-gradient(180deg, transparent 60%, rgba(0, 0, 0, 0.55) 100%);
+      linear-gradient(180deg, transparent 55%, rgba(0, 0, 0, 0.6) 80%, #000 100%);
   }
 
   .hero-content {
