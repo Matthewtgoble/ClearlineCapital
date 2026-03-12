@@ -173,10 +173,12 @@ const year = new Date().getFullYear();
       const threshold = heroHeight * 0.5;
       const headerHeight = header.offsetHeight;
 
+      // Parallax: hero background moves at 40% of scroll speed, creating depth
+      hero.style.backgroundPositionY = `${y * 0.4}px`;
+
       // Scroll fade: starts only when scrolling begins, reaches full black by 75% of hero height
-      const fadeStart = 0;
       const fadeEnd = heroHeight * 0.75;
-      const fadeProgress = Math.max(0, Math.min((y - fadeStart) / fadeEnd, 1));
+      const fadeProgress = Math.max(0, Math.min(y / fadeEnd, 1));
       heroFade.style.opacity = String(fadeProgress);
 
       if (y <= threshold) {
@@ -311,7 +313,7 @@ const year = new Date().getFullYear();
     inset-inline: 0;
     bottom: 0;
     height: 100%;
-    background: linear-gradient(to top, #000 0%, #000 15%, transparent 70%);
+    background: linear-gradient(to top, #000 0%, #000 35%, rgba(0,0,0,0.7) 55%, transparent 85%);
     opacity: 0;
     pointer-events: none;
     z-index: 1;
