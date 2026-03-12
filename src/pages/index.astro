@@ -173,8 +173,11 @@ const year = new Date().getFullYear();
       const threshold = heroHeight * 0.5;
       const headerHeight = header.offsetHeight;
 
-      // Scroll fade: opacity goes from 0 to 1 as user scrolls through the hero
-      heroFade.style.opacity = String(Math.min(y / heroHeight, 1));
+      // Scroll fade: starts only when scrolling begins, reaches full black by 75% of hero height
+      const fadeStart = 0;
+      const fadeEnd = heroHeight * 0.75;
+      const fadeProgress = Math.max(0, Math.min((y - fadeStart) / fadeEnd, 1));
+      heroFade.style.opacity = String(fadeProgress);
 
       if (y <= threshold) {
         // Parallax zone: scroll position directly drives position & opacity
@@ -307,8 +310,8 @@ const year = new Date().getFullYear();
     position: absolute;
     inset-inline: 0;
     bottom: 0;
-    height: 50%;
-    background: linear-gradient(to top, #000, transparent);
+    height: 100%;
+    background: linear-gradient(to top, #000 0%, #000 15%, transparent 70%);
     opacity: 0;
     pointer-events: none;
     z-index: 1;
