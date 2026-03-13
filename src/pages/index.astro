@@ -44,6 +44,10 @@ const year = new Date().getFullYear();
           <p class="invite-error" aria-live="polite">
             <span class="invite-error-icon">✕</span> the code you entered isn't valid, try again
           </p>
+          <label class="invite-confirm" id="invite-confirm-label">
+            <input type="checkbox" id="invite-checkbox" />
+            <span>I understand my invite code is single-use. Leaving or refreshing this page will permanently invalidate it.</span>
+          </label>
         </div>
       </div>
     </section>
@@ -199,9 +203,31 @@ const year = new Date().getFullYear();
       }
     }
 
+    const inviteCheckbox = document.getElementById('invite-checkbox');
+    const inviteConfirm  = document.getElementById('invite-confirm-label');
+
+    // Disable arrow until checkbox is checked
+    inviteArrow.disabled = true;
+
+    // Show checkbox when user starts typing
+    inviteInput.addEventListener('input', () => {
+      if (inviteInput.value.trim().length > 0) {
+        inviteConfirm.classList.add('visible');
+      } else {
+        inviteConfirm.classList.remove('visible');
+        inviteCheckbox.checked = false;
+        inviteArrow.disabled = true;
+      }
+    });
+
+    // Enable arrow when checkbox is checked
+    inviteCheckbox.addEventListener('change', () => {
+      inviteArrow.disabled = !inviteCheckbox.checked;
+    });
+
     inviteArrow.addEventListener('click', submitCode);
     inviteInput.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') submitCode();
+      if (e.key === 'Enter' && !inviteArrow.disabled) submitCode();
       if (inviteWrap.classList.contains('error')) {
         inviteWrap.classList.remove('error');
       }
@@ -447,6 +473,45 @@ const year = new Date().getFullYear();
   .invite-wrap.error .invite-divider,
   .invite-wrap.error .invite-error {
     opacity: 1;
+  }
+
+  .invite-confirm {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    margin-top: 1.25rem;
+    max-width: 320px;
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .invite-confirm.visible {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .invite-confirm input[type="checkbox"] {
+    margin-top: 2px;
+    accent-color: var(--gold);
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+
+  .invite-confirm span {
+    font-family: var(--sans);
+    font-size: 0.62rem;
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    color: rgba(255, 255, 255, 0.55);
+    line-height: 1.6;
+    text-align: left;
+  }
+
+  .invite-arrow:disabled {
+    opacity: 0.25;
+    cursor: not-allowed;
   }
 
   .invite-input {
