@@ -180,6 +180,7 @@ const year = new Date().getFullYear();
 
     // Lock scroll on load
     document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
 
     async function submitCode() {
       const code = inviteInput.value.trim();
@@ -195,6 +196,7 @@ const year = new Date().getFullYear();
       if (valid) {
         inviteWrap.classList.remove('error');
         document.body.style.overflow = '';
+        document.documentElement.style.overflow = '';
         document.querySelector('#contact').scrollIntoView({ behavior: 'smooth' });
       } else {
         inviteWrap.classList.add('error');
