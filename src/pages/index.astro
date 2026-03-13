@@ -35,7 +35,7 @@ const year = new Date().getFullYear();
       <div class="hero-scroll-fade"></div>
       <div class="hero-content">
         <h1>Invite-only Private Equity Firm</h1>
-        <a href="#contact" class="hero-link">Get in Touch</a>
+        <input type="text" class="invite-input" placeholder="enter your invite code" />
       </div>
     </section>
 
@@ -353,22 +353,33 @@ const year = new Date().getFullYear();
     margin-bottom: 2.5rem;
   }
 
-  .hero-link {
-    display: inline-block;
+  .invite-input {
+    display: block;
+    width: 320px;
+    max-width: 100%;
+    margin-inline: auto;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(201, 169, 110, 0.4);
+    outline: none;
     font-family: var(--sans);
-    font-size: 0.7rem;
+    font-size: 0.72rem;
     font-weight: 400;
-    letter-spacing: 0.25em;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
-    text-decoration: none;
-    color: #fff;
-    border-bottom: 1px solid var(--gold);
-    padding-bottom: 4px;
-    transition: color 0.2s ease;
+    color: var(--gold);
+    padding: 0.85rem 1.25rem;
+    text-align: center;
+    transition: border-color 0.25s ease, background 0.25s ease;
   }
 
-  .hero-link:hover {
+  .invite-input::placeholder {
     color: var(--gold);
+    opacity: 1;
+  }
+
+  .invite-input:focus {
+    border-color: var(--gold);
+    background: rgba(0, 0, 0, 0.65);
   }
 
   /* ─── Contact Section ─── */
