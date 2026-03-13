@@ -39,7 +39,11 @@ const year = new Date().getFullYear();
           <div class="invite-divider"></div>
           <div class="invite-row">
             <input type="text" class="invite-input" placeholder="enter your invite code" />
-            <button class="invite-arrow" aria-label="Submit">→</button>
+            <button class="invite-arrow" aria-label="Submit">
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0 0L10 6L0 12V0Z" fill="currentColor"/>
+            </svg>
+          </button>
           </div>
           <p class="invite-error" aria-live="polite">
             <span class="invite-error-icon">✕</span> the code you entered isn't valid, try again
