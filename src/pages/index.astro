@@ -35,7 +35,10 @@ const year = new Date().getFullYear();
       <div class="hero-scroll-fade"></div>
       <div class="hero-content">
         <h1>Invite-only Private Equity Firm</h1>
-        <input type="text" class="invite-input" placeholder="enter your invite code" />
+        <div class="invite-wrap">
+          <input type="text" class="invite-input" placeholder="enter your invite code" />
+          <button class="invite-arrow" aria-label="Submit">→</button>
+        </div>
       </div>
     </section>
 
@@ -353,11 +356,16 @@ const year = new Date().getFullYear();
     margin-bottom: 2.5rem;
   }
 
-  .invite-input {
-    display: block;
-    width: 320px;
-    max-width: 100%;
+  .invite-wrap {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
     margin-inline: auto;
+  }
+
+  .invite-input {
+    width: 320px;
+    max-width: 80vw;
     background: rgba(0, 0, 0, 0.5);
     border: none;
     outline: none;
@@ -367,9 +375,9 @@ const year = new Date().getFullYear();
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--gold);
-    padding: 0.85rem 1.25rem;
+    padding: 0.85rem 2.5rem 0.85rem 1.25rem;
     text-align: center;
-    transition: border-color 0.25s ease, background 0.25s ease;
+    transition: background 0.25s ease;
   }
 
   .invite-input::placeholder {
@@ -379,6 +387,31 @@ const year = new Date().getFullYear();
 
   .invite-input:focus {
     background: rgba(0, 0, 0, 0.65);
+  }
+
+  .invite-arrow {
+    position: absolute;
+    right: 0.75rem;
+    background: none;
+    border: none;
+    color: var(--gold);
+    font-size: 1.1rem;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateX(-4px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    padding: 0;
+    line-height: 1;
+  }
+
+  .invite-wrap:focus-within .invite-arrow,
+  .invite-input:not(:placeholder-shown) ~ .invite-arrow {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .invite-arrow:hover {
+    color: #fff;
   }
 
   /* ─── Contact Section ─── */
