@@ -36,8 +36,14 @@ const year = new Date().getFullYear();
       <div class="hero-content">
         <h1>Invite-only Private Investment Enterprise</h1>
         <div class="invite-wrap">
-          <input type="text" class="invite-input" placeholder="enter your invite code" />
-          <button class="invite-arrow" aria-label="Submit">→</button>
+          <div class="invite-divider"></div>
+          <div class="invite-row">
+            <input type="text" class="invite-input" placeholder="enter your invite code" />
+            <button class="invite-arrow" aria-label="Submit">→</button>
+          </div>
+          <p class="invite-error" aria-live="polite">
+            <span class="invite-error-icon">✕</span> the code you entered isn't valid, try again
+          </p>
         </div>
       </div>
     </section>
@@ -163,6 +169,45 @@ const year = new Date().getFullYear();
   </body>
 
   <script>
+    // ── Invite code gate ──
+    const inviteWrap  = document.querySelector('.invite-wrap');
+    const inviteInput = document.querySelector('.invite-input');
+    const inviteArrow = document.querySelector('.invite-arrow');
+
+    // Lock scroll on load
+    document.body.style.overflow = 'hidden';
+
+    async function submitCode() {
+      const code = inviteInput.value.trim();
+      if (!code) return;
+
+      const res  = await fetch('/api/validate-code', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({ code }),
+      });
+      const { valid } = await res.json();
+
+      if (valid) {
+        inviteWrap.classList.remove('error');
+        document.body.style.overflow = '';
+        document.querySelector('#contact').scrollIntoView({ behavior: 'smooth' });
+      } else {
+        inviteWrap.classList.add('error');
+        inviteInput.value = '';
+        inviteInput.focus();
+      }
+    }
+
+    inviteArrow.addEventListener('click', submitCode);
+    inviteInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') submitCode();
+      if (inviteWrap.classList.contains('error')) {
+        inviteWrap.classList.remove('error');
+      }
+    });
+
+    // ── Scroll / parallax ──
     const header = document.querySelector('header');
     const hero = document.querySelector('.hero');
     const heroFade = document.querySelector('.hero-scroll-fade');
@@ -357,9 +402,51 @@ const year = new Date().getFullYear();
 
   .invite-wrap {
     display: inline-flex;
+    flex-direction: column;
     align-items: center;
     position: relative;
     margin-inline: auto;
+    gap: 0;
+  }
+
+  .invite-divider {
+    width: 100%;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.25);
+    margin-bottom: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .invite-row {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 100%;
+  }
+
+  .invite-error {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--sans);
+    font-size: 0.65rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    color: #e05555;
+    margin-top: 0.65rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  .invite-error-icon {
+    font-size: 0.6rem;
+  }
+
+  .invite-wrap.error .invite-divider,
+  .invite-wrap.error .invite-error {
+    opacity: 1;
   }
 
   .invite-input {
