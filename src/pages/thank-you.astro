@@ -1,6 +1,5 @@
 ---
 const year = new Date().getFullYear();
-const name = Astro.url.searchParams.get('name') || '';
 ---
 
 <html lang="en">
@@ -28,7 +27,7 @@ const name = Astro.url.searchParams.get('name') || '';
         <div class="divider"></div>
 
         <p class="eyebrow">Introduction Received</p>
-        <h1>{name ? `Thank you for introducing yourself, ${name}.` : 'Thank you for introducing yourself.'}</h1>
+        <h1 id="ty-heading">Thank you for introducing yourself.</h1>
 
         <p class="body">
           Assuming we're aligned, a colleague will be in touch.
@@ -43,6 +42,12 @@ const name = Astro.url.searchParams.get('name') || '';
     </div>
 
   </body>
+  <script>
+    const name = new URLSearchParams(window.location.search).get('name');
+    if (name) {
+      document.getElementById('ty-heading').textContent = `Thank you for introducing yourself, ${name}.`;
+    }
+  </script>
 </html>
 
 <style>
