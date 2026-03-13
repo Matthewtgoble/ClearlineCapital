@@ -27,16 +27,12 @@ const name = Astro.url.searchParams.get('name') || '';
 
         <div class="divider"></div>
 
-        <p class="eyebrow">Submission Received</p>
-        <h1>{name ? `${name}, thank you for your interest in Clearline Capital.` : 'Thank you for your interest in Clearline Capital.'}</h1>
+        <p class="eyebrow">Introduction Received</p>
+        <h1>{name ? `Thank you for introducing yourself, ${name}.` : 'Thank you for introducing yourself.'}</h1>
 
         <p class="body">
-          All requests are reviewed internally.<br /><br />
-          If your profile aligns with our current allocation parameters,<br />
-          a member of our team will contact you directly.
+          Assuming we're aligned, a colleague will be in touch.
         </p>
-
-        <p class="closing">Discretion is fundamental to our process.</p>
 
         <a href="/" class="back-link">Return to Site</a>
       </div>
