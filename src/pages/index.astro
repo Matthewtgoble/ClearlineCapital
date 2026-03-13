@@ -277,6 +277,13 @@ const year = new Date().getFullYear();
       ticking = false;
     }
 
+    // ── Personalize thank you page with name ──
+    document.querySelector('.contact-form').addEventListener('submit', function () {
+      const name = document.getElementById('full-name').value.trim().split(' ')[0];
+      if (name) this.action = `/thank-you?name=${encodeURIComponent(name)}`;
+    });
+
+    // ── Scroll / parallax ──
     window.addEventListener('scroll', () => {
       if (!ticking) {
         requestAnimationFrame(updateHeader);

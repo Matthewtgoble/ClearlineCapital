@@ -1,5 +1,6 @@
 ---
 const year = new Date().getFullYear();
+const name = Astro.url.searchParams.get('name') || '';
 ---
 
 <html lang="en">
@@ -27,7 +28,7 @@ const year = new Date().getFullYear();
         <div class="divider"></div>
 
         <p class="eyebrow">Submission Received</p>
-        <h1>Thank you for your interest in Clearline Capital.</h1>
+        <h1>{name ? `${name}, thank you for your interest in Clearline Capital.` : 'Thank you for your interest in Clearline Capital.'}</h1>
 
         <p class="body">
           All requests are reviewed internally.<br /><br />
