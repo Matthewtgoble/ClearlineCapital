@@ -1,0 +1,366 @@
+---
+const year = new Date().getFullYear();
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Clearline Capital</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+
+    <!-- Fade overlay — starts black, fades out on load -->
+    <div class="fade-overlay visible" id="fade-overlay"></div>
+
+    <div class="page">
+
+      <header>
+        <img src="/logo.png" alt="Clearline Capital" class="logo-img" />
+      </header>
+
+      <section class="contact">
+        <div class="contact-inner">
+          <div class="contact-heading">
+            <p class="eyebrow">Connect</p>
+            <h2>You're in the right room</h2>
+            <p class="contact-sub">Let's get acquainted, and please, you go first.</p>
+          </div>
+
+          <form
+            name="contact"
+            method="POST"
+            action="/thank-you"
+            data-netlify="true"
+            netlify-honeypot="bot-field"
+            class="contact-form"
+            novalidate
+          >
+            <input type="hidden" name="form-name" value="contact" />
+            <p class="hidden"><label>Do not fill this out: <input name="bot-field" /></label></p>
+
+            <div class="field">
+              <input type="text" id="full-name" name="full-name" required autocomplete="name" placeholder=" " />
+              <label for="full-name">Full Name</label>
+            </div>
+
+            <div class="field">
+              <input type="tel" id="phone" name="phone" required autocomplete="tel" placeholder=" " />
+              <label for="phone">Phone Number</label>
+            </div>
+
+            <div class="field">
+              <input type="email" id="email" name="email" required autocomplete="email" placeholder=" " />
+              <label for="email">Email Address</label>
+            </div>
+
+            <div class="field">
+              <input type="text" id="referred-by" name="referred-by" required placeholder=" " />
+              <label for="referred-by">Referred By</label>
+            </div>
+
+            <div class="field">
+              <input type="url" id="linkedin" name="linkedin" autocomplete="url" placeholder=" " />
+              <label for="linkedin">LinkedIn Profile <span class="opt">— optional</span></label>
+            </div>
+
+            <div class="field">
+              <input type="text" id="instagram" name="instagram" autocomplete="off" placeholder=" " />
+              <label for="instagram">Instagram Handle <span class="opt">— optional</span></label>
+            </div>
+
+            <div class="field">
+              <input type="text" id="x-handle" name="x-handle" autocomplete="off" placeholder=" " />
+              <label for="x-handle">X Handle <span class="opt">— optional</span></label>
+            </div>
+
+            <button type="submit" class="submit-btn">Submit</button>
+          </form>
+        </div>
+      </section>
+
+      <footer>
+        <p>&copy; {year} Clearline Capital. All rights reserved.</p>
+      </footer>
+
+    </div>
+
+  </body>
+
+  <script>
+    const token = new URLSearchParams(window.location.search).get('token');
+
+    // Validate token — redirect if missing or invalid
+    if (!token) {
+      window.location.replace('/');
+    } else {
+      fetch('/api/validate-token', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token }),
+      })
+        .then(r => r.json())
+        .then(({ valid }) => {
+          if (!valid) {
+            window.location.replace('/');
+          } else {
+            // Fade in the page
+            document.getElementById('fade-overlay').classList.remove('visible');
+          }
+        })
+        .catch(() => window.location.replace('/'));
+    }
+
+    // Personalize thank you page with first name
+    document.querySelector('.contact-form').addEventListener('submit', function () {
+      const name = document.getElementById('full-name').value.trim().split(' ')[0];
+      if (name) this.action = `/thank-you?name=${encodeURIComponent(name)}`;
+    });
+  </script>
+</html>
+
+<style>
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  :root {
+    --gold:      #c9a96e;
+    --gold-dim:  rgba(201, 169, 110, 0.45);
+    --dark:      #0c0c0c;
+    --serif:     'Cormorant Garamond', Georgia, serif;
+    --sans:      'Inter', system-ui, sans-serif;
+  }
+
+  html, body {
+    height: 100%;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Fade overlay ── */
+  .fade-overlay {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 999;
+    transition: opacity 0.7s ease;
+  }
+
+  .fade-overlay.visible {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .page {
+    height: 100vh;
+    overflow-y: auto;
+    background: #000;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── Header ── */
+  header {
+    display: flex;
+    justify-content: center;
+    padding-top: 2.5rem;
+    padding-bottom: 1rem;
+    flex-shrink: 0;
+  }
+
+  .logo-img {
+    height: 56px;
+    width: auto;
+  }
+
+  /* ── Contact ── */
+  .contact {
+    flex: 1;
+    padding-block: 4rem;
+    padding-inline: 2rem;
+  }
+
+  .contact-inner {
+    max-width: 600px;
+    margin-inline: auto;
+  }
+
+  .contact-heading {
+    text-align: center;
+    margin-bottom: 4.5rem;
+  }
+
+  .eyebrow {
+    font-family: var(--sans);
+    font-size: 0.65rem;
+    font-weight: 400;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.1rem;
+  }
+
+  h2 {
+    font-family: var(--serif);
+    font-size: clamp(1.9rem, 4vw, 2.9rem);
+    font-weight: 300;
+    color: #d4d0cb;
+    margin-bottom: 1rem;
+  }
+
+  .contact-sub {
+    font-size: 0.875rem;
+    color: #9e9a95;
+    line-height: 1.8;
+  }
+
+  /* ── Form ── */
+  .hidden { display: none; }
+
+  .contact-form {
+    display: grid;
+    gap: 3rem;
+  }
+
+  .field {
+    position: relative;
+  }
+
+  .field::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 1px;
+    background: var(--gold);
+    transition: width 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+  }
+
+  .field:focus-within::after {
+    width: 100%;
+  }
+
+  .field input {
+    display: block;
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+    outline: none;
+    font-family: var(--sans);
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: #d4d0cb;
+    padding-block: 0.5rem 0.65rem;
+    transition: border-color 0.3s ease;
+    -webkit-text-fill-color: #d4d0cb;
+  }
+
+  .field:focus-within input {
+    border-bottom-color: transparent;
+  }
+
+  .field input:-webkit-autofill,
+  .field input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px #000 inset;
+    -webkit-text-fill-color: #d4d0cb;
+  }
+
+  .field label {
+    position: absolute;
+    top: 0.5rem;
+    left: 0;
+    font-family: var(--sans);
+    font-size: 0.82rem;
+    font-weight: 400;
+    letter-spacing: 0.03em;
+    color: #9e9a95;
+    pointer-events: none;
+    transform-origin: left top;
+    transition:
+      transform 0.26s cubic-bezier(0.4, 0, 0.2, 1),
+      color 0.26s ease;
+  }
+
+  .field input:focus ~ label,
+  .field input:not(:placeholder-shown) ~ label {
+    transform: translateY(-1.5rem) scale(0.75);
+    color: var(--gold);
+    letter-spacing: 0.08em;
+  }
+
+  .opt {
+    font-size: 0.7em;
+    font-style: italic;
+    color: #9e9a95;
+    font-weight: 300;
+  }
+
+  .submit-btn {
+    margin-top: 0.5rem;
+    width: 100%;
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding-block: 1.1rem;
+    cursor: pointer;
+    transition: background 0.24s ease, color 0.24s ease, border-color 0.24s ease;
+  }
+
+  .submit-btn:hover,
+  .submit-btn:active {
+    background: var(--dark);
+    border-color: var(--dark);
+    color: var(--gold);
+  }
+
+  /* ── Footer ── */
+  footer {
+    text-align: center;
+    padding-block: 2rem;
+    flex-shrink: 0;
+  }
+
+  footer p {
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+  }
+
+  /* ── Mobile ── */
+  @media (max-width: 580px) {
+    .contact {
+      padding-block: 2.5rem;
+      padding-inline: 1.5rem;
+    }
+
+    .contact-form {
+      gap: 2.5rem;
+    }
+
+    .field input {
+      font-size: 16px;
+    }
+  }
+</style>

@@ -1,5 +1,4 @@
 ---
-const year = new Date().getFullYear();
 ---
 
 <html lang="en">
@@ -10,7 +9,7 @@ const year = new Date().getFullYear();
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
     <title>Clearline Capital</title>
-    <meta name="description" content="Clearline Capital — Private capital with clarity of vision and precision of execution." />
+    <meta name="description" content="Clearline Capital — Invite-only private investment enterprise." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -19,6 +18,9 @@ const year = new Date().getFullYear();
     />
   </head>
   <body>
+
+    <!-- Fade overlay -->
+    <div class="fade-overlay"></div>
 
     <!-- ── Header ── -->
     <header>
@@ -32,18 +34,17 @@ const year = new Date().getFullYear();
     <!-- ── Hero ── -->
     <section class="hero" aria-label="Hero">
       <div class="hero-overlay"></div>
-      <div class="hero-scroll-fade"></div>
       <div class="hero-content">
         <h1>Invite-only Private Investment Enterprise</h1>
         <div class="invite-wrap">
           <div class="invite-divider"></div>
           <div class="invite-row">
-            <input type="text" class="invite-input" placeholder="enter your invite code" />
-            <button class="invite-arrow" aria-label="Submit">
-            <svg width="10" height="14" viewBox="0 0 10 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M1 1L9 7L1 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
-            </svg>
-          </button>
+            <input type="text" class="invite-input" placeholder="enter your invite code" autocomplete="off" />
+            <button class="invite-arrow" aria-label="Submit" disabled>
+              <svg width="10" height="14" viewBox="0 0 10 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 1L9 7L1 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
+              </svg>
+            </button>
           </div>
           <p class="invite-error" aria-live="polite">
             <span class="invite-error-icon">✕</span> the code you entered isn't valid, try again
@@ -56,172 +57,20 @@ const year = new Date().getFullYear();
       </div>
     </section>
 
-    <!-- ── Contact ── -->
-    <section class="contact" id="contact">
-      <div class="contact-inner">
-
-        <div class="contact-heading">
-          <p class="eyebrow">Connect</p>
-          <h2>You're in the right room</h2>
-          <p class="contact-sub">
-            Let's get acquainted, and please, you go first.
-          </p>
-        </div>
-
-        <form
-          name="contact"
-          method="POST"
-          action="/thank-you"
-          data-netlify="true"
-          netlify-honeypot="bot-field"
-          class="contact-form"
-          novalidate
-        >
-          <!-- Netlify hidden fields -->
-          <input type="hidden" name="form-name" value="contact" />
-          <p class="hidden"><label>Do not fill this out: <input name="bot-field" /></label></p>
-
-          <!-- Required fields -->
-          <div class="field">
-            <input
-              type="text"
-              id="full-name"
-              name="full-name"
-              required
-              autocomplete="name"
-              placeholder=" "
-            />
-            <label for="full-name">Full Name</label>
-          </div>
-
-          <div class="field">
-            <input
-              type="tel"
-              id="phone"
-              name="phone"
-              required
-              autocomplete="tel"
-              placeholder=" "
-            />
-            <label for="phone">Phone Number</label>
-          </div>
-
-          <div class="field">
-            <input
-              type="email"
-              id="email"
-              name="email"
-              required
-              autocomplete="email"
-              placeholder=" "
-            />
-            <label for="email">Email Address</label>
-          </div>
-
-          <div class="field">
-            <input
-              type="text"
-              id="referred-by"
-              name="referred-by"
-              required
-              placeholder=" "
-            />
-            <label for="referred-by">Referred By</label>
-          </div>
-
-          <!-- Optional fields -->
-          <div class="field">
-            <input
-              type="url"
-              id="linkedin"
-              name="linkedin"
-              autocomplete="url"
-              placeholder=" "
-            />
-            <label for="linkedin">LinkedIn Profile <span class="opt">— optional</span></label>
-          </div>
-
-          <div class="field">
-            <input
-              type="text"
-              id="instagram"
-              name="instagram"
-              autocomplete="off"
-              placeholder=" "
-            />
-            <label for="instagram">Instagram Handle <span class="opt">— optional</span></label>
-          </div>
-
-          <div class="field">
-            <input
-              type="text"
-              id="x-handle"
-              name="x-handle"
-              autocomplete="off"
-              placeholder=" "
-            />
-            <label for="x-handle">X Handle <span class="opt">— optional</span></label>
-          </div>
-
-          <button type="submit" class="submit-btn">Submit</button>
-        </form>
-
-      </div>
-    </section>
-
-    <!-- ── Footer ── -->
-    <footer>
-      <p>&copy; {year} Clearline Capital. All rights reserved.</p>
-    </footer>
-
   </body>
 
   <script>
-    // ── Invite code gate ──
-    const inviteWrap  = document.querySelector('.invite-wrap');
-    const inviteInput = document.querySelector('.invite-input');
-    const inviteArrow = document.querySelector('.invite-arrow');
-
-    // Lock scroll on load
-    document.body.style.overflow = 'hidden';
-    document.documentElement.style.overflow = 'hidden';
-
-    async function submitCode() {
-      const code = inviteInput.value.trim();
-      if (!code) return;
-
-      const res  = await fetch('/api/validate-code', {
-        method:  'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ code }),
-      });
-      const { valid } = await res.json();
-
-      if (valid) {
-        inviteWrap.classList.remove('error');
-        document.body.style.overflow = '';
-        document.documentElement.style.overflow = '';
-        document.querySelector('#contact').scrollIntoView({ behavior: 'smooth' });
-
-        // Re-lock once scroll animation completes (~800ms)
-        setTimeout(() => {
-          document.body.style.overflow = 'hidden';
-          document.documentElement.style.overflow = 'hidden';
-        }, 900);
-      } else {
-        inviteWrap.classList.add('error');
-        inviteInput.value = '';
-        inviteInput.focus();
-      }
-    }
-
+    const inviteWrap     = document.querySelector('.invite-wrap');
+    const inviteInput    = document.querySelector('.invite-input');
+    const inviteArrow    = document.querySelector('.invite-arrow');
     const inviteCheckbox = document.getElementById('invite-checkbox');
     const inviteConfirm  = document.getElementById('invite-confirm-label');
+    const fadeOverlay    = document.querySelector('.fade-overlay');
 
     // Disable arrow until checkbox is checked
     inviteArrow.disabled = true;
 
-    // Show checkbox when user starts typing
+    // Show checkbox when typing
     inviteInput.addEventListener('input', () => {
       if (inviteInput.value.trim().length > 0) {
         inviteConfirm.classList.add('visible');
@@ -237,106 +86,86 @@ const year = new Date().getFullYear();
       inviteArrow.disabled = !inviteCheckbox.checked;
     });
 
+    async function submitCode() {
+      const code = inviteInput.value.trim();
+      if (!code) return;
+
+      const res = await fetch('/api/validate-code', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code }),
+      });
+      const { valid, token } = await res.json();
+
+      if (valid && token) {
+        inviteWrap.classList.remove('error');
+        // Fade to black then navigate to contact page
+        fadeOverlay.classList.add('visible');
+        setTimeout(() => {
+          window.location.href = `/contact?token=${token}`;
+        }, 700);
+      } else {
+        inviteWrap.classList.add('error');
+        inviteInput.value = '';
+        inviteCheckbox.checked = false;
+        inviteArrow.disabled = true;
+        inviteConfirm.classList.remove('visible');
+        inviteInput.focus();
+      }
+    }
+
     inviteArrow.addEventListener('click', submitCode);
     inviteInput.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' && !inviteArrow.disabled) submitCode();
-      if (inviteWrap.classList.contains('error')) {
-        inviteWrap.classList.remove('error');
-      }
+      if (inviteWrap.classList.contains('error')) inviteWrap.classList.remove('error');
     });
-
-    // ── Scroll / parallax ──
-    const header = document.querySelector('header');
-    const hero = document.querySelector('.hero');
-    const heroFade = document.querySelector('.hero-scroll-fade');
-    let ticking = false;
-
-    function updateHeader() {
-      const y = window.scrollY;
-      const heroHeight = hero.offsetHeight;
-      const threshold = heroHeight * 0.5;
-      const headerHeight = header.offsetHeight;
-
-      // Parallax: hero background moves at 40% of scroll speed, creating depth
-      hero.style.backgroundPositionY = `${y * 0.4}px`;
-
-      // Scroll fade: starts only when scrolling begins, reaches full black by 75% of hero height
-      const fadeEnd = heroHeight * 0.75;
-      const fadeProgress = Math.max(0, Math.min(y / fadeEnd, 1));
-      heroFade.style.opacity = String(fadeProgress);
-
-      if (y <= threshold) {
-        // Parallax zone: scroll position directly drives position & opacity
-        const progress = y / threshold;
-        header.style.transform = `translateY(${-progress * headerHeight}px)`;
-        header.style.opacity = String(1 - progress);
-        header.style.pointerEvents = progress >= 1 ? 'none' : '';
-      } else {
-        // Fully hidden past threshold
-        header.style.transform = `translateY(-${headerHeight}px)`;
-        header.style.opacity = '0';
-        header.style.pointerEvents = 'none';
-      }
-
-      ticking = false;
-    }
-
-    // ── Personalize thank you page with name ──
-    document.querySelector('.contact-form').addEventListener('submit', function () {
-      const name = document.getElementById('full-name').value.trim().split(' ')[0];
-      if (name) this.action = `/thank-you?name=${encodeURIComponent(name)}`;
-    });
-
-    // ── Scroll / parallax ──
-    window.addEventListener('scroll', () => {
-      if (!ticking) {
-        requestAnimationFrame(updateHeader);
-        ticking = true;
-      }
-    }, { passive: true });
   </script>
 </html>
 
 <style>
-  /* ─── Reset ─── */
   *, *::before, *::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
   }
 
-  /* ─── Tokens ─── */
   :root {
-    --gold:        #c9a96e;
-    --gold-dim:    rgba(201, 169, 110, 0.45);
-    --dark:        #0c0c0c;
-    --dark-glass:  rgba(10, 10, 10, 0.82);
-    --off-white:   #fafaf8;
-    --muted:       #4a4845;
-    --serif:       'Cormorant Garamond', Georgia, serif;
-    --sans:        'Inter', system-ui, sans-serif;
+    --gold:      #c9a96e;
+    --gold-dim:  rgba(201, 169, 110, 0.45);
+    --dark:      #0c0c0c;
+    --serif:     'Cormorant Garamond', Georgia, serif;
+    --sans:      'Inter', system-ui, sans-serif;
   }
 
-  html {
-    scroll-behavior: smooth;
-  }
-
-  body {
-    font-family: var(--sans);
-    background: var(--off-white);
-    color: var(--dark);
+  html, body {
+    height: 100%;
+    overflow: hidden;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
   }
 
-  /* ─── Header ─── */
+  /* ── Fade overlay ── */
+  .fade-overlay {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 999;
+    transition: opacity 0.7s ease;
+  }
+
+  .fade-overlay.visible {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  /* ── Header ── */
   header {
     position: fixed;
     inset-block-start: 0;
     inset-inline: 0;
     z-index: 200;
     background: transparent;
-    will-change: transform, opacity;
   }
 
   .header-inner {
@@ -349,8 +178,6 @@ const year = new Date().getFullYear();
 
   .logo {
     display: flex;
-    flex-direction: column;
-    gap: 3px;
     text-decoration: none;
     line-height: 1;
   }
@@ -362,33 +189,11 @@ const year = new Date().getFullYear();
     margin-top: 1rem;
   }
 
-  .header-cta {
-    font-family: var(--sans);
-    font-size: 0.7rem;
-    font-weight: 500;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    text-decoration: none;
-    color: var(--dark);
-    background: transparent;
-    border: 1px solid var(--dark);
-    padding: 0.55rem 1.5rem;
-    transition: background 0.22s ease, color 0.22s ease, border-color 0.22s ease;
-  }
-
-  .header-cta:hover,
-  .header-cta:active {
-    background: var(--gold);
-    color: var(--dark);
-    border-color: var(--gold);
-  }
-
-  /* ─── Hero ─── */
+  /* ── Hero ── */
   .hero {
     position: relative;
     width: 100%;
-    height: 100svh;
-    min-height: 560px;
+    height: 100vh;
     background-image: url('/hero.png');
     background-size: cover;
     background-position: center top;
@@ -399,18 +204,6 @@ const year = new Date().getFullYear();
     text-align: center;
   }
 
-  .hero-scroll-fade {
-    position: absolute;
-    inset-inline: 0;
-    bottom: 0;
-    height: 100%;
-    background: linear-gradient(to top, #000 0%, #000 35%, rgba(0,0,0,0.7) 55%, transparent 85%);
-    opacity: 0;
-    pointer-events: none;
-    z-index: 1;
-  }
-
-  /* Subtle radial gold glow + permanent black anchor at the bottom */
   .hero-overlay {
     position: absolute;
     inset: 0;
@@ -445,20 +238,19 @@ const year = new Date().getFullYear();
     margin-bottom: 2.5rem;
   }
 
+  /* ── Invite input ── */
   .invite-wrap {
     display: inline-flex;
     flex-direction: column;
     align-items: center;
     position: relative;
     margin-inline: auto;
-    gap: 0;
   }
 
   .invite-divider {
     width: 100%;
     height: 1px;
     background: rgba(255, 255, 255, 0.25);
-    margin-bottom: 0;
     opacity: 0;
     transition: opacity 0.3s ease;
   }
@@ -468,6 +260,62 @@ const year = new Date().getFullYear();
     align-items: center;
     position: relative;
     width: 100%;
+  }
+
+  .invite-input {
+    width: 320px;
+    max-width: 80vw;
+    background: rgba(0, 0, 0, 0.5);
+    border: none;
+    outline: none;
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    padding: 0.85rem 2.5rem 0.85rem 1.25rem;
+    text-align: center;
+    transition: background 0.25s ease;
+  }
+
+  .invite-input::placeholder {
+    color: var(--gold);
+    opacity: 1;
+  }
+
+  .invite-input:focus {
+    background: rgba(0, 0, 0, 0.65);
+  }
+
+  .invite-arrow {
+    position: absolute;
+    right: 0.75rem;
+    background: none;
+    border: none;
+    color: var(--gold);
+    font-size: 1.1rem;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateX(-4px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    padding: 0;
+    line-height: 1;
+  }
+
+  .invite-wrap:focus-within .invite-arrow,
+  .invite-input:not(:placeholder-shown) ~ .invite-arrow {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .invite-arrow:hover {
+    color: #fff;
+  }
+
+  .invite-arrow:disabled {
+    opacity: 0.25;
+    cursor: not-allowed;
   }
 
   .invite-error {
@@ -528,258 +376,21 @@ const year = new Date().getFullYear();
     text-align: left;
   }
 
-  .invite-arrow:disabled {
-    opacity: 0.25;
-    cursor: not-allowed;
-  }
-
-  .invite-input {
-    width: 320px;
-    max-width: 80vw;
-    background: rgba(0, 0, 0, 0.5);
-    border: none;
-    outline: none;
-    font-family: var(--sans);
-    font-size: 0.72rem;
-    font-weight: 400;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--gold);
-    padding: 0.85rem 2.5rem 0.85rem 1.25rem;
-    text-align: center;
-    transition: background 0.25s ease;
-  }
-
-  .invite-input::placeholder {
-    color: var(--gold);
-    opacity: 1;
-  }
-
-  .invite-input:focus {
-    background: rgba(0, 0, 0, 0.65);
-  }
-
-  .invite-arrow {
-    position: absolute;
-    right: 0.75rem;
-    background: none;
-    border: none;
-    color: var(--gold);
-    font-size: 1.1rem;
-    cursor: pointer;
-    opacity: 0;
-    transform: translateX(-4px);
-    transition: opacity 0.25s ease, transform 0.25s ease;
-    padding: 0;
-    line-height: 1;
-  }
-
-  .invite-wrap:focus-within .invite-arrow,
-  .invite-input:not(:placeholder-shown) ~ .invite-arrow {
-    opacity: 1;
-    transform: translateX(0);
-  }
-
-  .invite-arrow:hover {
-    color: #fff;
-  }
-
-  /* ─── Contact Section ─── */
-  .contact {
-    padding-block: 9rem;
-    padding-inline: 2rem;
-    background: #000;
-  }
-
-  .contact-inner {
-    max-width: 600px;
-    margin-inline: auto;
-  }
-
-  .contact-heading {
-    text-align: center;
-    margin-bottom: 4.5rem;
-  }
-
-  .contact-heading .eyebrow {
-    color: var(--gold);
-    margin-bottom: 1.1rem;
-  }
-
-  .contact-heading h2 {
-    font-family: var(--serif);
-    font-size: clamp(1.9rem, 4vw, 2.9rem);
-    font-weight: 300;
-    color: #d4d0cb;
-    margin-bottom: 1rem;
-  }
-
-  .contact-sub {
-    font-size: 0.875rem;
-    color: #9e9a95;
-    line-height: 1.8;
-  }
-
-  /* ─── Form ─── */
-  .hidden {
-    display: none;
-  }
-
-  .contact-form {
-    display: grid;
-    gap: 3rem;
-  }
-
-  /* Each input + floating label */
-  .field {
-    position: relative;
-    /* gold underline sweep */
-  }
-
-  .field::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0%;
-    height: 1px;
-    background: var(--gold);
-    transition: width 0.38s cubic-bezier(0.4, 0, 0.2, 1);
-    pointer-events: none;
-  }
-
-  .field:focus-within::after {
-    width: 100%;
-  }
-
-  .field input {
-    display: block;
-    width: 100%;
-    background: transparent;
-    border: none;
-    border-bottom: 1px solid rgba(255,255,255,0.15);
-    outline: none;
-    font-family: var(--sans);
-    font-size: 0.95rem;
-    font-weight: 300;
-    color: #d4d0cb;
-    padding-block: 0.5rem 0.65rem;
-    transition: border-color 0.3s ease;
-    -webkit-text-fill-color: #d4d0cb;
-  }
-
-  /* Hide the static bottom border when focused (replaced by ::after sweep) */
-  .field:focus-within input {
-    border-bottom-color: transparent;
-  }
-
-  .field input:-webkit-autofill,
-  .field input:-webkit-autofill:focus {
-    -webkit-box-shadow: 0 0 0 1000px #000 inset;
-    -webkit-text-fill-color: #d4d0cb;
-  }
-
-  /* Floating label */
-  .field label {
-    position: absolute;
-    top: 0.5rem;
-    left: 0;
-    font-family: var(--sans);
-    font-size: 0.82rem;
-    font-weight: 400;
-    letter-spacing: 0.03em;
-    color: #9e9a95;
-    pointer-events: none;
-    transform-origin: left top;
-    transition:
-      transform 0.26s cubic-bezier(0.4, 0, 0.2, 1),
-      color 0.26s ease,
-      font-size 0.26s ease;
-  }
-
-  /* Float up when focused OR when input has a value (placeholder=" " trick) */
-  .field input:focus ~ label,
-  .field input:not(:placeholder-shown) ~ label {
-    transform: translateY(-1.5rem) scale(0.75);
-    color: var(--gold);
-    letter-spacing: 0.08em;
-  }
-
-  .opt {
-    font-family: var(--sans);
-    font-size: 0.7em;
-    font-style: italic;
-    color: #9e9a95;
-    font-weight: 300;
-  }
-
-  /* Submit button */
-  .submit-btn {
-    margin-top: 0.5rem;
-    width: 100%;
-    background: transparent;
-    border: 1px solid var(--gold);
-    color: var(--gold);
-    font-family: var(--sans);
-    font-size: 0.72rem;
-    font-weight: 500;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    padding-block: 1.1rem;
-    cursor: pointer;
-    transition: background 0.24s ease, color 0.24s ease, border-color 0.24s ease;
-  }
-
-  .submit-btn:hover,
-  .submit-btn:active {
-    background: var(--dark);
-    border-color: var(--dark);
-    color: var(--gold);
-  }
-
-  /* ─── Footer ─── */
-  footer {
-    background: #000;
-    text-align: center;
-    padding-block: 2rem;
-  }
-
-  footer p {
-    font-size: 0.68rem;
-    letter-spacing: 0.12em;
-    color: var(--gold);
-  }
-
-  /* ─── Responsive ─── */
+  /* ── Mobile ── */
   @media (max-width: 580px) {
-    .header-inner {
-      padding-inline: 1.25rem;
+    .logo-img {
+      height: 52px;
     }
 
-    .header-cta {
-      font-size: 0.65rem;
-      padding: 0.5rem 1rem;
+    .hero-content h1 {
+      font-size: 2.2rem;
     }
 
-    /* Prevent iOS Safari zoom on input focus */
     .invite-input {
       font-size: 16px;
       letter-spacing: 0.08em;
       width: 100%;
       max-width: 85vw;
-    }
-
-    .hero-content h1 {
-      font-size: 2.4rem;
-    }
-
-    .contact {
-      padding-block: 5.5rem;
-      padding-inline: 1.5rem;
-    }
-
-    .contact-form {
-      gap: 2.5rem;
     }
   }
 </style>

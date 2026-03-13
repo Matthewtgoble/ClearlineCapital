@@ -8,7 +8,6 @@ export default async (req) => {
     .split(',')
     .map(c => c.trim().toLowerCase());
 
-  // Check if code exists in the valid list
   if (!validCodes.includes(normalized)) {
     return new Response(JSON.stringify({ valid: false }), {
       status: 200,
@@ -17,8 +16,8 @@ export default async (req) => {
   }
 
   // Check if code has already been used
-  const store = getStore('used-codes');
-  const alreadyUsed = await store.get(normalized);
+  const usedStore = getStore('used-codes');
+  const alreadyUsed = await usedStore.get(normalized);
 
   if (alreadyUsed) {
     return new Response(JSON.stringify({ valid: false }), {
@@ -28,9 +27,14 @@ export default async (req) => {
   }
 
   // Mark code as used
-  await store.set(normalized, 'used');
+  await usedStore.set(normalized, 'used');
 
-  return new Response(JSON.stringify({ valid: true }), {
+  // Generate a single-use access token
+  const token = crypto.randomUUID();
+  const tokenStore = getStore('access-tokens');
+  await tokenStore.set(token, 'valid');
+
+  return new Response(JSON.stringify({ valid: true, token }), {
     status: 200,
     headers: { 'Content-Type': 'application/json' },
   });
