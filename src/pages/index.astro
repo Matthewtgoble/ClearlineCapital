@@ -198,6 +198,12 @@ const year = new Date().getFullYear();
         document.body.style.overflow = '';
         document.documentElement.style.overflow = '';
         document.querySelector('#contact').scrollIntoView({ behavior: 'smooth' });
+
+        // Re-lock once scroll animation completes (~800ms)
+        setTimeout(() => {
+          document.body.style.overflow = 'hidden';
+          document.documentElement.style.overflow = 'hidden';
+        }, 900);
       } else {
         inviteWrap.classList.add('error');
         inviteInput.value = '';
