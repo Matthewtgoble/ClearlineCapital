@@ -277,9 +277,12 @@ const year = new Date().getFullYear();
   }
 
   .field input:-webkit-autofill,
-  .field input:-webkit-autofill:focus {
-    -webkit-box-shadow: 0 0 0 1000px #000 inset;
-    -webkit-text-fill-color: #d4d0cb;
+  .field input:-webkit-autofill:hover,
+  .field input:-webkit-autofill:focus,
+  .field input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px #000 inset !important;
+    -webkit-text-fill-color: #d4d0cb !important;
+    caret-color: #d4d0cb;
   }
 
   .field label {
@@ -350,17 +353,47 @@ const year = new Date().getFullYear();
 
   /* ── Mobile ── */
   @media (max-width: 580px) {
+    header {
+      padding-top: 1rem;
+      padding-bottom: 0.5rem;
+    }
+
+    .logo-img {
+      height: 40px;
+    }
+
     .contact {
-      padding-block: 2.5rem;
-      padding-inline: 1.5rem;
+      padding-block: 1rem;
+      padding-inline: 1.25rem;
+    }
+
+    .contact-heading {
+      margin-bottom: 1.75rem;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+    }
+
+    .contact-sub {
+      font-size: 0.8rem;
     }
 
     .contact-form {
-      gap: 2.5rem;
+      gap: 1.75rem;
     }
 
     .field input {
       font-size: 16px;
+    }
+
+    .submit-btn {
+      padding-block: 0.85rem;
+    }
+
+    footer {
+      padding-block: 0.75rem;
+      padding-bottom: 10px;
     }
   }
 </style>
