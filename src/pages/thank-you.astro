@@ -43,8 +43,9 @@ const year = new Date().getFullYear();
 
   </body>
   <script>
-    const name = new URLSearchParams(window.location.search).get('name');
-    if (name) {
+    const raw = new URLSearchParams(window.location.search).get('name');
+    if (raw) {
+      const name = raw.charAt(0).toUpperCase() + raw.slice(1);
       document.getElementById('ty-heading').textContent = `Thank you for introducing yourself, ${name}.`;
     }
   </script>
