@@ -28,6 +28,7 @@
         <p class="eyebrow">Access Denied</p>
         <h2 id="error-heading">the code you entered isn't valid, try again</h2>
         <p class="error-sub" id="error-sub"></p>
+        <button class="try-again-btn" id="try-again-btn">Try Again</button>
       </div>
     </div>
 
@@ -78,6 +79,7 @@
     const errorOverlay   = document.getElementById('error-overlay');
     const errorHeading   = document.getElementById('error-heading');
     const errorSub       = document.getElementById('error-sub');
+    const tryAgainBtn    = document.getElementById('try-again-btn');
 
     const MAX_ATTEMPTS = 5;
     let attempts = 0;
@@ -109,12 +111,8 @@
       } else {
         errorHeading.textContent = 'The code you entered isn\'t valid, try again.';
         errorSub.textContent = `${MAX_ATTEMPTS - attempts} attempt${MAX_ATTEMPTS - attempts === 1 ? '' : 's'} remaining.`;
+        tryAgainBtn.style.display = 'inline-block';
         errorOverlay.classList.add('visible');
-        // Auto-dismiss after 2.5s so they can retry
-        setTimeout(() => {
-          errorOverlay.classList.remove('visible');
-          inviteInput.focus();
-        }, 2500);
       }
     }
 
@@ -142,12 +140,18 @@
         inviteConfirm.classList.remove('visible');
 
         if (attempts >= MAX_ATTEMPTS) {
+          tryAgainBtn.style.display = 'none';
           showErrorOverlay(true);
         } else {
           showErrorOverlay(false);
         }
       }
     }
+
+    tryAgainBtn.addEventListener('click', () => {
+      errorOverlay.classList.remove('visible');
+      inviteInput.focus();
+    });
 
     inviteArrow.addEventListener('click', submitCode);
     inviteInput.addEventListener('keydown', (e) => {
@@ -238,6 +242,29 @@
     font-weight: 300;
     color: #9e9a95;
     line-height: 1.9;
+    margin-bottom: 2rem;
+  }
+
+  .try-again-btn {
+    display: inline-block;
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    background: transparent;
+    border: 1px solid var(--gold);
+    padding: 0.65rem 2rem;
+    cursor: pointer;
+    transition: background 0.22s ease, color 0.22s ease, border-color 0.22s ease;
+  }
+
+  .try-again-btn:hover,
+  .try-again-btn:active {
+    background: var(--dark);
+    border-color: var(--dark);
+    color: var(--gold);
   }
 
   /* ── Header ── */
