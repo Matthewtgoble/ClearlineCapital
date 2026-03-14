@@ -19,8 +19,17 @@
   </head>
   <body>
 
-    <!-- Fade overlay -->
-    <div class="fade-overlay"></div>
+    <!-- Fade overlay (success) -->
+    <div class="fade-overlay" id="fade-overlay"></div>
+
+    <!-- Error overlay -->
+    <div class="error-overlay" id="error-overlay">
+      <div class="error-content">
+        <p class="eyebrow">Access Denied</p>
+        <h2 id="error-heading">the code you entered isn't valid, try again</h2>
+        <p class="error-sub" id="error-sub"></p>
+      </div>
+    </div>
 
     <!-- ── Header ── -->
     <header>
@@ -65,7 +74,13 @@
     const inviteArrow    = document.querySelector('.invite-arrow');
     const inviteCheckbox = document.getElementById('invite-checkbox');
     const inviteConfirm  = document.getElementById('invite-confirm-label');
-    const fadeOverlay    = document.querySelector('.fade-overlay');
+    const fadeOverlay    = document.getElementById('fade-overlay');
+    const errorOverlay   = document.getElementById('error-overlay');
+    const errorHeading   = document.getElementById('error-heading');
+    const errorSub       = document.getElementById('error-sub');
+
+    const MAX_ATTEMPTS = 5;
+    let attempts = 0;
 
     // Disable arrow until checkbox is checked
     inviteArrow.disabled = true;
@@ -86,6 +101,23 @@
       inviteArrow.disabled = !inviteCheckbox.checked;
     });
 
+    function showErrorOverlay(locked = false) {
+      if (locked) {
+        errorHeading.textContent = 'Too many failed attempts.';
+        errorSub.textContent = 'Please request a new code from our friend who invited you to join us.';
+        errorOverlay.classList.add('visible', 'locked');
+      } else {
+        errorHeading.textContent = 'The code you entered isn\'t valid, try again.';
+        errorSub.textContent = `${MAX_ATTEMPTS - attempts} attempt${MAX_ATTEMPTS - attempts === 1 ? '' : 's'} remaining.`;
+        errorOverlay.classList.add('visible');
+        // Auto-dismiss after 2.5s so they can retry
+        setTimeout(() => {
+          errorOverlay.classList.remove('visible');
+          inviteInput.focus();
+        }, 2500);
+      }
+    }
+
     async function submitCode() {
       const code = inviteInput.value.trim();
       if (!code) return;
@@ -98,26 +130,28 @@
       const { valid, token } = await res.json();
 
       if (valid && token) {
-        inviteWrap.classList.remove('error');
-        // Fade to black then navigate to contact page
         fadeOverlay.classList.add('visible');
         setTimeout(() => {
           window.location.href = `/contact?token=${token}`;
         }, 700);
       } else {
-        inviteWrap.classList.add('error');
+        attempts++;
         inviteInput.value = '';
         inviteCheckbox.checked = false;
         inviteArrow.disabled = true;
         inviteConfirm.classList.remove('visible');
-        inviteInput.focus();
+
+        if (attempts >= MAX_ATTEMPTS) {
+          showErrorOverlay(true);
+        } else {
+          showErrorOverlay(false);
+        }
       }
     }
 
     inviteArrow.addEventListener('click', submitCode);
     inviteInput.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' && !inviteArrow.disabled) submitCode();
-      if (inviteWrap.classList.contains('error')) inviteWrap.classList.remove('error');
     });
   </script>
 </html>
@@ -143,7 +177,7 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* ── Fade overlay ── */
+  /* ── Fade overlay (success) ── */
   .fade-overlay {
     position: fixed;
     inset: 0;
@@ -157,6 +191,53 @@
   .fade-overlay.visible {
     opacity: 1;
     pointer-events: all;
+  }
+
+  /* ── Error overlay ── */
+  .error-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 500;
+    transition: opacity 0.4s ease;
+    padding-inline: 2rem;
+  }
+
+  .error-overlay.visible {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .error-content {
+    max-width: 480px;
+  }
+
+  .error-content .eyebrow {
+    color: #e05555;
+    margin-bottom: 1.5rem;
+  }
+
+  .error-overlay #error-heading {
+    font-family: var(--serif);
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 300;
+    color: #d4d0cb;
+    line-height: 1.25;
+    margin-bottom: 1.25rem;
+  }
+
+  #error-sub {
+    font-family: var(--sans);
+    font-size: 0.875rem;
+    font-weight: 300;
+    color: #9e9a95;
+    line-height: 1.9;
   }
 
   /* ── Header ── */
