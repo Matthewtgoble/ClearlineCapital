@@ -289,12 +289,39 @@
     display: flex;
     text-decoration: none;
     line-height: 1;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .logo::after {
+    content: '';
+    position: absolute;
+    top: -10%;
+    left: -80%;
+    width: 40%;
+    height: 120%;
+    background: linear-gradient(
+      to right,
+      rgba(255, 220, 140, 0) 0%,
+      rgba(255, 220, 140, 0.55) 50%,
+      rgba(255, 220, 140, 0) 100%
+    );
+    transform: skewX(-20deg);
+    animation: logo-shimmer 4s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  @keyframes logo-shimmer {
+    0%   { left: -80%; }
+    40%  { left: 140%; }
+    100% { left: 140%; }
   }
 
   .logo-img {
     height: 74px;
     width: auto;
     display: block;
+    filter: sepia(1) saturate(1.8) brightness(1.5) hue-rotate(5deg);
   }
 
   /* ── Hero ── */
