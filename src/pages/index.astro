@@ -431,6 +431,20 @@
     transition: background 0.25s ease;
   }
 
+  .invite-row:hover .invite-input {
+    border-color: transparent;
+    background:
+      rgba(0, 0, 0, 0.5) padding-box,
+      linear-gradient(90deg, #9a6e2a 0%, #c9952e 20%, #f7e8a0 40%, #e8c96a 50%, #f7e8a0 60%, #c9952e 80%, #9a6e2a 100%) border-box;
+    background-size: 200% 100%;
+    animation: border-shimmer 2.5s ease-in-out infinite alternate;
+  }
+
+  @keyframes border-shimmer {
+    from { background-position: 0% 0; }
+    to   { background-position: 100% 0; }
+  }
+
   .invite-input::placeholder {
     color: var(--gold);
     opacity: 1;
