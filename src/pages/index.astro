@@ -431,13 +431,37 @@
     transition: background 0.25s ease;
   }
 
+  .invite-row::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    background: linear-gradient(
+      90deg,
+      #9a6e2a 0%,
+      #c9952e 20%,
+      #f7e8a0 42%,
+      #e8c96a 50%,
+      #f7e8a0 58%,
+      #c9952e 80%,
+      #9a6e2a 100%
+    );
+    background-size: 200% 100%;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .invite-row:hover::before {
+    opacity: 1;
+    animation: border-shimmer 2.5s ease-in-out infinite alternate;
+  }
+
   .invite-row:hover .invite-input {
     border-color: transparent;
-    background:
-      rgba(0, 0, 0, 0.5) padding-box,
-      linear-gradient(90deg, #9a6e2a 0%, #c9952e 20%, #f7e8a0 40%, #e8c96a 50%, #f7e8a0 60%, #c9952e 80%, #9a6e2a 100%) border-box;
-    background-size: 200% 100%;
-    animation: border-shimmer 2.5s ease-in-out infinite alternate;
   }
 
   @keyframes border-shimmer {
