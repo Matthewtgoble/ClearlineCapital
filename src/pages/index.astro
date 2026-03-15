@@ -290,23 +290,47 @@
     text-decoration: none;
     line-height: 1;
     position: relative;
-    overflow: hidden;
   }
 
+  /* Original white logo is hidden but holds the layout dimensions */
   .logo-img {
     height: 74px;
     width: auto;
     display: block;
-    animation: satin 3.5s ease-in-out infinite alternate;
+    visibility: hidden;
+  }
+
+  /* Gold satin gradient masked to the exact logo PNG shape */
+  .logo::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      110deg,
+      #9a6e2a 0%,
+      #c9952e 15%,
+      #e8c96a 35%,
+      #f7e8a0 50%,
+      #e8c96a 65%,
+      #c9952e 85%,
+      #9a6e2a 100%
+    );
+    background-size: 200% 100%;
+    animation: satin 4s ease-in-out infinite alternate;
+    -webkit-mask-image: url('/logo-white.png');
+    -webkit-mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-image: url('/logo-white.png');
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    pointer-events: none;
   }
 
   @keyframes satin {
-    from {
-      filter: sepia(1) saturate(1.8) brightness(1.3) hue-rotate(3deg);
-    }
-    to {
-      filter: sepia(1) saturate(2.4) brightness(1.75) hue-rotate(8deg);
-    }
+    from { background-position: 0% 50%; }
+    to   { background-position: 100% 50%; }
   }
 
   /* ── Hero ── */
