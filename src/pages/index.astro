@@ -130,10 +130,12 @@
       const { valid, token } = await res.json();
 
       if (valid && token) {
-        fadeOverlay.classList.add('visible');
+        document.documentElement.style.overflow = 'hidden';
+        document.body.style.transition = 'transform 0.42s cubic-bezier(0.77, 0, 0.18, 1)';
+        document.body.style.transform = 'translateY(-100vh)';
         setTimeout(() => {
           window.location.href = `/contact?token=${token}`;
-        }, 700);
+        }, 420);
       } else {
         attempts++;
         inviteInput.value = '';
