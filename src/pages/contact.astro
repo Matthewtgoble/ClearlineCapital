@@ -20,7 +20,8 @@ const year = new Date().getFullYear();
   </head>
   <body>
 
-    <div class="page" id="page">
+    <div class="fade-overlay visible" id="fade-overlay"></div>
+    <div class="page">
 
       <section class="contact">
         <div class="contact-inner">
@@ -91,17 +92,16 @@ const year = new Date().getFullYear();
   </body>
 
   <script>
-    const token = new URLSearchParams(window.location.search).get('token');
-    const page  = document.getElementById('page');
+    const token   = new URLSearchParams(window.location.search).get('token');
+    const overlay = document.getElementById('fade-overlay');
 
     if (!token) {
       window.location.replace('/');
     } else {
-      // Slide in immediately — validate in parallel
-      requestAnimationFrame(() => {
-        page.style.transform = 'translateY(0)';
-      });
+      // Fade in immediately
+      overlay.classList.remove('visible');
 
+      // Validate in parallel — redirect if invalid
       fetch('/api/validate-token', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -110,8 +110,8 @@ const year = new Date().getFullYear();
         .then(r => r.json())
         .then(({ valid }) => {
           if (!valid) {
-            page.style.transform = 'translateY(100vh)';
-            setTimeout(() => window.location.replace('/'), 420);
+            overlay.classList.add('visible');
+            setTimeout(() => window.location.replace('/'), 250);
           }
         })
         .catch(() => window.location.replace('/'));
@@ -149,13 +149,27 @@ const year = new Date().getFullYear();
     -webkit-font-smoothing: antialiased;
   }
 
+  /* ── Fade overlay ── */
+  .fade-overlay {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 999;
+    transition: opacity 0.25s ease;
+  }
+
+  .fade-overlay.visible {
+    opacity: 1;
+    pointer-events: all;
+  }
+
   .page {
     min-height: 100vh;
     background: #000;
     display: flex;
     flex-direction: column;
-    transform: translateY(100vh);
-    transition: transform 0.42s cubic-bezier(0.77, 0, 0.18, 1);
   }
 
   /* ── Contact ── */

@@ -130,12 +130,10 @@
       const { valid, token } = await res.json();
 
       if (valid && token) {
-        document.documentElement.style.overflow = 'hidden';
-        document.body.style.transition = 'transform 0.42s cubic-bezier(0.77, 0, 0.18, 1)';
-        document.body.style.transform = 'translateY(-100vh)';
+        fadeOverlay.classList.add('visible');
         setTimeout(() => {
           window.location.href = `/contact?token=${token}`;
-        }, 420);
+        }, 250);
       } else {
         attempts++;
         inviteInput.value = '';
@@ -193,7 +191,7 @@
     opacity: 0;
     pointer-events: none;
     z-index: 999;
-    transition: opacity 0.7s ease;
+    transition: opacity 0.25s ease;
   }
 
   .fade-overlay.visible {
