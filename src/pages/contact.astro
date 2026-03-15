@@ -25,6 +25,12 @@ const year = new Date().getFullYear();
 
     <div class="page">
 
+      <header class="site-header">
+        <a href="/" aria-label="Clearline Capital home">
+          <img src="/logo-white.png" alt="Clearline Capital" class="logo-img" />
+        </a>
+      </header>
+
       <section class="contact">
         <div class="contact-inner">
           <div class="contact-heading">
@@ -172,6 +178,17 @@ const year = new Date().getFullYear();
     background: #000;
     display: flex;
     flex-direction: column;
+  }
+
+  /* ── Header ── */
+  .site-header {
+    padding: 1.25rem 3%;
+  }
+
+  .logo-img {
+    height: 44px;
+    width: auto;
+    display: block;
   }
 
   /* ── Contact ── */
