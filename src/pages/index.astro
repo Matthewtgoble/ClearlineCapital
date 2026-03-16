@@ -107,8 +107,8 @@
 
     function showErrorOverlay(locked = false) {
       if (locked) {
-        errorHeading.textContent = 'Too many failed attempts.';
-        errorSub.textContent = 'Please request a new code from our friend who invited you to join us.';
+        errorHeading.textContent = 'Credential unrecognized. Access is reserved for verified invitees.';
+        errorSub.textContent = 'Please confirm your referral key with your sponsoring partner.';
         errorOverlay.classList.add('visible', 'locked');
       } else {
         errorHeading.textContent = 'The code you entered isn\'t valid, try again.';
