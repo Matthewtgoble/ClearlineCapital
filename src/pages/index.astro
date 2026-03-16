@@ -107,7 +107,7 @@
 
     function showErrorOverlay(locked = false) {
       if (locked) {
-        errorHeading.textContent = 'Credential unrecognized. Access is reserved for verified invitees.';
+        errorHeading.innerHTML = 'Credential unrecognized.<br>Access is reserved for verified invitees.';
         errorSub.textContent = 'Please confirm your referral key with your sponsoring partner.';
         errorOverlay.classList.add('visible', 'locked');
       } else {
