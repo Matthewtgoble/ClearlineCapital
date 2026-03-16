@@ -111,8 +111,8 @@
         errorSub.textContent = 'Please request a new code from our friend who invited you to join us.';
         errorOverlay.classList.add('visible', 'locked');
       } else {
-        errorHeading.textContent = 'The code you entered isn\'t valid, try again.';
-        errorSub.textContent = `${MAX_ATTEMPTS - attempts} attempt${MAX_ATTEMPTS - attempts === 1 ? '' : 's'} remaining.`;
+        errorHeading.textContent = 'Credential unrecognized. Access is reserved for verified invitees.';
+        errorSub.textContent = 'Please confirm your referral key with your sponsoring partner.';
         tryAgainBtn.style.display = 'inline-block';
         errorOverlay.classList.add('visible');
       }
