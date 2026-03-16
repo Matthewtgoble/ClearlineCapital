@@ -21,7 +21,7 @@ const year = new Date().getFullYear();
 
     <div class="page">
       <div class="content">
-        <a href="/" aria-label="Clearline Capital home">
+        <a href="/" aria-label="Clearline Capital home" class="logo">
           <img src="/logo-white.png" alt="Clearline Capital" class="logo-img" />
         </a>
 
@@ -89,12 +89,52 @@ const year = new Date().getFullYear();
     width: 100%;
   }
 
+  .logo {
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 3rem;
+    text-decoration: none;
+    line-height: 1;
+  }
+
+  .logo::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      110deg,
+      #9a6e2a 0%,
+      #c9952e 15%,
+      #e8c96a 35%,
+      #f7e8a0 50%,
+      #e8c96a 65%,
+      #c9952e 85%,
+      #9a6e2a 100%
+    );
+    background-size: 200% 100%;
+    animation: satin 4s ease-in-out infinite alternate;
+    -webkit-mask-image: url('/logo-white.png');
+    -webkit-mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-image: url('/logo-white.png');
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    pointer-events: none;
+  }
+
+  @keyframes satin {
+    from { background-position: 0% 50%; }
+    to   { background-position: 100% 50%; }
+  }
+
   .logo-img {
     height: 80px;
     width: auto;
     display: block;
-    margin-inline: auto;
-    margin-bottom: 3rem;
+    visibility: hidden;
   }
 
   .divider {
