@@ -78,6 +78,11 @@ const year = new Date().getFullYear();
               <label for="x-handle">X Handle <span class="opt">— optional</span></label>
             </div>
 
+            <div class="field field--textarea">
+              <textarea id="why-you" name="why-you" rows="4" required placeholder=" "></textarea>
+              <label for="why-you">Why this room, why you</label>
+            </div>
+
             <button type="submit" class="submit-btn">Submit</button>
           </form>
         </div>
@@ -289,6 +294,38 @@ const year = new Date().getFullYear();
 
   .field input:focus ~ label,
   .field input:not(:placeholder-shown) ~ label {
+    transform: translateY(-1.5rem) scale(0.75);
+    color: var(--gold);
+    letter-spacing: 0.08em;
+  }
+
+  .field--textarea textarea {
+    display: block;
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+    outline: none;
+    font-family: var(--sans);
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: #d4d0cb;
+    padding-block: 0.5rem 0.65rem;
+    resize: none;
+    transition: border-color 0.3s ease;
+    -webkit-text-fill-color: #d4d0cb;
+  }
+
+  .field--textarea:focus-within textarea {
+    border-bottom-color: transparent;
+  }
+
+  .field--textarea label {
+    top: 0.5rem;
+  }
+
+  .field--textarea textarea:focus ~ label,
+  .field--textarea textarea:not(:placeholder-shown) ~ label {
     transform: translateY(-1.5rem) scale(0.75);
     color: var(--gold);
     letter-spacing: 0.08em;
