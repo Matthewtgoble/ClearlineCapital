@@ -91,10 +91,10 @@
     }
     @keyframes breathe { from { transform: scale(1.025); } to { transform: scale(1.065); } }
     .hero-inner { position: relative; z-index: 2; max-width: var(--max); width: 100%; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1.1fr) 390px; gap: 48px; align-items: end; }
-    .eyebrow { color: var(--gold2); text-transform: uppercase; letter-spacing: .28em; font-size: 12px; margin-bottom: 18px; }
+    .eyebrow { color: var(--gold2); text-transform: uppercase; letter-spacing: .3em; font-size: clamp(14px, 1.05vw, 15px); margin-bottom: 18px; }
     h1, h2, h3 { font-family: var(--serif); font-weight: 400; margin: 0; text-wrap: pretty; }
     h1 { font-size: clamp(56px, 8vw, 112px); line-height: .88; max-width: 780px; letter-spacing: -.06em; }
-    .hero-copy { max-width: 630px; margin-top: 28px; color: rgba(247,242,232,.78); font-size: clamp(17px, 1.7vw, 22px); line-height: 1.55; }
+    .hero-copy { max-width: 630px; margin-top: 28px; color: rgba(247,242,232,.78); font-size: clamp(15px, 1.35vw, 18px); line-height: 1.58; }
     .access-card {
       border: 1px solid rgba(214,168,94,.34);
       background: linear-gradient(145deg, rgba(7,8,8,.88), rgba(30,23,13,.72));
@@ -115,8 +115,8 @@
     .wrap { max-width: var(--max); margin: 0 auto; }
     .split { display: grid; grid-template-columns: .85fr 1.15fr; gap: clamp(34px, 7vw, 96px); align-items: start; }
     h2 { font-size: clamp(38px, 5vw, 74px); line-height: .98; letter-spacing: -.045em; }
-    .lead { font-size: clamp(18px, 2vw, 25px); line-height: 1.5; color: rgba(247,242,232,.78); margin: 0; }
-    .body { color: rgba(247,242,232,.64); font-size: 16px; line-height: 1.75; }
+    .lead { font-size: clamp(16px, 1.55vw, 21px); line-height: 1.58; color: rgba(247,242,232,.76); margin: 0; }
+    .body { color: rgba(247,242,232,.64); font-size: 15px; line-height: 1.75; }
     .rule { height: 1px; background: linear-gradient(90deg, var(--gold), transparent); opacity: .45; margin: 32px 0; }
     .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 48px; }
     .card { border: 1px solid rgba(247,242,232,.12); background: linear-gradient(145deg, rgba(255,255,255,.045), rgba(255,255,255,.015)); padding: 28px; min-height: 220px; position: relative; }
