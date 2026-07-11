@@ -102,7 +102,15 @@
     .eyebrow { color: var(--gold2); text-transform: uppercase; letter-spacing: .3em; font-size: clamp(14px, 1.05vw, 15px); margin-bottom: 18px; }
     h1, h2, h3 { font-family: var(--serif); font-weight: 400; margin: 0; text-wrap: pretty; }
     h1 { font-size: clamp(56px, 8vw, 112px); line-height: .88; max-width: 780px; letter-spacing: -.06em; }
+    h1 span { display: block; }
     .hero-copy { max-width: 630px; margin-top: 28px; color: rgba(247,242,232,.78); font-size: clamp(15px, 1.35vw, 18px); line-height: 1.58; }
+    @media (min-width: 981px) {
+      .hero { padding-bottom: 24px; }
+      .hero-narrative .eyebrow { margin-bottom: 15px; }
+      h1 { font-size: clamp(60px, 4.5vw, 84px); line-height: .92; max-width: 700px; }
+      .hero-copy { max-width: 680px; margin-top: 22px; line-height: 1.52; }
+      .hero-narrative .secondary-link { margin-top: 18px; }
+    }
     .access-card {
       border: 1px solid rgba(214,168,94,.34);
       background: linear-gradient(145deg, rgba(7,8,8,.88), rgba(30,23,13,.72));
@@ -243,7 +251,7 @@
       <div class="hero-inner">
         <div class="hero-narrative">
           <div class="eyebrow">Private by design</div>
-          <h1>Entry by Endorsement</h1>
+          <h1><span>Entry by</span><span>Endorsement</span></h1>
           <p class="hero-copy">Clearline Capital is a private investment and acquisition firm built around direct origination, controlled access, and aligned execution. The firm operates through a closed network of owners, operators, investors, and capital partners.</p>
           <a class="secondary-link" href="#firm">Enter the overview</a>
         </div>
