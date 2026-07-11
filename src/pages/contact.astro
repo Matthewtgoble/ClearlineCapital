@@ -65,17 +65,17 @@ const year = new Date().getFullYear();
 
             <div class="field">
               <input type="url" id="linkedin" name="linkedin" autocomplete="url" placeholder=" " />
-              <label for="linkedin">LinkedIn Profile <span class="opt">— optional</span></label>
+              <label for="linkedin">LinkedIn Profile <span class="opt">- optional</span></label>
             </div>
 
             <div class="field">
               <input type="text" id="instagram" name="instagram" autocomplete="off" placeholder=" " />
-              <label for="instagram">Instagram Handle <span class="opt">— optional</span></label>
+              <label for="instagram">Instagram Handle <span class="opt">- optional</span></label>
             </div>
 
             <div class="field">
               <input type="text" id="x-handle" name="x-handle" autocomplete="off" placeholder=" " />
-              <label for="x-handle">X Handle <span class="opt">— optional</span></label>
+              <label for="x-handle">X Handle <span class="opt">- optional</span></label>
             </div>
 
             <div class="field field--textarea" style="padding-top: 1.25rem;">
@@ -106,7 +106,7 @@ const year = new Date().getFullYear();
       // Fade in immediately
       overlay.classList.remove('visible');
 
-      // Validate in parallel — redirect if invalid
+      // Validate in parallel, redirect if invalid
       fetch('/api/validate-token', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
