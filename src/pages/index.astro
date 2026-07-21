@@ -35,6 +35,7 @@
     .site-nav.is-scrolled { background: linear-gradient(to bottom, rgba(5,5,5,.96), rgba(5,5,5,.9)); border-bottom-color: rgba(247,242,232,.09); }
     .logo { display: flex; align-items: center; gap: 12px; min-width: 164px; }
     .logo img { width: 132px; height: auto; display: block; }
+    @media (min-width: 981px) { .hero .access-card { align-self: end; transform: translateY(clamp(80px, 8.5vh, 86px)); } }
     .nav-links { display: flex; align-items: center; gap: clamp(10px, 1.15vw, 16px); font-size: 11px; text-transform: uppercase; letter-spacing: .16em; color: rgba(247,242,232,.72); }
     .nav-links a { transition: color .25s ease; white-space: nowrap; }
     .nav-links a:hover { color: var(--gold2); }
@@ -96,17 +97,22 @@
     .intelligence-map { position: relative; min-height: clamp(560px, 62vh, 720px); border-top: 1px solid rgba(214,168,94,.16); border-bottom: 1px solid rgba(214,168,94,.16); }
     .map-visual { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; z-index: 1; opacity: .92; }
     .map-visual * { vector-effect: non-scaling-stroke; }
-    .field-grid { opacity: .30; }
-    .field-contours { opacity: .62; }
-    .market-point { opacity: .62; }
+    .field-grid { opacity: .22; }
+    .field-contours { opacity: .48; }
+    .market-point { opacity: .52; }
+    .market-stage-id, .lens-stage-id { position: absolute; z-index: 4; text-transform: uppercase; letter-spacing: .24em; font-size: 11px; line-height: 1; }
+    .market-stage-id { left: 6%; top: 6%; color: rgba(247,242,232,.42); }
+    .lens-stage-id { left: 43%; top: 6%; color: rgba(240,214,160,.74); }
+    .qualified-point { filter: drop-shadow(0 0 7px rgba(240,214,160,.22)); }
     .market-point.irrelevant { opacity: .22; }
     .relationship-trace, .risk-fracture, .qualified-path, .situation-marker, .memory-return { opacity: 1; transition: opacity .45s ease, transform .55s ease; }
     .field-copy { position: relative; z-index: 3; pointer-events: none; }
     .field-labels, .capability-labels, .qualified-final { position: absolute; inset: 0; z-index: 2; }
     .field-label, .capability-label { position: absolute; color: var(--field-muted, rgba(247,242,232,.66)); font-size: 12px; line-height: 1.2; letter-spacing: .08em; text-transform: uppercase; opacity: .88; }
     .field-label.emphasis, .capability-label.emphasis { color: var(--gold2); }
-    .capability-label { color: rgba(247,242,232,.78); font-weight: 600; }
+    .capability-label { color: rgba(247,242,232,.88); font-weight: 600; }
     .capability-label:before { content: ''; display: inline-block; width: 16px; height: 1px; margin: 0 8px 4px 0; background: var(--gold); opacity: .72; }
+    .capability-label.emphasis { color: var(--gold2); }
     .qualified-card { position: absolute; right: clamp(22px, 6vw, 86px); bottom: clamp(38px, 8vh, 96px); width: min(420px, 34vw); padding: clamp(24px, 3vw, 38px); background: linear-gradient(180deg, rgba(8,7,6,.96), rgba(17,14,10,.94)); border-top: 2px solid rgba(240,214,160,.84); border-bottom: 2px solid rgba(240,214,160,.84); box-shadow: 0 28px 80px rgba(0,0,0,.46); }
     .qualified-card h3 { font-size: clamp(28px, 3.4vw, 52px); line-height: .96; text-transform: uppercase; letter-spacing: -.03em; margin-bottom: 14px; }
     .qualified-card p { margin: 0; color: rgba(247,242,232,.76); font-size: clamp(14px, 1.3vw, 17px); line-height: 1.45; }
@@ -117,6 +123,8 @@
     .intelligence-field-section:not(.is-visible) .situation-marker { opacity: .18; }
     .intelligence-field-section.is-visible .capability-label { animation: resolveIn .8s ease both; }
     .intelligence-field-section.is-visible .qualified-card { animation: resolveIn .9s ease .18s both; }
+    .intelligence-field-section.is-visible .qualified-point { animation: pulseQualified 1.6s ease .2s both; }
+    @keyframes pulseQualified { from { opacity: .35; transform: scale(.82); } to { opacity: 1; transform: scale(1); } }
     @keyframes resolveIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     .mobile-field-copy { display: none; }
     .intelligence-reduced-copy { position: absolute; left: -9999px; }
@@ -129,6 +137,7 @@
       .mobile-field-copy { display: block; position: relative; z-index: 3; }
       .mobile-field-step { margin: 0 0 30px; max-width: 330px; }
       .mobile-field-step:nth-child(2) { margin-left: auto; }
+      .market-stage-id, .lens-stage-id { display: none; }
       .mobile-field-step h3 { font-size: 22px; line-height: 1.08; margin-bottom: 9px; }
       .mobile-field-step p { margin: 0; color: rgba(247,242,232,.68); font-size: 13px; line-height: 1.5; }
       .mobile-qualified-card { margin-top: 34px; padding: 26px 22px; background: linear-gradient(180deg, rgba(8,7,6,.96), rgba(17,14,10,.94)); border-top: 2px solid rgba(240,214,160,.84); border-bottom: 2px solid rgba(240,214,160,.84); }
@@ -194,7 +203,7 @@
 </head>
 <body>
   <nav class="site-nav" aria-label="Primary navigation">
-    <a class="logo" href="#top" aria-label="Clearline Capital home"><img src="/logo-white-132.webp" srcset="/logo-white-132.webp 132w, /logo-white-264.webp 264w" sizes="132px" width="132" height="83" alt="Clearline Capital" /></a>
+    <a class="logo" href="#top" aria-label="Clearline Capital home"><img src="/logo-champagne-132.webp" srcset="/logo-champagne-132.webp 132w, /logo-champagne-264.webp 264w, /logo-champagne-528.webp 528w" sizes="132px" width="132" height="83" alt="Clearline Capital" /></a>
     <div class="nav-links">
       <a href="#firm">Firm</a>
       <a href="#focus">Investment Focus</a>
@@ -303,29 +312,24 @@
         </div>
 
         <div class="intelligence-map" aria-label="Clearline Capital intelligence field resolving into qualified situations">
+          <div class="market-stage-id" aria-hidden="true">Market Universe</div>
+          <div class="lens-stage-id" aria-hidden="true">Intelligence Lenses</div>
             <svg class="map-visual desktop-map" viewBox="0 0 1440 780" role="img" aria-labelledby="desktop-map-title" focusable="false">
               <title id="desktop-map-title">Private-market field resolving into qualified situations</title>
               <g class="field-grid" aria-hidden="true" stroke="rgba(247,242,232,.12)" stroke-width=".6">
                 <path d="M60 76 C280 92 542 68 760 96 S1130 118 1370 82" />
-                <path d="M70 154 C310 132 530 168 760 150 S1125 132 1360 168" />
                 <path d="M70 236 C300 256 515 225 760 242 S1120 270 1365 232" />
-                <path d="M70 324 C340 300 540 342 792 322 S1125 300 1360 340" />
                 <path d="M90 430 C320 458 565 412 806 438 S1120 470 1340 426" />
                 <path d="M170 48 C150 210 176 342 150 515" />
-                <path d="M360 42 C335 180 382 318 356 530" />
                 <path d="M558 56 C520 215 596 350 552 548" />
                 <path d="M760 44 C725 226 805 360 760 560" />
-                <path d="M970 62 C940 205 1005 370 964 570" />
                 <path d="M1180 54 C1156 220 1218 365 1175 570" />
               </g>
               <g class="field-contours" aria-hidden="true" fill="none" stroke="rgba(247,242,232,.18)" stroke-width=".8">
                 <path d="M178 276 C214 132 414 84 590 126 C746 164 850 258 808 354 C764 454 570 512 370 478 C212 452 146 380 178 276Z" />
-                <path d="M232 278 C262 170 420 136 560 164 C694 190 770 266 732 342 C692 420 548 454 390 430 C278 412 208 360 232 278Z" />
                 <path d="M292 282 C328 212 444 194 548 214 C650 236 696 286 664 336 C632 390 532 410 418 392 C336 378 266 340 292 282Z" />
                 <path d="M136 438 C245 372 455 374 575 452 C680 520 618 610 434 628 C244 646 88 560 136 438Z" />
-                <path d="M210 462 C302 420 456 424 532 476 C598 522 538 578 410 588 C290 596 174 540 210 462Z" />
                 <path d="M602 168 C730 82 962 110 1044 224 C1120 330 1008 438 820 430 C660 424 520 312 602 168Z" />
-                <path d="M672 196 C772 144 920 168 974 246 C1026 320 936 384 815 374 C704 366 606 284 672 196Z" />
               </g>
               <g aria-hidden="true" fill="rgba(247,242,232,.64)">
                 <circle class="market-point" cx="152" cy="212" r="1.5"/><circle class="market-point" cx="230" cy="176" r="1.2"/><circle class="market-point irrelevant" cx="302" cy="128" r="1.2"/><circle class="market-point" cx="382" cy="232" r="1.6"/><circle class="market-point" cx="468" cy="188" r="1.2"/><circle class="market-point irrelevant" cx="548" cy="282" r="1.4"/><circle class="market-point" cx="628" cy="216" r="1.2"/><circle class="market-point" cx="735" cy="292" r="1.6"/><circle class="market-point irrelevant" cx="842" cy="184" r="1.2"/><circle class="market-point" cx="922" cy="258" r="1.5"/><circle class="market-point" cx="1055" cy="316" r="1.2"/><circle class="market-point irrelevant" cx="1190" cy="202" r="1.3"/><circle class="market-point" cx="310" cy="410" r="1.4"/><circle class="market-point" cx="438" cy="462" r="1.2"/><circle class="market-point irrelevant" cx="552" cy="522" r="1.5"/><circle class="market-point" cx="690" cy="444" r="1.2"/><circle class="market-point" cx="790" cy="492" r="1.5"/><circle class="market-point" cx="890" cy="382" r="1.2"/><circle class="market-point irrelevant" cx="1010" cy="452" r="1.4"/><circle class="market-point" cx="1145" cy="414" r="1.2"/><circle class="market-point" cx="218" cy="342" r="1.3"/><circle class="market-point irrelevant" cx="508" cy="350" r="1.1"/><circle class="market-point" cx="668" cy="342" r="1.3"/><circle class="market-point" cx="982" cy="520" r="1.2"/>
@@ -335,17 +339,15 @@
                 <path class="relationship-trace" d="M270 438 C405 382 520 414 640 372 S825 360 1002 424" stroke="rgba(214,168,94,.55)" stroke-width="1" />
                 <path class="relationship-trace" d="M404 168 C560 150 682 206 790 186 S942 166 1040 214" stroke="rgba(214,168,94,.42)" stroke-width=".9" />
                 <path class="risk-fracture" d="M706 236 L730 254 L754 242 L780 262 L808 248" stroke="rgba(214,168,94,.75)" stroke-width="1.3" />
-                <path class="risk-fracture" d="M330 504 L356 488 L384 512 L410 494" stroke="rgba(214,168,94,.68)" stroke-width="1.1" />
                 <path class="risk-fracture" d="M998 352 L1025 338 L1056 362 L1088 348" stroke="rgba(214,168,94,.68)" stroke-width="1.1" />
-                <path class="qualified-path" d="M558 220 C724 220 855 248 990 332 C1045 366 1088 420 1128 514" stroke="rgba(240,214,160,.72)" stroke-width="1.15" />
-                <path class="qualified-path" d="M460 424 C615 392 790 418 930 490 C1004 528 1050 556 1110 566" stroke="rgba(240,214,160,.68)" stroke-width="1.05" />
-                <path class="qualified-path" d="M746 322 C858 328 968 350 1072 402 C1134 434 1165 474 1188 514" stroke="rgba(240,214,160,.62)" stroke-width="1.05" />
-                <path class="memory-return" d="M1218 718 C976 762 700 734 520 560 C458 500 398 470 310 452" stroke="rgba(214,168,94,.55)" stroke-width=".9" />
+                <path class="qualified-path" d="M520 220 C690 226 835 266 974 346 C1042 386 1098 442 1140 512" stroke="rgba(240,214,160,.74)" stroke-width="1.18" />
+                <path class="qualified-path" d="M452 428 C620 394 786 426 930 492 C1014 532 1074 554 1138 566" stroke="rgba(240,214,160,.70)" stroke-width="1.12" />
+                <path class="qualified-path" d="M742 322 C866 328 974 362 1082 424 C1135 455 1168 488 1196 520" stroke="rgba(240,214,160,.66)" stroke-width="1.08" />
               </g>
-              <g class="situation-marker" aria-hidden="true" fill="rgba(240,214,160,.92)" stroke="rgba(240,214,160,.95)" stroke-width="1">
-                <path d="M1114 500 h32 M1130 484 v32"/><circle cx="1130" cy="516" r="3"/>
-                <path d="M1064 552 h32 M1080 536 v32"/><circle cx="1080" cy="568" r="3"/>
-                <path d="M1180 498 h32 M1196 482 v32"/><circle cx="1196" cy="514" r="3"/>
+              <g class="situation-marker" aria-hidden="true" fill="rgba(240,214,160,.94)" stroke="rgba(240,214,160,.95)" stroke-width="1">
+                <circle class="qualified-point" cx="1140" cy="512" r="5"/><path d="M1120 512 h40 M1140 492 v40"/>
+                <circle class="qualified-point" cx="1138" cy="566" r="5"/><path d="M1118 566 h40 M1138 546 v40"/>
+                <circle class="qualified-point" cx="1196" cy="520" r="5"/><path d="M1176 520 h40 M1196 500 v40"/>
               </g>
             </svg>
 
@@ -376,7 +378,7 @@
             <span class="field-label" style="left:63%;top:20%;">Operating indicators</span>
             <span class="field-label" style="left:10%;top:47%;">Transaction activity</span>
             <span class="field-label emphasis" style="left:32%;top:57%;">Relationship context</span>
-            <span class="field-label emphasis" style="left:75%;top:38%;">Risk</span>
+            <span class="field-label" style="left:74%;top:40%;">Risk Indicators</span>
           </div>
           <div class="field-copy capability-labels" aria-hidden="true">
             <span class="capability-label" style="left:8%;top:25%;">Origination Intelligence</span>
@@ -394,11 +396,11 @@
           </div>
           <div class="mobile-field-copy">
             <div class="mobile-field-step" style="padding-top:120px;">
-              <h3>Broad private-market inputs</h3>
-              <p>Businesses, assets, ownership structures, operating indicators, transaction activity, relationship context, and risk begin unresolved.</p>
+              <h3>Market Universe</h3>
+              <p>Businesses, assets, ownership structures, operating indicators, transaction activity, relationship context, and risk indicators begin unresolved.</p>
             </div>
             <div class="mobile-field-step" style="padding-top:112px;">
-              <h3>Proprietary agentic analysis</h3>
+              <h3>Intelligence Lenses</h3>
               <p>Origination intelligence, market mapping, ownership research, diligence coordination, risk and scenario analysis, and institutional memory clarify the field.</p>
             </div>
             <div class="mobile-field-step" style="padding-top:84px;">
