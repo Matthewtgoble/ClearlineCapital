@@ -113,9 +113,8 @@
     .qualified-stage-id { right: 7%; top: 6%; color: rgba(240,214,160,.86); }
     .zone-rule { position: absolute; z-index: 2; top: 12%; bottom: 14%; width: 1px; background: linear-gradient(180deg, transparent, rgba(214,168,94,.18), transparent); }
     .zone-rule.left { left: 35%; } .zone-rule.right { left: 68%; }
-    .qualified-point { filter: drop-shadow(0 0 6px rgba(240,214,160,.20)); }
     .market-point.irrelevant { opacity: .15; }
-    .relationship-trace, .risk-fracture, .qualified-path, .situation-marker, .memory-return { opacity: 1; transition: opacity .45s ease, transform .55s ease; }
+    .qualified-path { opacity: 1; transition: opacity .45s ease, transform .55s ease; }
     .field-copy { position: relative; z-index: 3; pointer-events: none; }
     .field-labels, .capability-labels, .qualified-final { position: absolute; inset: 0; z-index: 3; }
     .qualified-final { z-index: 6; }
@@ -132,12 +131,9 @@
     .governance-note { max-width: 760px; margin: clamp(24px, 4vh, 40px) 0 0 auto; color: rgba(247,242,232,.62); font-size: 14px; line-height: 1.7; }
     .intelligence-field-section:not(.is-visible) .capability-label,
     .intelligence-field-section:not(.is-visible) .qualified-card,
-    .intelligence-field-section:not(.is-visible) .qualified-path,
-    .intelligence-field-section:not(.is-visible) .situation-marker { opacity: 1; }
+    .intelligence-field-section:not(.is-visible) .qualified-path { opacity: 1; }
     .intelligence-field-section.is-visible .capability-label { animation: resolveIn .8s ease both; }
     .intelligence-field-section.is-visible .qualified-card { animation: resolveIn .9s ease .18s both; }
-    .intelligence-field-section.is-visible .qualified-point { animation: pulseQualified 1.6s ease .2s both; }
-    @keyframes pulseQualified { from { opacity: .35; transform: scale(.82); } to { opacity: 1; transform: scale(1); } }
     @keyframes resolveIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     .mobile-field-copy { display: none; }
     .intelligence-reduced-copy { position: absolute; left: -9999px; }
@@ -166,8 +162,7 @@
       * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
       .intelligence-field-section:not(.is-visible) .capability-label,
       .intelligence-field-section:not(.is-visible) .qualified-card,
-      .intelligence-field-section:not(.is-visible) .qualified-path,
-      .intelligence-field-section:not(.is-visible) .situation-marker { opacity: 1; }
+      .intelligence-field-section:not(.is-visible) .qualified-path { opacity: 1; }
     }
 
     .access-section { background: linear-gradient(180deg, #050505, #090705); }
@@ -361,19 +356,10 @@
                 <circle class="market-point" cx="118" cy="182" r="1.3"/><circle class="market-point" cx="184" cy="142" r="1.1"/><circle class="market-point irrelevant" cx="254" cy="166" r="1.1"/><circle class="market-point" cx="344" cy="218" r="1.3"/><circle class="market-point" cx="412" cy="292" r="1.1"/><circle class="market-point" cx="142" cy="356" r="1.2"/><circle class="market-point irrelevant" cx="228" cy="414" r="1.1"/><circle class="market-point" cx="326" cy="466" r="1.2"/><circle class="market-point" cx="444" cy="388" r="1.1"/>
                 <circle class="market-point irrelevant" cx="530" cy="196" r="1.0"/><circle class="market-point irrelevant" cx="632" cy="232" r="1.0"/><circle class="market-point irrelevant" cx="740" cy="344" r="1.0"/><circle class="market-point irrelevant" cx="858" cy="274" r="1.0"/>
               </g>
-              <g aria-hidden="true" fill="none" stroke-linecap="round">
-                <path class="relationship-trace" d="M166 204 C302 174 420 204 520 252" stroke="rgba(214,168,94,.32)" stroke-width=".8" />
-                <path class="relationship-trace" d="M176 356 C330 326 430 344 520 336" stroke="rgba(214,168,94,.30)" stroke-width=".8" />
-                <path class="relationship-trace" d="M324 466 C418 430 462 404 520 390" stroke="rgba(214,168,94,.28)" stroke-width=".8" />
-                <path class="risk-fracture" d="M668 318 L694 302 L724 324 L754 306" stroke="rgba(214,168,94,.58)" stroke-width="1" />
-                <path class="qualified-path" d="M772 248 C860 236 938 240 996 260 C1018 268 1034 270 1048 268" stroke="rgba(240,214,160,.74)" stroke-width="1.25" />
-                <path class="qualified-path" d="M710 344 C824 326 924 322 996 328 C1022 330 1040 332 1058 330" stroke="rgba(240,214,160,.72)" stroke-width="1.2" />
-                <path class="qualified-path" d="M776 438 C890 426 978 408 1026 392 C1044 386 1058 388 1068 390" stroke="rgba(240,214,160,.68)" stroke-width="1.15" />
-              </g>
-              <g class="situation-marker" aria-hidden="true" fill="rgba(240,214,160,.95)" stroke="rgba(240,214,160,.95)" stroke-width="1">
-                <circle class="qualified-point" cx="1048" cy="268" r="5"/><path d="M1032 268 h32 M1048 252 v32"/>
-                <circle class="qualified-point" cx="1058" cy="330" r="5"/><path d="M1042 330 h32 M1058 314 v32"/>
-                <circle class="qualified-point" cx="1068" cy="390" r="5"/><path d="M1052 390 h32 M1068 374 v32"/>
+              <g aria-hidden="true" fill="none" stroke="rgb(214, 168, 94)" stroke-opacity="0.62" stroke-width="1.4" stroke-linecap="round">
+                <path class="qualified-path" d="M166 204 C258 244 414 244 520 252 C662 324 860 262 1120 279" />
+                <path class="qualified-path" d="M176 356 C306 414 430 382 520 336 C668 382 868 360 1120 329" />
+                <path class="qualified-path" d="M324 466 C420 506 470 430 520 390 C650 324 850 340 1120 379" />
               </g>
             </svg>
 
@@ -385,15 +371,10 @@
               <g fill="rgba(247,242,232,.55)">
                 <circle class="market-point" cx="78" cy="140" r="1.2"/><circle class="market-point" cx="132" cy="120" r="1.1"/><circle class="market-point" cx="210" cy="148" r="1.2"/><circle class="market-point" cx="292" cy="196" r="1.2"/><circle class="market-point" cx="164" cy="242" r="1.2"/>
               </g>
-              <g fill="none" stroke-linecap="round">
-                <path class="relationship-trace" d="M116 248 C168 300 178 360 190 420" stroke="rgba(214,168,94,.32)" stroke-width=".9"/>
-                <path class="relationship-trace" d="M254 250 C228 310 208 364 198 420" stroke="rgba(214,168,94,.28)" stroke-width=".9"/>
-                <path class="qualified-path" d="M154 510 C176 594 188 660 194 724" stroke="rgba(240,214,160,.72)" stroke-width="1.1"/>
-                <path class="qualified-path" d="M226 510 C210 598 202 676 198 768" stroke="rgba(240,214,160,.68)" stroke-width="1.1"/>
-                <path class="qualified-path" d="M276 482 C244 590 220 700 206 812" stroke="rgba(240,214,160,.64)" stroke-width="1.05"/>
-              </g>
-              <g fill="rgba(240,214,160,.95)" stroke="rgba(240,214,160,.95)" stroke-width="1">
-                <circle class="qualified-point" cx="194" cy="724" r="4"/><circle class="qualified-point" cx="198" cy="768" r="4"/><circle class="qualified-point" cx="206" cy="812" r="4"/>
+              <g fill="none" stroke="rgb(214, 168, 94)" stroke-opacity="0.62" stroke-width="1.4" stroke-linecap="round">
+                <path class="qualified-path" d="M-235 389 C-229 389 -221 389 -213 389"/>
+                <path class="qualified-path" d="M-235 443 C-229 443 -221 443 -213 443"/>
+                <path class="qualified-path" d="M-235 497 C-229 497 -221 497 -213 497"/>
               </g>
             </svg>
 
