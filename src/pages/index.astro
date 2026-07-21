@@ -46,13 +46,13 @@
     .hero-media { position: absolute; inset: 0; z-index: 0; }
     .hero-media:after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(0,0,0,.88) 0%, rgba(0,0,0,.52) 44%, rgba(0,0,0,.20) 100%), linear-gradient(to top, rgba(0,0,0,.88) 0%, rgba(0,0,0,.18) 42%, rgba(0,0,0,.54) 100%); }
     .hero-media img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
-    .hero-inner { position: relative; z-index: 2; max-width: var(--max); width: 100%; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr) minmax(310px, 360px); grid-template-rows: auto auto auto auto; column-gap: clamp(28px, 4vw, 48px); row-gap: 0; align-items: start; }
+    .hero-inner { position: relative; z-index: 2; max-width: var(--max); width: 100%; margin: 44px auto 0; display: grid; grid-template-columns: minmax(0, 1fr) minmax(310px, 360px); grid-template-rows: auto auto 44px auto auto; column-gap: clamp(28px, 4vw, 48px); row-gap: 0; align-items: start; }
     .hero-narrative { display: contents; }
     .hero-narrative .eyebrow { grid-column: 1; grid-row: 1; }
     .hero-narrative h1 { grid-column: 1; grid-row: 2; }
-    .hero-narrative .hero-copy { grid-column: 1; grid-row: 3; }
-    .hero-narrative .secondary-link { grid-column: 1; grid-row: 4; }
-    .hero .access-card { grid-column: 2; grid-row: 3; align-self: start; margin-top: 18px; }
+    .hero-narrative .hero-copy { grid-column: 1; grid-row: 4; }
+    .hero-narrative .secondary-link { grid-column: 1; grid-row: 5; }
+    .hero .access-card { grid-column: 2; grid-row: 4; align-self: start; margin-top: 18px; }
     .eyebrow { color: var(--gold2); text-transform: uppercase; letter-spacing: .3em; font-size: clamp(12px, .95vw, 14px); margin-bottom: 14px; }
     h1, h2, h3 { font-family: var(--serif); font-weight: 400; margin: 0; text-wrap: pretty; }
     h1 { font-size: clamp(42px, 4.45vw, 64px); line-height: .99; max-width: 780px; letter-spacing: -.055em; }
@@ -124,9 +124,11 @@
     .capability-label { color: rgba(247,242,232,.96); font-size: 12px; font-weight: 700; opacity: 1; }
     .capability-label:before { content: ''; display: inline-block; width: 18px; height: 1px; margin: 0 9px 4px 0; background: var(--gold); opacity: .76; }
     .capability-label.emphasis { color: var(--gold2); }
-    .qualified-card { position: absolute; right: clamp(18px, 4.4vw, 62px); top: 34%; width: min(390px, 28vw); padding: clamp(24px, 3vw, 36px); background: linear-gradient(180deg, rgba(7,6,5,.98), rgba(17,14,10,.96)); border-top: 2px solid rgba(240,214,160,.84); border-bottom: 2px solid rgba(240,214,160,.84); box-shadow: 0 28px 80px rgba(0,0,0,.46); }
-    .qualified-card h3 { font-size: clamp(28px, 3.4vw, 52px); line-height: .96; text-transform: uppercase; letter-spacing: -.03em; margin-bottom: 14px; }
-    .qualified-card p { margin: 0; color: rgba(247,242,232,.76); font-size: clamp(14px, 1.3vw, 17px); line-height: 1.45; }
+    .qualified-resolution { position: absolute; left: 72%; top: 34%; width: min(330px, 22vw); }
+    .resolution-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 18px; }
+    .resolution-list li { position: relative; padding-left: 28px; color: rgba(247,242,232,.84); font-size: clamp(12px, .92vw, 14px); line-height: 1.35; letter-spacing: .03em; }
+    .resolution-list li:before { content: ''; position: absolute; left: 0; top: .43em; width: 8px; height: 8px; border: 1px solid rgba(240,214,160,.92); border-radius: 999px; background: rgba(214,168,94,.34); box-shadow: 0 0 0 5px rgba(214,168,94,.06); }
+    .resolution-note { margin: 22px 0 0; color: rgba(240,214,160,.72); font-size: clamp(12px, .86vw, 13px); line-height: 1.45; }
     .governance-note { max-width: 760px; margin: clamp(24px, 4vh, 40px) 0 0 auto; color: rgba(247,242,232,.62); font-size: 14px; line-height: 1.7; }
     .intelligence-field-section:not(.is-visible) .capability-label,
     .intelligence-field-section:not(.is-visible) .qualified-card,
@@ -151,9 +153,12 @@
       .market-stage-id, .lens-stage-id, .qualified-stage-id, .zone-rule { display: none; }
       .mobile-field-step h3 { font-size: 21px; line-height: 1.05; margin-bottom: 7px; }
       .mobile-field-step p { margin: 0; color: rgba(247,242,232,.68); font-size: 11.5px; line-height: 1.3; }
-      .mobile-qualified-card { margin-top: 10px; padding: 18px 17px; background: linear-gradient(180deg, rgba(8,7,6,.96), rgba(17,14,10,.94)); border-top: 2px solid rgba(240,214,160,.84); border-bottom: 2px solid rgba(240,214,160,.84); }
-      .mobile-qualified-card h3 { font-size: clamp(26px, 7.5vw, 36px); line-height: .95; text-transform: uppercase; margin-bottom: 10px; }
-      .mobile-qualified-card p { margin: 0; color: rgba(247,242,232,.76); font-size: 13px; line-height: 1.42; }
+      .mobile-qualified-output { margin-top: 18px; max-width: 348px; }
+      .mobile-qualified-output h3 { font-size: 21px; line-height: 1.05; margin-bottom: 12px; }
+      .mobile-resolution-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+      .mobile-resolution-list li { position: relative; padding-left: 20px; color: rgba(247,242,232,.78); font-size: 11.5px; line-height: 1.28; }
+      .mobile-resolution-list li:before { content: ''; position: absolute; left: 0; top: .36em; width: 6px; height: 6px; border: 1px solid rgba(240,214,160,.88); border-radius: 999px; background: rgba(214,168,94,.30); }
+      .mobile-resolution-note { margin: 10px 0 0; color: rgba(240,214,160,.70); font-size: 11.5px; line-height: 1.32; }
       .governance-note { margin: 26px 0 0; font-size: 13px; }
     }
     @media (min-width: 981px) { .map-visual.mobile-map { display: none; } }
@@ -176,7 +181,7 @@
     @media (max-width: 1180px) { .nav-links { gap: 10px; font-size: 10px; letter-spacing: .12em; } .logo { min-width: 132px; } }
     @media (max-width: 980px) {
       .hero-inner, .split { grid-template-columns: 1fr; }
-      .hero-inner { display: grid; row-gap: 22px; }
+      .hero-inner { display: grid; grid-template-rows: auto; row-gap: 22px; margin: 0 auto; }
       .hero-narrative { display: block; padding-top: 0; }
       .hero .access-card { grid-column: auto; grid-row: auto; }
       .access-card { max-width: 480px; }
@@ -361,14 +366,14 @@
                 <path class="relationship-trace" d="M176 356 C330 326 430 344 520 336" stroke="rgba(214,168,94,.30)" stroke-width=".8" />
                 <path class="relationship-trace" d="M324 466 C418 430 462 404 520 390" stroke="rgba(214,168,94,.28)" stroke-width=".8" />
                 <path class="risk-fracture" d="M668 318 L694 302 L724 324 L754 306" stroke="rgba(214,168,94,.58)" stroke-width="1" />
-                <path class="qualified-path" d="M740 242 C838 246 914 286 988 352 C1044 402 1084 434 1122 454" stroke="rgba(240,214,160,.74)" stroke-width="1.25" />
-                <path class="qualified-path" d="M626 338 C764 328 886 360 996 426 C1052 460 1092 482 1132 502" stroke="rgba(240,214,160,.72)" stroke-width="1.2" />
-                <path class="qualified-path" d="M760 432 C866 426 956 456 1034 514 C1082 548 1120 558 1160 556" stroke="rgba(240,214,160,.68)" stroke-width="1.15" />
+                <path class="qualified-path" d="M772 248 C860 236 938 240 996 260 C1018 268 1034 270 1048 268" stroke="rgba(240,214,160,.74)" stroke-width="1.25" />
+                <path class="qualified-path" d="M710 344 C824 326 924 322 996 328 C1022 330 1040 332 1058 330" stroke="rgba(240,214,160,.72)" stroke-width="1.2" />
+                <path class="qualified-path" d="M776 438 C890 426 978 408 1026 392 C1044 386 1058 388 1068 390" stroke="rgba(240,214,160,.68)" stroke-width="1.15" />
               </g>
               <g class="situation-marker" aria-hidden="true" fill="rgba(240,214,160,.95)" stroke="rgba(240,214,160,.95)" stroke-width="1">
-                <circle class="qualified-point" cx="1122" cy="454" r="5"/><path d="M1106 454 h32 M1122 438 v32"/>
-                <circle class="qualified-point" cx="1132" cy="502" r="5"/><path d="M1116 502 h32 M1132 486 v32"/>
-                <circle class="qualified-point" cx="1160" cy="556" r="5"/><path d="M1144 556 h32 M1160 540 v32"/>
+                <circle class="qualified-point" cx="1048" cy="268" r="5"/><path d="M1032 268 h32 M1048 252 v32"/>
+                <circle class="qualified-point" cx="1058" cy="330" r="5"/><path d="M1042 330 h32 M1058 314 v32"/>
+                <circle class="qualified-point" cx="1068" cy="390" r="5"/><path d="M1052 390 h32 M1068 374 v32"/>
               </g>
             </svg>
 
@@ -383,12 +388,12 @@
               <g fill="none" stroke-linecap="round">
                 <path class="relationship-trace" d="M116 248 C168 300 178 360 190 420" stroke="rgba(214,168,94,.32)" stroke-width=".9"/>
                 <path class="relationship-trace" d="M254 250 C228 310 208 364 198 420" stroke="rgba(214,168,94,.28)" stroke-width=".9"/>
-                <path class="qualified-path" d="M154 510 C178 600 192 662 194 734" stroke="rgba(240,214,160,.72)" stroke-width="1.1"/>
-                <path class="qualified-path" d="M226 510 C206 598 200 662 198 734" stroke="rgba(240,214,160,.68)" stroke-width="1.1"/>
-                <path class="qualified-path" d="M276 482 C242 586 218 658 206 734" stroke="rgba(240,214,160,.64)" stroke-width="1.05"/>
+                <path class="qualified-path" d="M154 510 C176 594 188 660 194 724" stroke="rgba(240,214,160,.72)" stroke-width="1.1"/>
+                <path class="qualified-path" d="M226 510 C210 598 202 676 198 768" stroke="rgba(240,214,160,.68)" stroke-width="1.1"/>
+                <path class="qualified-path" d="M276 482 C244 590 220 700 206 812" stroke="rgba(240,214,160,.64)" stroke-width="1.05"/>
               </g>
               <g fill="rgba(240,214,160,.95)" stroke="rgba(240,214,160,.95)" stroke-width="1">
-                <circle class="qualified-point" cx="194" cy="734" r="4"/><circle class="qualified-point" cx="198" cy="768" r="4"/><circle class="qualified-point" cx="206" cy="802" r="4"/>
+                <circle class="qualified-point" cx="194" cy="724" r="4"/><circle class="qualified-point" cx="198" cy="768" r="4"/><circle class="qualified-point" cx="206" cy="812" r="4"/>
               </g>
             </svg>
 
@@ -403,17 +408,21 @@
           </div>
           <div class="field-copy capability-labels" aria-hidden="true">
             <span class="capability-label" style="left:40%;top:18%;">Origination Intelligence</span>
-            <span class="capability-label" style="left:52%;top:27%;">Market Mapping</span>
+            <span class="capability-label" style="left:50%;top:27%;">Market Mapping</span>
             <span class="capability-label" style="left:42%;top:38%;">Ownership Research</span>
-            <span class="capability-label" style="left:43%;top:49%;">Diligence Coordination</span>
+            <span class="capability-label" style="left:42%;top:49%;">Diligence Coordination</span>
             <span class="capability-label emphasis" style="left:40%;top:60%;">Risk and Scenario Analysis</span>
-            <span class="capability-label" style="left:53%;top:71%;">Institutional Memory</span>
+            <span class="capability-label" style="left:43%;top:71%;">Institutional Memory</span>
           </div>
-          <div class="qualified-final">
-            <article class="qualified-card">
-              <h3>Qualified Situations</h3>
-              <p>A narrow set of opportunities selected for deeper evaluation.</p>
-            </article>
+          <div class="qualified-final" aria-hidden="true">
+            <div class="qualified-resolution">
+              <ol class="resolution-list">
+                <li>Ownership context established</li>
+                <li>Path to engagement identified</li>
+                <li>Strategic and preliminary underwriting fit supported</li>
+              </ol>
+              <p class="resolution-note">Only situations meeting all three conditions advance to deeper evaluation.</p>
+            </div>
           </div>
           <div class="mobile-field-copy">
             <div class="mobile-field-step" style="padding-top:16px;">
@@ -424,10 +433,15 @@
               <h3>02 Intelligence Lenses</h3>
               <p>Origination intelligence, market mapping, ownership research, diligence coordination, risk and scenario analysis, and institutional memory clarify the field.</p>
             </div>
-            <article class="mobile-qualified-card" style="margin-top:20px;">
+            <div class="mobile-qualified-output" style="margin-top:20px;">
               <h3>03 Qualified Situations</h3>
-              <p>A narrow set of opportunities selected for deeper evaluation.</p>
-            </article>
+              <ol class="mobile-resolution-list">
+                <li>Ownership context established</li>
+                <li>Path to engagement identified</li>
+                <li>Strategic and preliminary underwriting fit supported</li>
+              </ol>
+              <p class="mobile-resolution-note">Only situations meeting all three conditions advance to deeper evaluation.</p>
+            </div>
           </div>        </div>
         <p class="governance-note">The platform expands visibility and accelerates analysis. Investment decisions and transaction authority remain with Clearline Capital’s investment professionals and operating partners.</p>
         <p class="intelligence-reduced-copy">The intelligence field combines broad private-market inputs with proprietary agentic analysis, resolves toward qualified situations, and transitions directly into Access.</p>
