@@ -7,7 +7,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Clearline Capital | Private Investment and Acquisition Firm</title>
-  <meta name="description" content="Clearline Capital pursues off-market business acquisitions, select real estate opportunities, and operating partnerships through direct relationships, disciplined underwriting, and aligned capital." />
+  <meta name="description" content="Clearline Capital pursues founder-led businesses, select real estate, and operating partnerships through proprietary origination, disciplined underwriting, and agentic intelligence." />
   <meta property="og:title" content="Clearline Capital" />
   <meta property="og:description" content="A private investment and acquisition firm pursuing off-market business acquisitions, select real estate opportunities, and operating partnerships." />
   <link rel="preload" as="image" href="/hero-clearline-1440.webp" imagesrcset="/hero-clearline-960.webp 960w, /hero-clearline-1440.webp 1440w, /hero-clearline-1920.webp 1920w" imagesizes="100vw" fetchpriority="high" />
@@ -39,19 +39,19 @@
     .nav-links a { transition: color .25s ease; white-space: nowrap; }
     .nav-links a:hover { color: var(--gold2); }
     .nav-cta { border: 1px solid var(--line); border-radius: 999px; padding: 11px 14px; color: var(--gold2) !important; background: rgba(214,168,94,.08); }
-    .hero { min-height: 100vh; position: relative; display: grid; align-items: end; padding: clamp(132px, 15vh, 176px) clamp(22px, 5vw, 72px) clamp(24px, 4vh, 42px); overflow: hidden; }
+    .hero { min-height: 100svh; position: relative; display: grid; align-items: center; padding: clamp(92px, 10vh, 124px) clamp(22px, 5vw, 72px) clamp(28px, 5vh, 52px); overflow: hidden; }
     .hero-media { position: absolute; inset: 0; z-index: 0; }
-    .hero-media:after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(0,0,0,.86) 0%, rgba(0,0,0,.48) 44%, rgba(0,0,0,.20) 100%), linear-gradient(to top, rgba(0,0,0,.94) 0%, rgba(0,0,0,.20) 42%, rgba(0,0,0,.50) 100%); }
+    .hero-media:after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(0,0,0,.88) 0%, rgba(0,0,0,.52) 44%, rgba(0,0,0,.20) 100%), linear-gradient(to top, rgba(0,0,0,.88) 0%, rgba(0,0,0,.18) 42%, rgba(0,0,0,.54) 100%); }
     .hero-media img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
-    .hero-inner { position: relative; z-index: 2; max-width: var(--max); width: 100%; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1.1fr) 390px; gap: 48px; align-items: end; }
-    .hero-narrative { align-self: end; padding-top: clamp(56px, 11vh, 128px); }
-    .eyebrow { color: var(--gold2); text-transform: uppercase; letter-spacing: .3em; font-size: clamp(13px, 1.05vw, 15px); margin-bottom: 18px; }
+    .hero-inner { position: relative; z-index: 2; max-width: var(--max); width: 100%; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr) minmax(310px, 360px); gap: clamp(28px, 4vw, 48px); align-items: end; }
+    .hero-narrative { align-self: end; padding-top: 0; }
+    .eyebrow { color: var(--gold2); text-transform: uppercase; letter-spacing: .3em; font-size: clamp(12px, .95vw, 14px); margin-bottom: 14px; }
     h1, h2, h3 { font-family: var(--serif); font-weight: 400; margin: 0; text-wrap: pretty; }
-    h1 { font-size: clamp(56px, 7vw, 104px); line-height: .9; max-width: 820px; letter-spacing: -.06em; }
+    h1 { font-size: clamp(42px, 4.45vw, 64px); line-height: .99; max-width: 780px; letter-spacing: -.055em; }
     h1 span { display: block; }
-    h2 { font-size: clamp(38px, 5vw, 74px); line-height: .98; letter-spacing: -.045em; }
-    .hero-copy { max-width: 680px; margin-top: 24px; color: rgba(247,242,232,.82); font-size: clamp(15px, 1.35vw, 18px); line-height: 1.58; }
-    .access-card { border: 1px solid rgba(214,168,94,.34); background: linear-gradient(145deg, rgba(7,8,8,.88), rgba(30,23,13,.72)); box-shadow: 0 30px 80px rgba(0,0,0,.5); border-radius: 2px; padding: 28px; position: relative; overflow: hidden; }
+    h2 { font-size: clamp(38px, 5vw, 74px); line-height: 1.02; letter-spacing: -.045em; }
+    .hero-copy { max-width: 710px; margin-top: 18px; color: rgba(247,242,232,.84); font-size: clamp(14px, 1.12vw, 16px); line-height: 1.5; }
+    .access-card { border: 1px solid rgba(214,168,94,.34); background: linear-gradient(145deg, rgba(7,8,8,.88), rgba(30,23,13,.72)); box-shadow: 0 24px 60px rgba(0,0,0,.44); border-radius: 2px; padding: clamp(20px, 2.2vw, 24px); position: relative; overflow: hidden; }
     .access-card:before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold2), transparent); opacity: .8; }
     .access-title { font-size: 13px; text-transform: uppercase; letter-spacing: .24em; color: var(--gold2); margin-bottom: 18px; }
     .input-row { display: grid; grid-template-columns: 1fr auto; border: 1px solid rgba(247,242,232,.18); background: rgba(0,0,0,.35); }
@@ -83,142 +83,66 @@
     .leadership-points { list-style: none; padding: 0; margin: 38px 0 0; display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 18px 28px; }
     .leadership-points li { border-top: 1px solid rgba(214,168,94,.36); padding-top: 14px; color: rgba(247,242,232,.72); line-height: 1.55; }
     .intelligence-field-section {
-      --field-progress: 0;
-      --field-ink: #f7f2e8;
-      --field-muted: rgba(247,242,232,.66);
-      --field-soft: rgba(247,242,232,.42);
-      --field-gold: #d6a85e;
-      --field-gold2: #f0d6a0;
-      --field-line: rgba(214,168,94,.32);
-      --stage-one: clamp(0, calc((var(--field-progress) - .25) * 5), 1);
-      --stage-two: clamp(0, calc((var(--field-progress) - .50) * 6), 1);
-      --stage-three: clamp(0, calc((var(--field-progress) - .64) * 8.5), 1);
-      --threshold-event: clamp(0, calc((var(--field-progress) - .64) * 20), 1);
-      --stage-four: clamp(0, calc((var(--field-progress) - .82) * 6), 1);
-      min-height: 220vh;
-      padding: 0 clamp(22px, 5vw, 72px);
       background:
         radial-gradient(circle at 14% 18%, rgba(214,168,94,.12), transparent 30%),
-        linear-gradient(180deg, #050505 0%, #080706 48%, #050505 100%);
+        linear-gradient(180deg, #050505 0%, #080706 52%, #050505 100%);
       overflow: clip;
     }
-    .intelligence-field-sticky {
-      position: sticky;
-      top: 0;
-      min-height: 100vh;
-      display: grid;
-      align-items: center;
-      padding: clamp(96px, 12vh, 132px) 0 clamp(54px, 7vh, 78px);
-    }
-    .intelligence-field-shell { max-width: min(1440px, 100%); margin: 0 auto; width: 100%; }
-    .intelligence-field-header { max-width: 960px; margin-bottom: clamp(24px, 4vh, 44px); }
+    .intelligence-field-shell { max-width: min(1360px, 100%); margin: 0 auto; width: 100%; }
+    .intelligence-field-header { max-width: 980px; margin-bottom: clamp(34px, 5vh, 58px); }
     .intelligence-field-header .eyebrow { margin-bottom: 14px; }
-    .intelligence-field-header h2 { max-width: 920px; font-size: clamp(42px, 5.4vw, 82px); }
-    .intelligence-field-header .lead { margin-top: 22px; max-width: 900px; }
-    .intelligence-map { position: relative; min-height: clamp(650px, 62vh, 780px); }
-    .field-copy { position: relative; z-index: 3; pointer-events: none; }
-    .map-visual { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; z-index: 1; }
+    .intelligence-field-header h2 { max-width: 880px; font-size: clamp(42px, 5.2vw, 78px); }
+    .intelligence-field-header .lead { margin-top: 22px; max-width: 920px; }
+    .intelligence-map { position: relative; min-height: clamp(560px, 62vh, 720px); border-top: 1px solid rgba(214,168,94,.16); border-bottom: 1px solid rgba(214,168,94,.16); }
+    .map-visual { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; z-index: 1; opacity: .92; }
     .map-visual * { vector-effect: non-scaling-stroke; }
-    .field-grid { opacity: .34; }
-    .field-contours { opacity: .72; }
-    .market-point { opacity: calc(.38 + (1 - var(--stage-two)) * .34); transition: opacity .4s ease; }
-    .market-point.irrelevant { opacity: calc(.26 * (1 - var(--stage-two))); }
-    .relationship-trace, .risk-fracture, .qualified-path, .situation-marker, .memory-return { opacity: 0; transition: opacity .45s ease, stroke-dashoffset .7s ease, transform .55s ease; }
-    .relationship-trace, .risk-fracture { opacity: var(--stage-one); }
-    .qualified-path, .situation-marker { opacity: var(--stage-two); }
-    .memory-return { opacity: var(--stage-four); }
-    .field-labels, .capability-labels, .situation-profiles, .human-threshold, .human-decision, .memory-label { position: absolute; inset: 0; z-index: 2; }
-    .field-label, .capability-label { position: absolute; color: var(--field-muted); font-size: 12px; line-height: 1.2; letter-spacing: .08em; text-transform: uppercase; }
-    .field-label.emphasis, .capability-label.emphasis { color: var(--field-gold2); }
-    .capability-label { opacity: var(--stage-one); color: rgba(247,242,232,.78); font-weight: 600; }
-    .capability-label:before { content: ''; display: inline-block; width: 16px; height: 1px; margin: 0 8px 4px 0; background: var(--field-gold); opacity: .72; }
-    .situation-profile { position: absolute; width: min(21vw, 248px); opacity: var(--stage-two); transform: translateY(calc((1 - var(--stage-two)) * 12px)); transition: opacity .45s ease, transform .45s ease; }
-    .situation-profile h3 { font-size: clamp(19px, 1.6vw, 25px); line-height: 1.04; color: var(--field-ink); margin-bottom: 12px; }
-    .situation-profile p { margin: 0 0 6px; color: var(--field-muted); font-size: 13px; line-height: 1.35; }
-    .human-threshold { display: flex; align-items: flex-end; pointer-events: none; }
-    .threshold-inner {
-      width: 100%;
-      min-height: clamp(128px, 17vh, 174px);
-      margin-bottom: clamp(190px, 24vh, 250px);
-      background: linear-gradient(180deg, rgba(8,7,6,.98), rgba(17,14,10,.98));
-      border-top: 2px solid rgba(240,214,160,.84);
-      border-bottom: 2px solid rgba(240,214,160,.84);
-      box-shadow: 0 -26px 80px rgba(0,0,0,.42), 0 22px 70px rgba(0,0,0,.5);
-      display: grid;
-      grid-template-columns: minmax(300px, .95fr) minmax(320px, 1fr);
-      gap: clamp(28px, 6vw, 94px);
-      align-items: center;
-      padding: clamp(28px, 4vw, 48px) clamp(28px, 5vw, 76px);
-      opacity: var(--threshold-event);
-      transform: translateY(calc((1 - var(--stage-three)) * 24px));
-      transition: opacity .5s ease, transform .5s ease;
-    }
-    .threshold-inner h3 { font-size: clamp(32px, 4.5vw, 64px); line-height: .92; letter-spacing: -.04em; text-transform: uppercase; }
-    .threshold-inner p { margin: 0; color: var(--field-gold2); font-size: clamp(17px, 2vw, 28px); line-height: 1.28; font-weight: 600; }
-    .human-decision { display: flex; align-items: flex-end; pointer-events: none; }
-    .decision-inner { width: 100%; padding: 0 clamp(28px, 5vw, 76px); opacity: var(--stage-four); transform: translateY(calc((1 - var(--stage-four)) * 18px)); transition: opacity .5s ease, transform .5s ease; }
-    .decision-inner h3 { font-size: clamp(34px, 4.2vw, 68px); line-height: .96; margin-bottom: clamp(22px, 3vw, 38px); }
-    .decision-responsibilities { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: clamp(18px, 2.3vw, 36px); list-style: none; padding: 0; margin: 0; }
-    .decision-responsibilities li { color: var(--field-ink); font-weight: 600; font-size: clamp(13px, 1.15vw, 17px); line-height: 1.25; }
-    .decision-responsibilities li:before { content: ''; display: block; width: 72px; height: 1px; background: var(--field-gold); margin-bottom: 13px; opacity: .7; }
-    .memory-label { pointer-events: none; }
-    .memory-label div { position: absolute; right: 7%; bottom: 6%; opacity: var(--stage-four); color: var(--field-muted); font-size: 13px; line-height: 1.35; }
-    .memory-label strong { display: block; color: var(--field-gold2); margin-bottom: 4px; letter-spacing: .08em; text-transform: uppercase; }
+    .field-grid { opacity: .30; }
+    .field-contours { opacity: .62; }
+    .market-point { opacity: .62; }
+    .market-point.irrelevant { opacity: .22; }
+    .relationship-trace, .risk-fracture, .qualified-path, .situation-marker, .memory-return { opacity: 1; transition: opacity .45s ease, transform .55s ease; }
+    .field-copy { position: relative; z-index: 3; pointer-events: none; }
+    .field-labels, .capability-labels, .qualified-final { position: absolute; inset: 0; z-index: 2; }
+    .field-label, .capability-label { position: absolute; color: var(--field-muted, rgba(247,242,232,.66)); font-size: 12px; line-height: 1.2; letter-spacing: .08em; text-transform: uppercase; opacity: .88; }
+    .field-label.emphasis, .capability-label.emphasis { color: var(--gold2); }
+    .capability-label { color: rgba(247,242,232,.78); font-weight: 600; }
+    .capability-label:before { content: ''; display: inline-block; width: 16px; height: 1px; margin: 0 8px 4px 0; background: var(--gold); opacity: .72; }
+    .qualified-card { position: absolute; right: clamp(22px, 6vw, 86px); bottom: clamp(38px, 8vh, 96px); width: min(420px, 34vw); padding: clamp(24px, 3vw, 38px); background: linear-gradient(180deg, rgba(8,7,6,.96), rgba(17,14,10,.94)); border-top: 2px solid rgba(240,214,160,.84); border-bottom: 2px solid rgba(240,214,160,.84); box-shadow: 0 28px 80px rgba(0,0,0,.46); }
+    .qualified-card h3 { font-size: clamp(28px, 3.4vw, 52px); line-height: .96; text-transform: uppercase; letter-spacing: -.03em; margin-bottom: 14px; }
+    .qualified-card p { margin: 0; color: rgba(247,242,232,.76); font-size: clamp(14px, 1.3vw, 17px); line-height: 1.45; }
+    .governance-note { max-width: 760px; margin: clamp(24px, 4vh, 40px) 0 0 auto; color: rgba(247,242,232,.62); font-size: 14px; line-height: 1.7; }
+    .intelligence-field-section:not(.is-visible) .capability-label,
+    .intelligence-field-section:not(.is-visible) .qualified-card,
+    .intelligence-field-section:not(.is-visible) .qualified-path,
+    .intelligence-field-section:not(.is-visible) .situation-marker { opacity: .18; }
+    .intelligence-field-section.is-visible .capability-label { animation: resolveIn .8s ease both; }
+    .intelligence-field-section.is-visible .qualified-card { animation: resolveIn .9s ease .18s both; }
+    @keyframes resolveIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     .mobile-field-copy { display: none; }
     .intelligence-reduced-copy { position: absolute; left: -9999px; }
     @media (max-width: 980px) {
-      .intelligence-field-section { min-height: auto; padding: 84px 20px 72px; }
-      .intelligence-field-sticky { position: relative; min-height: auto; padding: 0; }
+      .intelligence-field-section { padding: 84px 20px 72px; }
       .intelligence-field-header h2 { font-size: clamp(38px, 10vw, 72px); }
-      .intelligence-map { min-height: auto; padding-bottom: 24px; }
-      .map-visual.desktop-map, .field-labels, .capability-labels, .situation-profiles { display: none; }
-      .map-visual.mobile-map { display: block; position: absolute; inset: 150px 0 auto 0; height: 620px; opacity: .9; }
+      .intelligence-map { min-height: auto; border: 0; }
+      .map-visual.desktop-map, .field-labels, .capability-labels, .qualified-final { display: none; }
+      .map-visual.mobile-map { display: block; position: absolute; inset: 168px 0 auto 0; height: 540px; opacity: .74; }
       .mobile-field-copy { display: block; position: relative; z-index: 3; }
-      .mobile-field-step { margin: 0 0 26px; max-width: 330px; }
+      .mobile-field-step { margin: 0 0 30px; max-width: 330px; }
       .mobile-field-step:nth-child(2) { margin-left: auto; }
-      .mobile-field-step h3 { font-size: 21px; line-height: 1.08; margin-bottom: 9px; }
-      .mobile-field-step p { margin: 0; color: var(--field-muted); font-size: 13px; line-height: 1.48; }
-      .human-threshold, .human-decision, .memory-label { position: relative; inset: auto; z-index: 4; display: block; opacity: 1 !important; }
-      .human-threshold::before { display: none; }
-      .threshold-inner { min-height: 148px; margin: 28px 0 30px; grid-template-columns: 1fr; gap: 12px; padding: 26px 22px; opacity: 1 !important; transform: none !important; }
-      .threshold-inner h3 { font-size: clamp(30px, 8.5vw, 43px); }
-      .threshold-inner p { font-size: clamp(14px, 4vw, 18px); line-height: 1.34; }
-      .decision-inner { padding: 0 4px; opacity: 1 !important; transform: none !important; }
-      .decision-inner h3 { font-size: clamp(32px, 9vw, 48px); max-width: 330px; }
-      .decision-responsibilities { grid-template-columns: 1fr 1fr; gap: 18px 22px; }
-      .memory-label div { position: static; margin-top: 26px; opacity: 1 !important; }
-      .memory-label div { right: auto; left: 28px; bottom: 0; font-size: 12px; max-width: 300px; }
+      .mobile-field-step h3 { font-size: 22px; line-height: 1.08; margin-bottom: 9px; }
+      .mobile-field-step p { margin: 0; color: rgba(247,242,232,.68); font-size: 13px; line-height: 1.5; }
+      .mobile-qualified-card { margin-top: 34px; padding: 26px 22px; background: linear-gradient(180deg, rgba(8,7,6,.96), rgba(17,14,10,.94)); border-top: 2px solid rgba(240,214,160,.84); border-bottom: 2px solid rgba(240,214,160,.84); }
+      .mobile-qualified-card h3 { font-size: clamp(30px, 8.5vw, 43px); line-height: .95; text-transform: uppercase; margin-bottom: 12px; }
+      .mobile-qualified-card p { margin: 0; color: rgba(247,242,232,.76); font-size: 14px; line-height: 1.5; }
+      .governance-note { margin: 26px 0 0; font-size: 13px; }
     }
     @media (min-width: 981px) { .map-visual.mobile-map { display: none; } }
-    @media (max-width: 430px) {
-      .intelligence-map { min-height: auto; }
-      .mobile-field-step { max-width: 300px; }
-      .threshold-inner { margin: 28px 0 30px; }
-      .decision-responsibilities { gap: 16px; }
-    }
     @media (prefers-reduced-motion: reduce) {
-      .intelligence-field-section { --field-progress: 1 !important; min-height: auto; }
-      .intelligence-field-sticky { position: relative; min-height: auto; }
-      .relationship-trace, .risk-fracture, .qualified-path, .situation-marker, .memory-return, .threshold-inner, .decision-inner, .situation-profile, .capability-label { transition: none !important; transform: none !important; }
-    }
-
-    .intelligence-field-header, .field-labels, .capability-labels, .situation-profiles { opacity: calc(1 - var(--threshold-event)); transition: opacity .2s ease; }
-    .human-threshold { z-index: 6; }
-    .human-threshold::before {
-      content: '';
-      position: absolute;
-      left: -2%;
-      right: -2%;
-      bottom: clamp(70px, 9vh, 118px);
-      height: clamp(300px, 40vh, 430px);
-      background: linear-gradient(180deg, rgba(5,5,5,0), rgba(5,5,5,.98) 16%, rgba(8,7,6,1) 42%, rgba(8,7,6,1) 66%, rgba(5,5,5,.90) 86%, rgba(5,5,5,0));
-      opacity: var(--threshold-event);
-      pointer-events: none;
-    }
-    .threshold-inner { position: relative; z-index: 2; transform: none !important; background: linear-gradient(180deg, #080706, #12100c); }
-    @media (prefers-reduced-motion: reduce) {
-      .intelligence-field-header { opacity: 1; }
-      .human-threshold::before { opacity: 1; }
+      * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+      .intelligence-field-section:not(.is-visible) .capability-label,
+      .intelligence-field-section:not(.is-visible) .qualified-card,
+      .intelligence-field-section:not(.is-visible) .qualified-path,
+      .intelligence-field-section:not(.is-visible) .situation-marker { opacity: 1; }
     }
 
     .access-section { background: linear-gradient(180deg, #050505, #090705); }
@@ -247,11 +171,19 @@
     @media (max-width: 620px) {
       .site-nav { position: sticky; height: 72px; padding: 8px 18px 7px; background: linear-gradient(to bottom, rgba(0,0,0,.96), rgba(0,0,0,.86)); border-bottom: 1px solid rgba(247,242,232,.08); }
       .logo img { width: 98px; }
-      .hero { min-height: calc(100svh - 72px); padding: 42px 20px 32px; }
+      .hero { min-height: calc(100svh - 72px); padding: 28px 20px 26px; }
+      .hero-inner { gap: 22px; }
+      .hero-copy { margin-top: 14px; font-size: 13px; line-height: 1.42; }
+      .hero .secondary-link { margin-top: 16px; }
+      .access-card { padding: 17px; }
+      .access-title { margin-bottom: 12px; }
+      .input-row input { padding: 12px 11px; }
+      .input-row button { padding: 0 12px; }
+      .small { margin-top: 10px; line-height: 1.42; }
       section { padding: 72px 20px; scroll-margin-top: 96px; }
       .form-shell { grid-template-columns: 1fr; }
       textarea, .submit { grid-column: auto; }
-      h1 { font-size: 54px; }
+      h1 { font-size: clamp(37px, 11.3vw, 44px); line-height: .98; }
       footer .wrap { flex-direction: column; }
     }
     @media (prefers-reduced-motion: reduce) {
@@ -267,7 +199,7 @@
       <a href="#firm">Firm</a>
       <a href="#focus">Investment Focus</a>
       <a href="#process">Process</a>
-      <a href="#leadership">Leadership and Network</a>
+      <a href="#network">Network</a>
       <a href="#intelligence">Intelligence</a>
       <a href="#access" class="nav-cta">Request Consideration</a>
     </div>
@@ -283,8 +215,8 @@
       <div class="hero-inner">
         <div class="hero-narrative">
           <div class="eyebrow">PRIVATE INVESTMENT AND ACQUISITION FIRM</div>
-          <h1>The most compelling opportunities begin with a private conversation.</h1>
-          <p class="hero-copy">Clearline Capital pursues off-market business acquisitions, select real estate opportunities, and operating partnerships through direct relationships, disciplined underwriting, and aligned capital.</p>
+          <h1>Off-market acquisitions, informed by proprietary intelligence.</h1>
+          <p class="hero-copy">Clearline Capital pursues founder-led businesses, select real estate, and operating partnerships through direct relationships, disciplined underwriting, and a purpose-built agentic intelligence platform that expands the firm’s off-market origination and research capabilities.</p>
           <a class="secondary-link" href="#firm">Enter the overview</a>
         </div>
         <aside class="access-card" aria-label="Invitation access validation">
@@ -293,7 +225,7 @@
             <input id="invite-code" aria-label="Invitation code" placeholder="Invitation code" autocomplete="off" />
             <button id="invite-submit" type="button">Submit</button>
           </div>
-          <p class="small">The firm issues invitation codes through trusted relationships. Access begins with referral and fit.</p>
+          <p class="small">Access is reserved for relevant opportunities and trusted introductions.</p>
           <a class="secondary-link" href="#access">Request consideration</a>
         </aside>
       </div>
@@ -303,13 +235,13 @@
       <div class="wrap split">
         <div>
           <div class="eyebrow">THE FIRM</div>
-          <h2>Built for opportunities where discretion creates an advantage.</h2>
+          <h2>A disciplined platform for off-market acquisitions.</h2>
         </div>
         <div>
-          <p class="lead">Clearline Capital focuses on situations where timing, structure, and trust can shape value before an opportunity reaches the broader market.</p>
+          <p class="lead">Clearline Capital identifies and evaluates select businesses, real estate, and operating partnerships outside broadly marketed channels.</p>
           <div class="rule"></div>
-          <p class="body">Through direct relationships with owners, founders, operators, investors, advisors, and capital partners, the firm pursues founder-led businesses, privately held assets, select real estate, and operating partnerships where succession, growth, complexity, or transition create a reason to engage.</p>
-          <p class="body">Clearline Capital advances selectively when the relationship context, underwriting case, operating perspective, and capital structure support conviction.</p>
+          <p class="body">The firm combines sector research, proprietary market intelligence, and experienced investor and operator perspective to develop conviction around a limited number of qualified situations.</p>
+          <p class="body">Each opportunity is tested through financial analysis, professional diligence, operating insight, and a clearly defined path to execution.</p>
         </div>
       </div>
     </section>
@@ -317,64 +249,62 @@
     <section id="focus">
       <div class="wrap">
         <div class="eyebrow">INVESTMENT FOCUS</div>
-        <h2>Focused where discretion, timing, and structure can shape the outcome.</h2>
+        <h2>Where Clearline Capital invests.</h2>
         <div class="cards">
-          <article class="card"><h3>Founder-led and privately held businesses</h3><p>Businesses approaching succession, expansion, recapitalization, or ownership transition where a direct conversation can protect confidentiality and clarify the right path forward.</p></article>
-          <article class="card"><h3>Select real estate opportunities</h3><p>Properties, portfolios, and operating real estate situations where timing, ownership complexity, repositioning potential, or relationship access can shape value.</p></article>
-          <article class="card"><h3>Operating partnerships</h3><p>Partnerships with experienced operators, sector specialists, founders, or capital partners where operating perspective and aligned execution can support growth, transition, or strategic improvement.</p></article>
+          <article class="card"><h3>Founder-led and privately held businesses</h3><p>Companies facing succession, expansion, recapitalization, or ownership transition, with current interest in aesthetics, wellness, healthcare services, and other durable service categories.</p></article>
+          <article class="card"><h3>Select real estate opportunities</h3><p>Properties, portfolios, and operating real estate where basis, repositioning potential, or ownership complexity creates a compelling investment thesis.</p></article>
+          <article class="card"><h3>Operating partnerships</h3><p>Partnerships with experienced operators and sector specialists where resources and execution capability can accelerate growth or strategic improvement.</p></article>
         </div>
-        <p class="body section-intro">Clearline Capital evaluates fragmented categories with durable demand, including founder-led service businesses, aesthetics, wellness, healthcare services, business services, specialty real estate, and other privately held operating companies.</p>
       </div>
     </section>
 
     <section id="process" class="dark-band">
       <div class="wrap">
         <div class="eyebrow">HOW OPPORTUNITIES ADVANCE</div>
-        <h2>From introduction to informed conviction.</h2>
-        <p class="lead section-intro">Clearline Capital uses a selective process designed to protect confidentiality, test alignment early, and advance only the situations that merit serious attention.</p>
+        <h2>A disciplined path from origination to decision.</h2>
+        <p class="lead section-intro">Every situation moves through a controlled investment process that separates market interest from actionable conviction.</p>
         <div class="process-line" aria-label="Clearline Capital opportunity process">
-          <article class="process-step"><span>01</span><h3>Originate</h3><p>Opportunities emerge through direct relationships, trusted referrals, sector research, operator insight, advisor introductions, and proprietary market intelligence.</p></article>
-          <article class="process-step"><span>02</span><h3>Assess</h3><p>Clearline Capital evaluates ownership context, business or asset quality, sector dynamics, timing, seller objectives, and strategic fit before committing deeper attention.</p></article>
-          <article class="process-step"><span>03</span><h3>Underwrite</h3><p>Qualified situations advance through financial analysis, operating review, risk assessment, transaction structuring, capital planning, and professional diligence where appropriate.</p></article>
-          <article class="process-step"><span>04</span><h3>Convene</h3><p>The firm brings the relevant operators, advisors, and capital partners into a focused conversation designed to test alignment and execution readiness.</p></article>
-          <article class="process-step"><span>05</span><h3>Decide</h3><p>Clearline Capital advances only when the underwriting case, relationship context, capital structure, and execution path support conviction.</p></article>
+          <article class="process-step"><span>01</span><h3>Originate</h3><p>The firm develops potential situations through proprietary intelligence, sector research, trusted referrals, and operator insight.</p></article>
+          <article class="process-step"><span>02</span><h3>Qualify</h3><p>Business or asset quality, ownership context, sector dynamics, strategic relevance, and seller objectives are tested against the mandate.</p></article>
+          <article class="process-step"><span>03</span><h3>Underwrite</h3><p>Qualified situations advance through financial analysis, operating review, risk assessment, transaction design, and financing plans.</p></article>
+          <article class="process-step"><span>04</span><h3>Validate</h3><p>Relevant advisors, operators, and specialists examine the thesis through professional diligence and scenario review.</p></article>
+          <article class="process-step"><span>05</span><h3>Decide</h3><p>Clearline Capital proceeds only when the evidence, economics, and execution plan support investment conviction.</p></article>
         </div>
       </div>
     </section>
 
-    <section id="leadership">
+    <section id="network">
       <div class="wrap split">
         <div>
-          <div class="eyebrow">LEADERSHIP AND NETWORK</div>
-          <h2>Principal-led. Network-supported. Privately executed.</h2>
+          <div class="eyebrow">NETWORK AND GOVERNANCE</div>
+          <h2>Experienced perspective. Clear authority.</h2>
         </div>
         <div>
-          <p class="lead">Clearline Capital was founded by Matthew Goble and operates through a private network of experienced founders, operators, investors, advisors, and capital partners.</p>
+          <p class="lead">Clearline Capital operates through a private network of investors, founders, operators, advisors, and funding partners. The network contributes sector knowledge, operating experience, transaction perspective, and relevant resources to select situations.</p>
           <div class="rule"></div>
-          <p class="body">As Founder and Principal, Matthew leads the firm’s investment direction and principal relationships. The broader network contributes sector knowledge, operating perspective, transaction judgment, and aligned capital to select opportunities.</p>
-          <p class="body">This structure allows Clearline Capital to evaluate situations from multiple perspectives while maintaining disciplined control over underwriting, relationships, and execution.</p>
+          <p class="body">Opportunities are evaluated through disciplined underwriting, professional diligence, and clearly defined investment governance.</p>
           <ul class="leadership-points">
-            <li>Founder and Principal leadership.</li>
-            <li>Experienced network perspective.</li>
-            <li>Disciplined underwriting and professional diligence.</li>
-            <li>Human authority over capital and execution.</li>
+            <li>Experienced investor and operator perspective.</li>
+            <li>Independent professional diligence.</li>
+            <li>Disciplined resource allocation.</li>
+            <li>Defined investment governance.</li>
           </ul>
         </div>
       </div>
     </section>
 
     <section id="intelligence" class="intelligence-field-section" aria-labelledby="intelligence-title">
-      <div class="intelligence-field-sticky">
-        <div class="intelligence-field-shell">
-          <div class="intelligence-field-header">
-            <div class="eyebrow">The Clearline Intelligence Field</div>
-            <h2 id="intelligence-title">A proprietary intelligence environment.<br />Governed by investment judgment.</h2>
-            <p class="lead section-intro">The platform expands what Clearline Capital can see. The firm’s leadership, operating partners, and professional advisors determine what merits action. Investment decisions, relationships, underwriting, and execution remain human-led.</p>
-          </div>
+      <div class="intelligence-field-shell">
+        <div class="intelligence-field-header">
+          <div class="eyebrow">PROPRIETARY INTELLIGENCE</div>
+          <h2 id="intelligence-title">A proprietary intelligence environment.<br />Built for off-market origination.</h2>
+          <p class="lead section-intro">Clearline Capital has invested significant time and resources in a purpose-built agentic intelligence platform for the work behind an acquisition. Specialized agents map fragmented markets, research ownership, monitor operating and transaction indicators, coordinate diligence, challenge assumptions, and preserve institutional memory across assignments.</p>
+          <p class="body section-intro">The platform can plan multistep work, pursue parallel research paths, and surface non-obvious connections or risk factors that conventional workflows may miss. It changes how Clearline Capital develops and evaluates proprietary deal flow by expanding the firm’s field of view and accelerating synthesis.</p>
+        </div>
 
-          <div class="intelligence-map" aria-label="Clearline Capital intelligence field sequence">
+        <div class="intelligence-map" aria-label="Clearline Capital intelligence field resolving into qualified situations">
             <svg class="map-visual desktop-map" viewBox="0 0 1440 780" role="img" aria-labelledby="desktop-map-title" focusable="false">
-              <title id="desktop-map-title">Private-market field resolving into human review and decision-making</title>
+              <title id="desktop-map-title">Private-market field resolving into qualified situations</title>
               <g class="field-grid" aria-hidden="true" stroke="rgba(247,242,232,.12)" stroke-width=".6">
                 <path d="M60 76 C280 92 542 68 760 96 S1130 118 1370 82" />
                 <path d="M70 154 C310 132 530 168 760 150 S1125 132 1360 168" />
@@ -439,83 +369,50 @@
               </g>
             </svg>
 
-            <div class="field-copy field-labels" aria-hidden="true">
-              <span class="field-label" style="left:9%;top:14%;">Businesses</span>
-              <span class="field-label" style="left:25%;top:9%;">Assets</span>
-              <span class="field-label" style="left:45%;top:13%;">Ownership structures</span>
-              <span class="field-label" style="left:62%;top:19%;">Operating signals</span>
-              <span class="field-label" style="left:12%;top:46%;">Transaction activity</span>
-              <span class="field-label emphasis" style="left:32%;top:56%;">Relationship context</span>
-              <span class="field-label" style="left:58%;top:49%;">Timing</span>
-              <span class="field-label emphasis" style="left:75%;top:38%;">Risk</span>
-            </div>
-            <div class="field-copy capability-labels" aria-hidden="true">
-              <span class="capability-label" style="left:8%;top:25%;">Origination Intelligence</span>
-              <span class="capability-label" style="left:30%;top:21%;">Market Mapping</span>
-              <span class="capability-label" style="left:50%;top:30%;">Ownership Research</span>
-              <span class="capability-label" style="left:22%;top:43%;">Diligence Coordination</span>
-              <span class="capability-label emphasis" style="left:57%;top:50%;">Risk and Scenario Analysis</span>
-              <span class="capability-label" style="left:38%;top:59%;">Institutional Memory</span>
-            </div>
-            <div class="field-copy situation-profiles">
-              <article class="situation-profile" style="left:77%;top:27%;">
-                <h3>Ownership context verified</h3>
-                <p>Strategic relevance high</p>
-                <p>Relationship path known</p>
-                <p>Risk status reviewable</p>
-              </article>
-              <article class="situation-profile" style="left:72%;top:48%;">
-                <h3>Timing condition active</h3>
-                <p>Operating signals aligned</p>
-                <p>Diligence path defined</p>
-                <p>Review readiness near-term</p>
-              </article>
-              <article class="situation-profile" style="left:81%;top:42%;">
-                <h3>Transaction marker confirmed</h3>
-                <p>Relationship context warm</p>
-                <p>Capital structure plausible</p>
-                <p>Risk status contained</p>
-              </article>
-            </div>
-            <div class="mobile-field-copy">
-              <div class="mobile-field-step" style="padding-top:130px;">
-                <h3>Broad private-market field</h3>
-                <p>Businesses, assets, ownership structures, timing, transaction activity, relationship context, and risk begin unresolved.</p>
-              </div>
-              <div class="mobile-field-step" style="padding-top:130px;">
-                <h3>Progressive resolution</h3>
-                <p>Origination intelligence, market mapping, ownership research, diligence coordination, risk analysis, and institutional memory clarify the field.</p>
-              </div>
-              <div class="mobile-field-step" style="padding-top:108px;">
-                <h3>Qualified situations</h3>
-                <p>Only two or three situations remain worthy of human review.</p>
-              </div>
-            </div>
-            <div class="human-threshold">
-              <div class="threshold-inner">
-                <h3>Human Review and Authority</h3>
-                <p>The platform informs. People decide.<br />Nothing advances without human authority.</p>
-              </div>
-            </div>
-            <div class="human-decision">
-              <div class="decision-inner">
-                <h3>Human Decision and Execution</h3>
-                <ul class="decision-responsibilities">
-                  <li>Principal Engagement</li>
-                  <li>Underwriting</li>
-                  <li>Professional Diligence</li>
-                  <li>Capital Alignment</li>
-                  <li>Investment Approval</li>
-                  <li>Transaction Execution</li>
-                </ul>
-              </div>
-            </div>
-            <div class="memory-label" aria-hidden="true">
-              <div><strong>Institutional Memory</strong>Completed work strengthens future context.</div>
-            </div>
+          <div class="field-copy field-labels" aria-hidden="true">
+            <span class="field-label" style="left:8%;top:14%;">Businesses</span>
+            <span class="field-label" style="left:23%;top:10%;">Assets</span>
+            <span class="field-label" style="left:43%;top:14%;">Ownership structures</span>
+            <span class="field-label" style="left:63%;top:20%;">Operating indicators</span>
+            <span class="field-label" style="left:10%;top:47%;">Transaction activity</span>
+            <span class="field-label emphasis" style="left:32%;top:57%;">Relationship context</span>
+            <span class="field-label emphasis" style="left:75%;top:38%;">Risk</span>
           </div>
-          <p class="intelligence-reduced-copy">The intelligence field resolves into qualified situations, all paths stop at Human Review and Authority, and only then proceed to Human Decision and Execution. Institutional Memory returns context only.</p>
+          <div class="field-copy capability-labels" aria-hidden="true">
+            <span class="capability-label" style="left:8%;top:25%;">Origination Intelligence</span>
+            <span class="capability-label" style="left:30%;top:21%;">Market Mapping</span>
+            <span class="capability-label" style="left:50%;top:30%;">Ownership Research</span>
+            <span class="capability-label" style="left:20%;top:42%;">Diligence Coordination</span>
+            <span class="capability-label emphasis" style="left:47%;top:36%;">Risk and Scenario Analysis</span>
+            <span class="capability-label" style="left:35%;top:65%;">Institutional Memory</span>
+          </div>
+          <div class="qualified-final">
+            <article class="qualified-card">
+              <h3>Qualified Situations</h3>
+              <p>A narrow set of opportunities selected for deeper evaluation.</p>
+            </article>
+          </div>
+          <div class="mobile-field-copy">
+            <div class="mobile-field-step" style="padding-top:120px;">
+              <h3>Broad private-market inputs</h3>
+              <p>Businesses, assets, ownership structures, operating indicators, transaction activity, relationship context, and risk begin unresolved.</p>
+            </div>
+            <div class="mobile-field-step" style="padding-top:112px;">
+              <h3>Proprietary agentic analysis</h3>
+              <p>Origination intelligence, market mapping, ownership research, diligence coordination, risk and scenario analysis, and institutional memory clarify the field.</p>
+            </div>
+            <div class="mobile-field-step" style="padding-top:84px;">
+              <h3>Progressive clarification</h3>
+              <p>Parallel research paths surface relevant patterns, exceptions, and non-obvious risk factors.</p>
+            </div>
+            <article class="mobile-qualified-card">
+              <h3>Qualified Situations</h3>
+              <p>A narrow set of opportunities selected for deeper evaluation.</p>
+            </article>
+          </div>
         </div>
+        <p class="governance-note">The platform expands visibility and accelerates analysis. Investment decisions and transaction authority remain with Clearline Capital’s investment professionals and operating partners.</p>
+        <p class="intelligence-reduced-copy">The intelligence field combines broad private-market inputs with proprietary agentic analysis, resolves toward qualified situations, and transitions directly into Access.</p>
       </div>
     </section>
 
@@ -526,9 +423,8 @@
           <h2>The right introduction matters.</h2>
         </div>
         <div>
-          <p class="lead">Clearline Capital considers opportunities and introductions through trusted relationships, referred owners, operating partners, investors, advisors, and aligned counterparties.</p>
-          <p class="body">Each request is considered for relationship fit, relevance, source credibility, and alignment with the firm’s mandate. Selectivity is central to how Clearline Capital protects attention, trust, and execution quality.</p>
-          <p class="body">If there is a relevant business, asset, operating partnership, or investment opportunity to discuss, request consideration through the access panel.</p>
+          <p class="lead">Clearline Capital considers acquisition opportunities, operating partnerships, and investor introductions submitted with credible context. Share the relevant parties, the basis for the introduction, and why the situation merits review.</p>
+          <p class="body">Submissions are screened for mandate fit, source quality, and strategic relevance. Only qualified matters advance.</p>
           <form name="access-request" method="POST" action="/thank-you" data-netlify="true" netlify-honeypot="bot-field" class="form-shell">
             <input type="hidden" name="form-name" value="access-request" />
             <p class="hidden"><label>Do not fill this out: <input name="bot-field" /></label></p>
@@ -548,7 +444,7 @@
   <footer>
     <div class="wrap">
       <span>Clearline Capital. Private investment and acquisition firm.</span>
-      <span>Selective capital. Direct context.</span>
+      <span>Selective review. Direct access.</span>
     </div>
   </footer>
 
@@ -583,26 +479,16 @@
     inviteInput?.addEventListener('keydown', (event) => { if (event.key === 'Enter') validateInvite(); });
 
     const intelligenceSection = document.querySelector('.intelligence-field-section');
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    function clamp(value, min, max) { return Math.min(max, Math.max(min, value)); }
-    function updateIntelligenceProgress() {
-      if (!intelligenceSection) return;
-      if (reducedMotion.matches) {
-        intelligenceSection.style.setProperty('--field-progress', '1');
-        intelligenceSection.dataset.stage = 'resolved';
-        return;
-      }
-      const rect = intelligenceSection.getBoundingClientRect();
-      const travel = Math.max(1, rect.height - window.innerHeight);
-      const progress = clamp(-rect.top / travel, 0, 1);
-      intelligenceSection.style.setProperty('--field-progress', progress.toFixed(3));
-      const stage = progress < .25 ? 'field' : progress < .5 ? 'resolution' : progress < .7 ? 'qualified' : progress < .82 ? 'authority' : 'decision';
-      intelligenceSection.dataset.stage = stage;
+    if (intelligenceSection && 'IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) intelligenceSection.classList.add('is-visible');
+        });
+      }, { threshold: 0.22 });
+      observer.observe(intelligenceSection);
+    } else {
+      intelligenceSection?.classList.add('is-visible');
     }
-    updateIntelligenceProgress();
-    window.addEventListener('scroll', updateIntelligenceProgress, { passive: true });
-    window.addEventListener('resize', updateIntelligenceProgress);
-    reducedMotion.addEventListener?.('change', updateIntelligenceProgress);
   </script>
 </body>
 </html>
