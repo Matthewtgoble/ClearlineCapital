@@ -93,6 +93,7 @@
     .intelligence-field-section {
       background: linear-gradient(180deg, #050505 0%, #070604 52%, #050505 100%);
       overflow: clip;
+      padding-top: clamp(178px, 14vw, 220px);
     }
     .intelligence-field-shell { max-width: min(1360px, 100%); margin: 0 auto; width: 100%; }
     .intelligence-field-header {
@@ -107,77 +108,265 @@
     .intelligence-field-header .lead { margin: 0; color: rgba(247,242,232,.56); font-size: 14px; line-height: 1.55; max-width: 360px; }
     .qualification-architecture {
       position: relative;
-      border: 1px solid rgba(247,242,232,.08);
-      padding: clamp(24px, 3vw, 36px);
+      isolation: isolate;
+      min-height: clamp(540px, 48vw, 620px);
+      padding: clamp(28px, 3vw, 42px) clamp(24px, 3vw, 34px) clamp(24px, 2.6vw, 34px);
+      border-top: 1px solid rgba(247,242,232,.06);
+      border-bottom: 1px solid rgba(247,242,232,.05);
       background:
-        linear-gradient(90deg, rgba(214,168,94,.028) 1px, transparent 1px),
-        linear-gradient(180deg, rgba(214,168,94,.022) 1px, transparent 1px),
-        linear-gradient(180deg, rgba(247,242,232,.012), rgba(247,242,232,.004));
-      background-size: 84px 84px, 84px 84px, auto;
+        radial-gradient(circle at 13% 34%, rgba(214,168,94,.06), transparent 30%),
+        radial-gradient(circle at 52% 42%, rgba(214,168,94,.032), transparent 24%),
+        radial-gradient(circle at 84% 40%, rgba(247,242,232,.022), transparent 25%),
+        linear-gradient(90deg, rgba(247,242,232,.026), transparent 22%, transparent 76%, rgba(247,242,232,.014));
     }
     .qualification-architecture:before {
       content: '';
       position: absolute;
       inset: 0;
+      z-index: 0;
       pointer-events: none;
-      background:
-        radial-gradient(circle at 32% 28%, rgba(214,168,94,.045), transparent 30%),
-        radial-gradient(circle at 66% 46%, rgba(214,168,94,.035), transparent 34%);
-      opacity: .8;
+      opacity: .24;
+      background-image:
+        linear-gradient(rgba(247,242,232,.028) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(247,242,232,.022) 1px, transparent 1px);
+      background-size: 96px 96px, 96px 96px;
+      mask-image: linear-gradient(to bottom, transparent, #000 15%, #000 82%, transparent);
     }
-    .qualification-panels { position: relative; z-index: 2; display: grid; grid-template-columns: minmax(0,.95fr) minmax(0,1.14fr) minmax(0,.96fr); gap: clamp(18px, 1.7vw, 24px); }
-    .qualification-panel { position: relative; min-width: 0; min-height: 575px; padding: 0; border: 1px solid rgba(247,242,232,.11); background: rgba(5,5,5,.78); box-shadow: inset 0 0 0 1px rgba(214,168,94,.035); }
-    .qualification-panel:before { content: ''; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, rgba(247,242,232,.025), transparent 32%, rgba(214,168,94,.018)); }
-    .qa-panel-heading { position: relative; z-index: 2; min-height: 68px; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 12px; padding: 0 clamp(14px, 1.4vw, 20px); border-bottom: 1px solid rgba(247,242,232,.09); background: rgba(247,242,232,.025); }
-    .qa-panel-heading h3 { margin: 0; color: rgba(247,242,232,.88); font-size: clamp(8.5px, .72vw, 10.5px); font-weight: 500; letter-spacing: .20em; line-height: 1; text-transform: uppercase; white-space: nowrap; min-width: 0; }
-    .qa-panel-kicker { justify-self: end; color: rgba(247,242,232,.28); font-size: clamp(7px, .55vw, 8.5px); letter-spacing: .14em; text-transform: uppercase; white-space: nowrap; }
-    .qa-icon { width: 17px; height: 17px; position: relative; opacity: .82; }
-    .qa-icon.market:before, .qa-icon.market:after { content: ''; position: absolute; left: 2px; right: 2px; height: 1px; background: rgba(214,168,94,.56); }
-    .qa-icon.market:before { top: 5px; box-shadow: 0 4px 0 rgba(214,168,94,.38), 0 8px 0 rgba(214,168,94,.22); }
-    .qa-icon.market:after { top: 2px; width: 7px; box-shadow: 0 4px 0 rgba(214,168,94,.32), 0 8px 0 rgba(214,168,94,.18); }
-    .qa-icon.lens { border: 1px solid rgba(240,214,160,.8); border-radius: 999px; box-shadow: 0 0 0 5px rgba(214,168,94,.045); }
-    .qa-icon.output { transform: rotate(45deg); border: 1px solid rgba(240,214,160,.78); width: 12px; height: 12px; margin-left: 3px; }
-    .qa-market-list, .qa-lens-list, .qa-output-list { position: relative; z-index: 2; list-style: none; margin: 0; padding: 28px 24px; }
-    .qa-market-list { display: grid; gap: 0; }
-    .qa-market-list li { display: grid; grid-template-columns: 24px 1fr; align-items: center; min-height: 56px; border-bottom: 1px solid rgba(247,242,232,.055); color: rgba(247,242,232,.58); font-size: 11px; letter-spacing: .22em; text-transform: uppercase; }
-    .market-line-icon { width: 14px; height: 12px; position: relative; opacity: .58; }
-    .market-line-icon:before { content: ''; position: absolute; left: 0; top: 1px; width: 12px; height: 1px; background: rgba(214,168,94,.38); box-shadow: 0 4px 0 rgba(214,168,94,.28), 0 8px 0 rgba(214,168,94,.18); }
-    .qa-lens-list { padding-top: 22px; padding-bottom: 22px; display: grid; gap: 11px; }
-    .qa-lens-list:before { content: ''; position: absolute; left: 42px; top: 40px; bottom: 48px; width: 1px; background: linear-gradient(180deg, transparent, rgba(214,168,94,.32), transparent); }
-    .qa-lens-list li { position: relative; min-height: 58px; display: flex; align-items: center; padding: 0 24px 0 50px; border: 1px solid rgba(247,242,232,.07); background: linear-gradient(180deg, rgba(247,242,232,.035), rgba(247,242,232,.015)); color: rgba(247,242,232,.88); font-size: 12px; font-weight: 700; letter-spacing: .20em; text-transform: uppercase; }
-    .qa-lens-list li:before { content: ''; position: absolute; left: 12px; top: 50%; width: 12px; height: 12px; border: 1px solid rgba(240,214,160,.82); border-radius: 999px; background: #050505; box-shadow: 0 0 0 4px rgba(214,168,94,.045); transform: translateY(-50%); }
-    .qa-output-list { padding-top: 32px; display: grid; gap: 0; }
-    .qa-output-list:before { content: ''; position: absolute; left: 32px; top: 38px; height: 220px; width: 1px; background: linear-gradient(180deg, rgba(214,168,94,.26), rgba(214,168,94,.06)); }
-    .qa-output-list li { position: relative; display: grid; grid-template-columns: 28px 1fr; align-items: start; min-height: 92px; border-bottom: 1px solid rgba(247,242,232,.065); color: rgba(247,242,232,.62); font-size: 11px; letter-spacing: .18em; line-height: 1.55; text-transform: uppercase; }
-    .output-diamond { width: 11px; height: 11px; margin-top: 5px; border: 1px solid rgba(240,214,160,.74); background: #050505; transform: rotate(45deg); box-shadow: 0 0 0 4px rgba(214,168,94,.035); }
-    .qa-output-note { position: relative; z-index: 2; margin: 34px 24px 0; padding-top: 26px; border-top: 1px solid rgba(247,242,232,.055); color: rgba(247,242,232,.62); font-size: 13px; line-height: 1.45; max-width: 300px; }
-    .qa-connector { position: absolute; z-index: 3; top: 98px; bottom: 118px; width: 26px; pointer-events: none; }
-    .qa-connector.left { left: calc(33.333% - 17px); }
-    .qa-connector.right { left: calc(66.666% - 8px); }
-    .qa-connector:before, .qa-connector:after { content: ''; position: absolute; top: 20px; bottom: 0; width: 1px; background: linear-gradient(180deg, transparent, rgba(214,168,94,.25), transparent); }
-    .qa-connector:before { left: 5px; } .qa-connector:after { right: 5px; }
-    .qa-node { position: absolute; left: 50%; width: 4px; height: 4px; margin-left: -2px; border-radius: 50%; background: rgba(214,168,94,.72); box-shadow: 0 0 0 3px rgba(214,168,94,.05); }
-    .qa-node.n1 { top: 30%; } .qa-node.n2 { top: 50%; } .qa-node.n3 { top: 70%; }
-    .qa-connector-line { position: absolute; left: 0; right: 0; height: 1px; background: rgba(214,168,94,.14); }
-    .qa-connector-line.l1 { top: 30%; } .qa-connector-line.l2 { top: 50%; } .qa-connector-line.l3 { top: 70%; }
-    .governance-note { max-width: 760px; margin: clamp(24px, 4vh, 40px) 0 0 auto; color: rgba(247,242,232,.62); font-size: 14px; line-height: 1.7; }
-    .intelligence-reduced-copy { position: absolute; left: -9999px; }
+    .qualification-architecture:after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: .24;
+      mix-blend-mode: screen;
+      background-image:
+        radial-gradient(circle at 22% 18%, rgba(255,255,255,.08) 0 1px, transparent 1.2px),
+        radial-gradient(circle at 76% 62%, rgba(214,168,94,.055) 0 1px, transparent 1.2px);
+      background-size: 34px 34px, 47px 47px;
+      filter: blur(.15px);
+    }
+    .qualification-backdrop {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: visible;
+    }
+    .qa-contours { fill: none; stroke: rgba(247,242,232,.052); stroke-width: 1; stroke-linecap: round; stroke-linejoin: round; }
+    .qa-boundaries { fill: none; stroke: rgba(214,168,94,.11); stroke-width: 1; stroke-linecap: round; stroke-linejoin: round; }
+    .qa-analytical { fill: none; stroke: rgba(214,168,94,.14); stroke-width: 1; stroke-linecap: round; stroke-linejoin: round; }
+    .density-market { fill: rgba(214,168,94,.20); }
+    .density-lenses { fill: rgba(214,168,94,.16); }
+    .density-qualified { fill: rgba(214,168,94,.12); }
+    .qualification-stages {
+      position: relative;
+      z-index: 2;
+      min-height: clamp(488px, 42vw, 552px);
+      display: grid;
+      grid-template-columns: minmax(0,1.02fr) minmax(0,1.22fr) minmax(0,1.04fr);
+      column-gap: clamp(34px, 4.1vw, 56px);
+      align-items: stretch;
+    }
+    .qualification-stage { position: relative; min-width: 0; padding: 34px 0 30px; }
+    .qualification-stage + .qualification-stage:before {
+      content: '';
+      position: absolute;
+      left: calc(clamp(34px, 4.1vw, 56px) / -2);
+      top: 24px;
+      bottom: 24px;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, rgba(214,168,94,.15), rgba(247,242,232,.065), transparent);
+    }
+    .qualification-stage-title {
+      position: relative;
+      z-index: 3;
+      display: inline-block;
+      margin: 0;
+      padding: 7px 18px 7px 0;
+      color: rgba(214,168,94,.84);
+      background: linear-gradient(90deg, rgba(5,5,5,.98), rgba(5,5,5,.90) 82%, transparent);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: .22em;
+      line-height: 1;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .qa-register, .qa-conditions { position: relative; z-index: 3; margin: 42px 0 0; padding: 0; list-style: none; }
+    .qa-market-register { display: grid; gap: 24px; max-width: 318px; }
+    .qa-register li, .qa-conditions li {
+      position: relative;
+      color: rgba(247,242,232,.62);
+      font-size: clamp(10.5px, .72vw, 12px);
+      letter-spacing: .20em;
+      line-height: 1.35;
+      text-transform: uppercase;
+    }
+    .qa-market-register li {
+      width: max-content;
+      max-width: 100%;
+      padding-left: 36px;
+      padding-right: 16px;
+      background: linear-gradient(90deg, rgba(5,5,5,.96), rgba(5,5,5,.88) 88%, transparent);
+    }
+    .qa-market-register li:before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: .64em;
+      width: 20px;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(214,168,94,.62), rgba(214,168,94,.12));
+    }
+    .qa-market-register li:nth-child(2n) { margin-left: 22px; color: rgba(247,242,232,.52); }
+    .qa-market-register li:nth-child(3n) { margin-left: 8px; }
+    .qa-lens-register { margin-top: 40px; display: grid; gap: 27px; max-width: 430px; }
+    .qa-lens-register li {
+      width: max-content;
+      max-width: 100%;
+      padding-left: 54px;
+      padding-right: 18px;
+      color: rgba(247,242,232,.74);
+      background: linear-gradient(90deg, rgba(5,5,5,.97), rgba(5,5,5,.90) 84%, transparent);
+      font-weight: 700;
+      letter-spacing: .19em;
+    }
+    .qa-lens-register li:before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: .65em;
+      width: 32px;
+      height: 1px;
+      background: rgba(214,168,94,.74);
+    }
+    .qa-lens-register li:after {
+      content: '';
+      position: absolute;
+      left: 36px;
+      top: calc(.65em - 2px);
+      width: 5px;
+      height: 5px;
+      border: 1px solid rgba(214,168,94,.68);
+      border-radius: 50%;
+      background: #050505;
+    }
+    .qa-qualified-stage { padding-left: 10px; }
+    .qa-conditions { margin-top: 54px; display: grid; gap: clamp(34px, 4vw, 54px); max-width: 100%; }
+    .qa-conditions li {
+      width: 100%;
+      max-width: 100%;
+      padding-left: 48px;
+      padding-right: 12px;
+      color: rgba(247,242,232,.70);
+      background: linear-gradient(90deg, rgba(5,5,5,.97), rgba(5,5,5,.88) 84%, transparent);
+      font-size: clamp(10px, .70vw, 12px);
+      letter-spacing: clamp(.10em, .78vw, .18em);
+      line-height: 1.55;
+      white-space: normal;
+      overflow: visible;
+      overflow-wrap: normal;
+      word-break: normal;
+    }
+    .qa-conditions li:before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: .6em;
+      width: 15px;
+      height: 15px;
+      border: 1px solid rgba(214,168,94,.84);
+      border-radius: 50%;
+      background: #050505;
+      box-shadow: 0 0 0 5px rgba(214,168,94,.025);
+    }
+    .qa-conditions li:after {
+      content: '';
+      position: absolute;
+      left: 24px;
+      right: 0;
+      top: calc(.6em + 7px);
+      z-index: -1;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(214,168,94,.34), rgba(247,242,232,.05), transparent);
+      transform: translateY(-50%);
+    }
+    .qa-output-note {
+      position: absolute;
+      left: 58px;
+      right: 12px;
+      bottom: 32px;
+      z-index: 3;
+      max-width: 350px;
+      margin: 0;
+      padding: 8px 12px 8px 0;
+      color: rgba(247,242,232,.60);
+      background: linear-gradient(90deg, rgba(5,5,5,.96), rgba(5,5,5,.86) 80%, transparent);
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.45;
+    }
+    .governance-note {
+      max-width: 760px;
+      margin: clamp(24px, 4vh, 40px) 0 0 auto;
+      color: rgba(247,242,232,.60);
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.7;
+    }
+    @media (max-width: 1280px) {
+      .qualification-architecture { padding-inline: 22px; }
+      .qualification-stages { column-gap: 32px; grid-template-columns: minmax(0,.96fr) minmax(0,1.04fr) minmax(0,1.16fr); }
+      .qualification-stage + .qualification-stage:before { left: -16px; }
+      .qa-market-register { gap: 20px; }
+      .qa-lens-register { gap: 24px; }
+      .qa-conditions li { font-size: 10.5px; letter-spacing: .11em; line-height: 1.5; }
+    }
     @media (max-width: 980px) {
-      .intelligence-field-section { padding: 84px 20px 72px; }
+      .intelligence-field-section { padding: 132px 20px 72px; }
       .intelligence-field-header { grid-template-columns: 1fr; gap: 18px; margin-bottom: 32px; }
       .intelligence-field-header h2 { font-size: clamp(38px, 10vw, 58px); }
-      .intelligence-field-header .lead { max-width: 520px; }
-      .qualification-architecture { padding: 18px; }
-      .qualification-panels { grid-template-columns: 1fr; gap: 16px; }
-      .qualification-panel { min-height: auto; }
-      .qa-panel-heading { min-height: 62px; }
-      .qa-panel-kicker { display: none; }
-      .qa-market-list, .qa-lens-list, .qa-output-list { padding: 20px 18px; }
-      .qa-market-list li { min-height: 48px; }
-      .qa-lens-list li { min-height: 54px; font-size: 11px; letter-spacing: .16em; }
-      .qa-output-list li { min-height: 78px; font-size: 10.5px; }
-      .qa-connector { display: none; }
-      .governance-note { margin: 26px 0 0; font-size: 13px; }
+      .qualification-architecture { min-height: 0; padding: 22px 18px 24px; }
+      .qualification-architecture:before { opacity: .15; background-size: 82px 82px, 82px 82px; }
+      .qualification-backdrop { opacity: .58; }
+      .density-market { opacity: .62; }
+      .density-lenses { opacity: .42; }
+      .density-qualified { opacity: .18; }
+      .qa-contours { opacity: .50; }
+      .qa-boundaries, .qa-analytical { opacity: .38; }
+      .qualification-stages { min-height: 0; display: grid; grid-template-columns: 1fr; row-gap: 0; }
+      .qualification-stage { padding: 22px 0 24px; }
+      .qualification-stage + .qualification-stage:before { left: 0; top: 0; right: 0; bottom: auto; width: auto; height: 1px; background: linear-gradient(90deg, transparent, rgba(214,168,94,.13), transparent); }
+      .qualification-stage-title { font-size: 10px; letter-spacing: .22em; }
+      .qa-register, .qa-conditions { margin-top: 18px; }
+      .qa-market-register, .qa-lens-register { gap: 12px; max-width: none; }
+      .qa-market-register li { margin-left: 0 !important; padding-left: 30px; }
+      .qa-market-register li:before { width: 18px; }
+      .qa-register li { font-size: 9.8px; letter-spacing: .16em; line-height: 1.32; }
+      .qa-lens-register li { padding-left: 42px; font-size: 9.5px; letter-spacing: .14em; }
+      .qa-lens-register li:before { width: 28px; }
+      .qa-lens-register li:after { left: 32px; }
+      .qa-qualified-stage { padding-left: 0; }
+      .qa-conditions { gap: 18px; max-width: none; }
+      .qa-conditions li { padding-left: 38px; padding-right: 4px; font-size: 9.2px; letter-spacing: .095em; line-height: 1.35; }
+      .qa-conditions li:before { width: 12px; height: 12px; top: .45em; }
+      .qa-conditions li:after { left: 20px; top: calc(.45em + 6px); }
+      .qa-output-note { position: relative; left: auto; right: auto; bottom: auto; margin: 18px 0 0 38px; max-width: 270px; font-size: 11px; line-height: 1.35; }
+      .governance-note { margin: 22px 0 0; max-width: 620px; font-size: 12.5px; line-height: 1.55; }
+    }
+    @media (max-width: 430px) {
+      .intelligence-field-section { padding: 124px 20px 68px; }
+      .intelligence-field-header { margin-bottom: 26px; }
+      .intelligence-field-header h2 { font-size: clamp(32px, 8.8vw, 36px); line-height: 1; }
+      .qualification-architecture { padding: 20px 17px 22px; }
+      .qualification-stage { padding: 20px 0 22px; }
+      .qa-market-register, .qa-lens-register { gap: 10px; }
+      .qa-register li { font-size: 9.2px; letter-spacing: .15em; }
+      .qa-lens-register li { font-size: 9px; letter-spacing: .12em; }
+      .qa-conditions li { font-size: 8.8px; letter-spacing: .075em; line-height: 1.35; }
     }
     @media (prefers-reduced-motion: reduce) {
       * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
@@ -349,31 +538,51 @@
         </div>
 
         <div class="qualification-architecture" aria-label="Clearline qualification architecture">
-          <div class="qualification-panels">
-            <section class="qualification-panel market-panel" aria-labelledby="market-panel-title">
-              <div class="qa-panel-heading">
-                <span class="qa-icon market" aria-hidden="true"></span>
-                <h3 id="market-panel-title">Market Universe</h3>
-                <span class="qa-panel-kicker">Inputs</span>
-              </div>
-              <ul class="qa-market-list">
-                <li><span class="market-line-icon" aria-hidden="true"></span><span>Businesses</span></li>
-                <li><span class="market-line-icon" aria-hidden="true"></span><span>Assets</span></li>
-                <li><span class="market-line-icon" aria-hidden="true"></span><span>Ownership Structures</span></li>
-                <li><span class="market-line-icon" aria-hidden="true"></span><span>Operating Indicators</span></li>
-                <li><span class="market-line-icon" aria-hidden="true"></span><span>Transaction Activity</span></li>
-                <li><span class="market-line-icon" aria-hidden="true"></span><span>Relationship Context</span></li>
-                <li><span class="market-line-icon" aria-hidden="true"></span><span>Risk Indicators</span></li>
+          <svg class="qualification-backdrop" viewBox="0 0 1200 520" preserveAspectRatio="none" aria-hidden="true">
+            <g class="qa-contours">
+              <path d="M18 112 C118 68 214 82 318 58 C432 34 488 82 590 58 C704 34 798 44 924 78 C1036 108 1114 82 1184 48" />
+              <path d="M40 308 C138 262 250 318 354 288 C476 254 548 216 670 258 C778 296 846 352 956 314 C1054 280 1120 286 1192 328" />
+              <path d="M-18 424 C110 378 222 426 342 392 C468 356 546 344 650 384 C766 430 878 440 1002 398 C1102 364 1168 352 1220 384" />
+              <path d="M60 204 C154 166 238 196 332 164 C442 126 528 128 620 150 C718 174 806 232 932 198 C1032 172 1112 150 1202 174" />
+              <path d="M70 370 C180 340 262 362 356 352 C468 340 556 318 650 332 C760 350 836 378 942 352 C1032 330 1110 326 1186 346" />
+            </g>
+            <g class="qa-boundaries">
+              <path d="M92 396 C156 360 214 342 274 344 C338 346 382 326 426 286" />
+              <path d="M828 124 C900 98 976 88 1048 104 C1092 114 1124 134 1154 152" />
+              <path d="M690 420 C752 382 812 372 884 392 C956 412 1014 386 1062 334" />
+            </g>
+            <g class="density-market">
+              <circle cx="76" cy="104" r="1.0" /><circle cx="108" cy="118" r="1.5" /><circle cx="132" cy="164" r="1.0" /><circle cx="162" cy="184" r="1.2" /><circle cx="192" cy="132" r=".9" /><circle cx="228" cy="92" r="1.8" /><circle cx="246" cy="238" r="1.0" /><circle cx="278" cy="156" r=".9" /><circle cx="310" cy="258" r="1.3" /><circle cx="338" cy="216" r=".9" /><circle cx="360" cy="180" r="1.1" /><circle cx="386" cy="312" r=".9" /><circle cx="438" cy="335" r="1.3" />
+            </g>
+            <g class="density-lenses">
+              <circle cx="520" cy="154" r="1.3" /><circle cx="578" cy="208" r=".9" /><circle cx="612" cy="236" r="1.1" /><circle cx="676" cy="186" r=".9" /><circle cx="724" cy="114" r="1.2" /><circle cx="792" cy="262" r=".9" />
+            </g>
+            <g class="density-qualified">
+              <circle cx="920" cy="206" r="1.0" /><circle cx="1036" cy="118" r=".9" /><circle cx="1110" cy="284" r=".9" />
+            </g>
+            <g class="qa-analytical">
+              <path d="M330 244 C438 220 506 220 590 238 C688 260 778 250 868 214" />
+              <path d="M340 322 C452 306 548 300 638 318 C734 336 796 330 888 306" />
+              <path d="M326 164 C448 144 536 154 626 174 C724 192 794 180 888 150" />
+            </g>
+          </svg>
+          <div class="qualification-stages">
+            <section class="qualification-stage qa-market-stage" aria-labelledby="market-panel-title">
+              <h3 class="qualification-stage-title" id="market-panel-title">Market Universe</h3>
+              <ul class="qa-register qa-market-register">
+                <li>Businesses</li>
+                <li>Assets</li>
+                <li>Ownership Structures</li>
+                <li>Operating Indicators</li>
+                <li>Transaction Activity</li>
+                <li>Relationship Context</li>
+                <li>Risk Indicators</li>
               </ul>
             </section>
 
-            <section class="qualification-panel lens-panel" aria-labelledby="lens-panel-title">
-              <div class="qa-panel-heading">
-                <span class="qa-icon lens" aria-hidden="true"></span>
-                <h3 id="lens-panel-title">Intelligence Lenses</h3>
-                <span class="qa-panel-kicker">Screening</span>
-              </div>
-              <ul class="qa-lens-list">
+            <section class="qualification-stage qa-lens-stage" aria-labelledby="lens-panel-title">
+              <h3 class="qualification-stage-title" id="lens-panel-title">Intelligence Lenses</h3>
+              <ul class="qa-register qa-lens-register">
                 <li>Origination Intelligence</li>
                 <li>Market Mapping</li>
                 <li>Ownership Research</li>
@@ -383,25 +592,18 @@
               </ul>
             </section>
 
-            <section class="qualification-panel output-panel" aria-labelledby="output-panel-title">
-              <div class="qa-panel-heading">
-                <span class="qa-icon output" aria-hidden="true"></span>
-                <h3 id="output-panel-title">Qualified Situations</h3>
-                <span class="qa-panel-kicker">Output</span>
-              </div>
-              <ul class="qa-output-list">
-                <li><span class="output-diamond" aria-hidden="true"></span><span>Ownership context established</span></li>
-                <li><span class="output-diamond" aria-hidden="true"></span><span>Path to engagement identified</span></li>
-                <li><span class="output-diamond" aria-hidden="true"></span><span>Strategic and preliminary underwriting fit supported</span></li>
+            <section class="qualification-stage qa-qualified-stage" aria-labelledby="output-panel-title">
+              <h3 class="qualification-stage-title" id="output-panel-title">Qualified Situations</h3>
+              <ul class="qa-conditions">
+                <li>Ownership context established</li>
+                <li>Path to engagement identified</li>
+                <li>Strategic and preliminary underwriting fit supported</li>
               </ul>
               <p class="qa-output-note">Only situations meeting all three conditions advance to deeper evaluation.</p>
             </section>
           </div>
-          <div class="qa-connector left" aria-hidden="true"><span class="qa-connector-line l1"></span><span class="qa-connector-line l2"></span><span class="qa-connector-line l3"></span><span class="qa-node n1"></span><span class="qa-node n2"></span><span class="qa-node n3"></span></div>
-          <div class="qa-connector right" aria-hidden="true"><span class="qa-connector-line l1"></span><span class="qa-connector-line l2"></span><span class="qa-connector-line l3"></span><span class="qa-node n1"></span><span class="qa-node n2"></span><span class="qa-node n3"></span></div>
         </div>
         <p class="governance-note">The platform expands visibility and accelerates analysis. Investment decisions and transaction authority remain with Clearline Capital’s investment professionals and operating partners.</p>
-        <p class="intelligence-reduced-copy">The intelligence field combines broad private-market inputs with proprietary agentic analysis, resolves toward qualified situations, and transitions directly into Access.</p>
       </div>
     </section>
 
