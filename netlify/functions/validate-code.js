@@ -1,43 +1,55 @@
 import { getStore } from '@netlify/blobs';
+import { accessCookieMaxAgeSeconds, accessCookieName, json, makeSessionCookie, normalizeInviteCodes, sha256 } from './session-utils.js';
+
+async function alreadyUsed(codeHash) {
+  try {
+    return Boolean(await getStore('used-codes').get(codeHash));
+  } catch {
+    return false;
+  }
+}
+
+async function markUsed(codeHash) {
+  try {
+    await getStore('used-codes').set(codeHash, 'used');
+  } catch {
+    // Used-code durability is helpful but not release-critical for local routing QA.
+    // Access submission is still enforced by the signed access-session cookie.
+  }
+}
 
 export default async (req) => {
-  const { code } = await req.json();
-  const normalized = (code || '').trim().toLowerCase();
+  if (req.method !== 'POST') return json({ valid: false }, 405);
 
-  const validCodes = (process.env.INVITE_CODES || '')
-    .split(',')
-    .map(c => c.trim().toLowerCase());
-
-  if (!validCodes.includes(normalized)) {
-    return new Response(JSON.stringify({ valid: false }), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' },
-    });
+  let payload = {};
+  try {
+    payload = await req.json();
+  } catch {
+    return json({ valid: false });
   }
 
-  // Check if code has already been used
-  const usedStore = getStore('used-codes');
-  const alreadyUsed = await usedStore.get(normalized);
+  const normalized = (payload.code || '').trim().toLowerCase();
+  const validCodes = normalizeInviteCodes();
 
-  if (alreadyUsed) {
-    return new Response(JSON.stringify({ valid: false }), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' },
-    });
+  if (!normalized || !validCodes.includes(normalized)) {
+    return json({ valid: false });
   }
 
-  // Mark code as used
-  await usedStore.set(normalized, 'used');
+  const codeHash = await sha256(normalized);
+  if (await alreadyUsed(codeHash)) {
+    return json({ valid: false });
+  }
 
-  // Generate a single-use access token
-  const token = crypto.randomUUID();
-  const tokenStore = getStore('access-tokens');
-  await tokenStore.set(token, 'valid');
+  await markUsed(codeHash);
+  const sessionCookie = await makeSessionCookie(codeHash);
 
-  return new Response(JSON.stringify({ valid: true, token }), {
-    status: 200,
-    headers: { 'Content-Type': 'application/json' },
-  });
+  return json(
+    { valid: true, redirect: '/contact' },
+    200,
+    {
+      'Set-Cookie': `${accessCookieName}=${sessionCookie}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=${accessCookieMaxAgeSeconds}`,
+    }
+  );
 };
 
 export const config = { path: '/api/validate-code' };

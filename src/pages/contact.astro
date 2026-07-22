@@ -24,25 +24,36 @@ const year = new Date().getFullYear();
     <div class="fade-overlay visible" id="fade-overlay"></div>
     <div class="page">
 
-      <section class="contact">
+      <main class="contact">
         <div class="contact-inner">
           <div class="contact-heading">
             <p class="eyebrow">Private introduction</p>
-            <h2>Begin with context.</h2>
+            <h1>Begin with context.</h1>
             <p class="contact-sub">Clearline Capital reviews introductions for referral path, fit, and relevance. Please share the information that would make a direct conversation useful.</p>
           </div>
 
           <form
             name="contact"
             method="POST"
-            action="/thank-you"
-            data-netlify="true"
-            netlify-honeypot="bot-field"
+            action="/api/access-submit"
             class="contact-form"
-            novalidate
+            data-access-form
           >
-            <input type="hidden" name="form-name" value="contact" />
-            <p class="hidden"><label>Do not fill this out: <input name="bot-field" /></label></p>
+            <input type="hidden" name="form-name" value="Access" />
+            <input type="hidden" name="source_page_url" value="" data-source-page-url />
+            <input type="hidden" name="legal_acceptance_required" value="true" />
+            <input type="hidden" name="legal_acceptance_text" value="I acknowledge the Privacy Policy and agree to the Terms of Use and Submission Terms. I understand that submitting this form does not create a confidential relationship, transaction commitment, exclusivity, compensation right, or obligation for Clearline Capital to respond or proceed." />
+            <input type="hidden" name="privacy_policy_effective_date" value="2026-07-22" />
+            <input type="hidden" name="privacy_policy_version" value="CLC-PRIVACY-POLICY-2026-07-22-v1" />
+            <input type="hidden" name="terms_of_use_effective_date" value="2026-07-22" />
+            <input type="hidden" name="terms_of_use_version" value="CLC-TERMS-OF-USE-2026-07-22-v1" />
+            <input type="hidden" name="submission_terms_effective_date" value="2026-07-22" />
+            <input type="hidden" name="submission_terms_version" value="CLC-SUBMISSION-TERMS-2026-07-22-v1" />
+            <input type="hidden" name="legal_disclosures_effective_date" value="2026-07-22" />
+            <input type="hidden" name="legal_disclosures_version" value="CLC-LEGAL-DISCLOSURES-2026-07-22-v1" />
+            <input type="hidden" name="combined_legal_package_version" value="CLC-PUBLIC-WEBSITE-LEGAL-PACKAGE-2026-07-22-v1" />
+            <p class="legal-notice">Please do not submit confidential, proprietary, regulated, or sensitive personal information unless a separate written confidentiality agreement is in place. A submission does not create a relationship, commitment, exclusivity, compensation right, or obligation for Clearline Capital LLC to review, respond, pursue, finance, or complete any opportunity.</p>
+            <p class="hidden"><label>Do not fill this out: <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
 
             <div class="field">
               <input type="text" id="full-name" name="full-name" required autocomplete="name" placeholder=" " />
@@ -84,13 +95,46 @@ const year = new Date().getFullYear();
               <label for="why-you">Context for the introduction</label>
             </div>
 
+            <label class="legal-consent" for="legal-acceptance-contact"><input id="legal-acceptance-contact" name="legal_acceptance_value" type="checkbox" value="true" required /> <span>I acknowledge the <a href="/privacy-policy">Privacy Policy</a> and agree to the <a href="/terms-of-use">Terms of Use</a> and <a href="/submission-terms">Submission Terms</a>. I understand that submitting this form does not create a confidential relationship, transaction commitment, exclusivity, compensation right, or obligation for Clearline Capital to respond or proceed.</span></label>
+            <p class="form-error" aria-live="polite"></p>
             <button type="submit" class="submit-btn">Submit for review</button>
           </form>
         </div>
-      </section>
+      </main>
+
+      <form name="clearline-access-request" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="hidden" aria-hidden="true">
+        <input type="hidden" name="form-name" value="clearline-access-request" />
+        <input type="hidden" name="internal_submission_id" />
+        <input type="hidden" name="submitted_at_utc" />
+        <input type="hidden" name="name" />
+        <input type="hidden" name="email" />
+        <input type="hidden" name="company" />
+        <input type="hidden" name="referred_by" />
+        <input type="hidden" name="brief_context" />
+        <input type="hidden" name="legal_acceptance_value" />
+        <input type="hidden" name="privacy_policy_effective_date" />
+        <input type="hidden" name="privacy_policy_version" />
+        <input type="hidden" name="terms_of_use_effective_date" />
+        <input type="hidden" name="terms_of_use_version" />
+        <input type="hidden" name="submission_terms_effective_date" />
+        <input type="hidden" name="submission_terms_version" />
+        <input type="hidden" name="legal_disclosures_effective_date" />
+        <input type="hidden" name="legal_disclosures_version" />
+        <input type="hidden" name="combined_legal_package_version" />
+        <input type="hidden" name="sanitized_source_page_url" />
+        <input type="hidden" name="invitation_status" />
+        <p><label>Do not fill this out: <input name="bot-field" /></label></p>
+      </form>
 
       <footer>
         <p>Copyright &copy; 2026 Clearline Capital, LLC</p>
+        <p class="footer-disclaimer">Clearline Capital LLC is a private investment and acquisition firm. This website is for informational purposes only. Nothing on this website is an offer to sell, or a solicitation of an offer to buy, securities or interests in any investment vehicle or fund. Submissions do not create a confidential relationship, transaction commitment, exclusivity, compensation right, or obligation for Clearline Capital to respond or proceed. Please review our Legal Disclosures, Privacy Policy, Terms of Use, and Submission Terms.</p>
+        <nav class="footer-links" aria-label="Legal links">
+          <a href="/legal-disclosures">Legal Disclosures</a>
+          <a href="/privacy-policy">Privacy Policy</a>
+          <a href="/terms-of-use">Terms of Use</a>
+          <a href="/submission-terms">Submission Terms</a>
+        </nav>
       </footer>
 
     </div>
@@ -98,35 +142,45 @@ const year = new Date().getFullYear();
   </body>
 
   <script>
-    const token   = new URLSearchParams(window.location.search).get('token');
     const overlay = document.getElementById('fade-overlay');
-
-    if (!token) {
-      window.location.replace('/');
-    } else {
-      // Fade in immediately
-      overlay.classList.remove('visible');
-
-      // Validate in parallel, redirect if invalid
-      fetch('/api/validate-token', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ token }),
-      })
-        .then(r => r.json())
-        .then(({ valid }) => {
-          if (!valid) {
-            overlay.classList.add('visible');
-            setTimeout(() => window.location.replace('/'), 250);
-          }
-        })
-        .catch(() => window.location.replace('/'));
+    const url = new URL(window.location.href);
+    if (url.searchParams.has('token') || url.searchParams.has('code')) {
+      url.searchParams.delete('token');
+      url.searchParams.delete('code');
+      window.history.replaceState({}, '', url.pathname + url.search + url.hash);
     }
 
-    // Personalize thank you page with first name
-    document.querySelector('.contact-form').addEventListener('submit', function () {
-      const name = document.getElementById('full-name').value.trim().split(' ')[0];
-      if (name) this.action = `/thank-you?name=${encodeURIComponent(name)}`;
+    overlay.classList.remove('visible');
+    fetch('/api/validate-token', { method: 'POST', credentials: 'same-origin' })
+      .then(r => r.json())
+      .then(({ valid }) => {
+        if (!valid) {
+          overlay.classList.add('visible');
+          setTimeout(() => window.location.replace('/'), 250);
+        }
+      })
+      .catch(() => window.location.replace('/'));
+
+    document.querySelectorAll('[data-source-page-url]').forEach((field) => { field.value = window.location.href; });
+    document.querySelector('.contact-form').addEventListener('submit', async function (event) {
+      event.preventDefault();
+      const error = this.querySelector('.form-error');
+      if (!this.reportValidity()) {
+        if (error) error.textContent = 'Please complete all required fields and acknowledge the required terms before submitting.';
+        return;
+      }
+      const button = this.querySelector('button[type="submit"]');
+      const original = button?.textContent || '';
+      if (button) { button.disabled = true; button.textContent = 'Submitting'; }
+      try {
+        const response = await fetch(this.action, { method: 'POST', body: new FormData(this), credentials: 'same-origin' });
+        const payload = await response.json();
+        if (!response.ok || !payload.accepted) throw new Error(payload.error || 'Submission could not be accepted.');
+        window.location.href = payload.redirect || '/thank-you';
+      } catch (submitError) {
+        if (error) error.textContent = submitError.message || 'Submission could not be accepted.';
+        if (button) { button.disabled = false; button.textContent = original; }
+      }
     });
   </script>
 </html>
@@ -205,7 +259,7 @@ const year = new Date().getFullYear();
     margin-bottom: 1.1rem;
   }
 
-  h2 {
+  h1 {
     font-family: var(--serif);
     font-size: clamp(1.9rem, 4vw, 2.9rem);
     font-weight: 300;
@@ -217,6 +271,14 @@ const year = new Date().getFullYear();
     font-size: 0.875rem;
     color: #9e9a95;
     line-height: 1.8;
+  }
+
+  .legal-notice {
+    color: #9e9a95;
+    font-size: 0.78rem;
+    line-height: 1.75;
+    border-left: 1px solid rgba(201, 169, 110, 0.55);
+    padding-left: 1rem;
   }
 
   /* ── Form ── */
@@ -345,6 +407,40 @@ const year = new Date().getFullYear();
     font-weight: 300;
   }
 
+  .legal-consent {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.75rem;
+    align-items: start;
+    color: #aaa49d;
+    font-size: 0.78rem;
+    line-height: 1.65;
+  }
+
+  .legal-consent input {
+    width: 18px;
+    height: 18px;
+    margin-top: 0.1rem;
+    accent-color: var(--gold);
+  }
+
+  .legal-consent input:focus-visible {
+    outline: 2px solid #e8c96a;
+    outline-offset: 3px;
+  }
+
+  .legal-consent a {
+    color: var(--gold);
+    text-underline-offset: 3px;
+  }
+
+  .form-error {
+    min-height: 1rem;
+    color: var(--gold);
+    font-size: 0.76rem;
+    line-height: 1.45;
+  }
+
   .submit-btn {
     margin-top: 0.5rem;
     width: 100%;
@@ -381,6 +477,37 @@ const year = new Date().getFullYear();
     color: var(--gold);
   }
 
+  .footer-disclaimer {
+    max-width: 920px;
+    margin: 1.4rem auto 0;
+    color: rgba(247, 242, 232, 0.58);
+    font-size: 0.72rem;
+    line-height: 1.8;
+    letter-spacing: 0.04em;
+  }
+
+  .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.6rem 1.2rem;
+    margin-top: 1rem;
+  }
+
+  .footer-links a {
+    color: var(--gold);
+    font-family: var(--sans);
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+
+  .footer-links a:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 4px;
+  }
+
   /* ── Mobile ── */
   @media (max-width: 580px) {
     .contact {
@@ -392,7 +519,7 @@ const year = new Date().getFullYear();
       margin-bottom: 1.75rem;
     }
 
-    h2 {
+    h1 {
       font-size: 1.5rem;
     }
 
@@ -408,7 +535,41 @@ const year = new Date().getFullYear();
       font-size: 16px;
     }
 
-    .submit-btn {
+    .legal-consent {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.75rem;
+    align-items: start;
+    color: #aaa49d;
+    font-size: 0.78rem;
+    line-height: 1.65;
+  }
+
+  .legal-consent input {
+    width: 18px;
+    height: 18px;
+    margin-top: 0.1rem;
+    accent-color: var(--gold);
+  }
+
+  .legal-consent input:focus-visible {
+    outline: 2px solid #e8c96a;
+    outline-offset: 3px;
+  }
+
+  .legal-consent a {
+    color: var(--gold);
+    text-underline-offset: 3px;
+  }
+
+  .form-error {
+    min-height: 1rem;
+    color: var(--gold);
+    font-size: 0.76rem;
+    line-height: 1.45;
+  }
+
+  .submit-btn {
       padding-block: 0.85rem;
     }
 
