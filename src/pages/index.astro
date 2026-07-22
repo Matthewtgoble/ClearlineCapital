@@ -91,78 +91,96 @@
     .leadership-points { list-style: none; padding: 0; margin: 38px 0 0; display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 18px 28px; }
     .leadership-points li { border-top: 1px solid rgba(214,168,94,.36); padding-top: 14px; color: rgba(247,242,232,.72); line-height: 1.55; }
     .intelligence-field-section {
-      background:
-        radial-gradient(circle at 14% 18%, rgba(214,168,94,.12), transparent 30%),
-        linear-gradient(180deg, #050505 0%, #080706 52%, #050505 100%);
+      background: linear-gradient(180deg, #050505 0%, #070604 52%, #050505 100%);
       overflow: clip;
     }
     .intelligence-field-shell { max-width: min(1360px, 100%); margin: 0 auto; width: 100%; }
-    .intelligence-field-header { max-width: 980px; margin-bottom: clamp(34px, 5vh, 58px); }
+    .intelligence-field-header {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 360px);
+      gap: clamp(28px, 6vw, 120px);
+      align-items: start;
+      margin-bottom: clamp(34px, 5vh, 58px);
+    }
     .intelligence-field-header .eyebrow { margin-bottom: 14px; }
-    .intelligence-field-header h2 { max-width: 880px; font-size: clamp(42px, 5.2vw, 78px); }
-    .intelligence-field-header .lead { margin-top: 22px; max-width: 920px; }
-    .intelligence-map { position: relative; min-height: clamp(560px, 62vh, 720px); border-top: 1px solid rgba(214,168,94,.16); border-bottom: 1px solid rgba(214,168,94,.16); }
-    .map-visual { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; z-index: 1; opacity: .9; }
-    .map-visual * { vector-effect: non-scaling-stroke; }
-    .field-grid { opacity: .14; }
-    .field-contours { opacity: .28; }
-    .market-point { opacity: .38; }
-    .market-stage-id, .lens-stage-id, .qualified-stage-id { position: absolute; z-index: 4; text-transform: uppercase; letter-spacing: .22em; font-size: clamp(12px, .95vw, 15px); line-height: 1; }
-    .market-stage-id { left: 5.5%; top: 6%; color: rgba(247,242,232,.48); }
-    .lens-stage-id { left: 41.5%; top: 6%; color: rgba(240,214,160,.82); }
-    .qualified-stage-id { right: 7%; top: 6%; color: rgba(240,214,160,.86); }
-    .zone-rule { position: absolute; z-index: 2; top: 12%; bottom: 14%; width: 1px; background: linear-gradient(180deg, transparent, rgba(214,168,94,.18), transparent); }
-    .zone-rule.left { left: 35%; } .zone-rule.right { left: 68%; }
-    .market-point.irrelevant { opacity: .15; }
-    .qualified-path { opacity: 1; transition: opacity .45s ease, transform .55s ease; }
-    .field-copy { position: relative; z-index: 3; pointer-events: none; }
-    .field-labels, .capability-labels, .qualified-final { position: absolute; inset: 0; z-index: 3; }
-    .qualified-final { z-index: 6; }
-    .field-label, .capability-label { position: absolute; line-height: 1.2; letter-spacing: .08em; text-transform: uppercase; }
-    .field-label { color: rgba(247,242,232,.48); font-size: 11px; opacity: .82; }
-    .capability-label { color: rgba(247,242,232,.96); font-size: 12px; font-weight: 700; opacity: 1; }
-    .capability-label:before { content: ''; display: inline-block; width: 18px; height: 1px; margin: 0 9px 4px 0; background: var(--gold); opacity: .76; }
-    .capability-label.emphasis { color: rgba(247,242,232,.96); }
-    .qualified-resolution { position: absolute; left: 72%; top: 34%; width: min(330px, 22vw); }
-    .resolution-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 18px; }
-    .resolution-list li { position: relative; padding-left: 28px; color: rgba(247,242,232,.84); font-size: clamp(12px, .92vw, 14px); line-height: 1.35; letter-spacing: .03em; }
-    .resolution-list li:before { content: ''; position: absolute; left: 0; top: .43em; width: 8px; height: 8px; border: 1px solid rgba(240,214,160,.92); border-radius: 999px; background: rgba(214,168,94,.34); box-shadow: 0 0 0 5px rgba(214,168,94,.06); }
-    .resolution-note { margin: 22px 0 0; color: rgba(240,214,160,.72); font-size: clamp(12px, .86vw, 13px); line-height: 1.45; }
+    .intelligence-field-header h2 { max-width: 640px; font-size: clamp(42px, 4.5vw, 64px); line-height: .96; letter-spacing: -.045em; }
+    .intelligence-field-header .lead { margin: 0; color: rgba(247,242,232,.56); font-size: 14px; line-height: 1.55; max-width: 360px; }
+    .qualification-architecture {
+      position: relative;
+      border: 1px solid rgba(247,242,232,.08);
+      padding: clamp(24px, 3vw, 36px);
+      background:
+        linear-gradient(90deg, rgba(214,168,94,.028) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(214,168,94,.022) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(247,242,232,.012), rgba(247,242,232,.004));
+      background-size: 84px 84px, 84px 84px, auto;
+    }
+    .qualification-architecture:before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 32% 28%, rgba(214,168,94,.045), transparent 30%),
+        radial-gradient(circle at 66% 46%, rgba(214,168,94,.035), transparent 34%);
+      opacity: .8;
+    }
+    .qualification-panels { position: relative; z-index: 2; display: grid; grid-template-columns: minmax(0,.95fr) minmax(0,1.14fr) minmax(0,.96fr); gap: clamp(18px, 1.7vw, 24px); }
+    .qualification-panel { position: relative; min-width: 0; min-height: 575px; padding: 0; border: 1px solid rgba(247,242,232,.11); background: rgba(5,5,5,.78); box-shadow: inset 0 0 0 1px rgba(214,168,94,.035); }
+    .qualification-panel:before { content: ''; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, rgba(247,242,232,.025), transparent 32%, rgba(214,168,94,.018)); }
+    .qa-panel-heading { position: relative; z-index: 2; min-height: 68px; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 12px; padding: 0 clamp(14px, 1.4vw, 20px); border-bottom: 1px solid rgba(247,242,232,.09); background: rgba(247,242,232,.025); }
+    .qa-panel-heading h3 { margin: 0; color: rgba(247,242,232,.88); font-size: clamp(8.5px, .72vw, 10.5px); font-weight: 500; letter-spacing: .20em; line-height: 1; text-transform: uppercase; white-space: nowrap; min-width: 0; }
+    .qa-panel-kicker { justify-self: end; color: rgba(247,242,232,.28); font-size: clamp(7px, .55vw, 8.5px); letter-spacing: .14em; text-transform: uppercase; white-space: nowrap; }
+    .qa-icon { width: 17px; height: 17px; position: relative; opacity: .82; }
+    .qa-icon.market:before, .qa-icon.market:after { content: ''; position: absolute; left: 2px; right: 2px; height: 1px; background: rgba(214,168,94,.56); }
+    .qa-icon.market:before { top: 5px; box-shadow: 0 4px 0 rgba(214,168,94,.38), 0 8px 0 rgba(214,168,94,.22); }
+    .qa-icon.market:after { top: 2px; width: 7px; box-shadow: 0 4px 0 rgba(214,168,94,.32), 0 8px 0 rgba(214,168,94,.18); }
+    .qa-icon.lens { border: 1px solid rgba(240,214,160,.8); border-radius: 999px; box-shadow: 0 0 0 5px rgba(214,168,94,.045); }
+    .qa-icon.output { transform: rotate(45deg); border: 1px solid rgba(240,214,160,.78); width: 12px; height: 12px; margin-left: 3px; }
+    .qa-market-list, .qa-lens-list, .qa-output-list { position: relative; z-index: 2; list-style: none; margin: 0; padding: 28px 24px; }
+    .qa-market-list { display: grid; gap: 0; }
+    .qa-market-list li { display: grid; grid-template-columns: 24px 1fr; align-items: center; min-height: 56px; border-bottom: 1px solid rgba(247,242,232,.055); color: rgba(247,242,232,.58); font-size: 11px; letter-spacing: .22em; text-transform: uppercase; }
+    .market-line-icon { width: 14px; height: 12px; position: relative; opacity: .58; }
+    .market-line-icon:before { content: ''; position: absolute; left: 0; top: 1px; width: 12px; height: 1px; background: rgba(214,168,94,.38); box-shadow: 0 4px 0 rgba(214,168,94,.28), 0 8px 0 rgba(214,168,94,.18); }
+    .qa-lens-list { padding-top: 22px; padding-bottom: 22px; display: grid; gap: 11px; }
+    .qa-lens-list:before { content: ''; position: absolute; left: 42px; top: 40px; bottom: 48px; width: 1px; background: linear-gradient(180deg, transparent, rgba(214,168,94,.32), transparent); }
+    .qa-lens-list li { position: relative; min-height: 58px; display: flex; align-items: center; padding: 0 24px 0 50px; border: 1px solid rgba(247,242,232,.07); background: linear-gradient(180deg, rgba(247,242,232,.035), rgba(247,242,232,.015)); color: rgba(247,242,232,.88); font-size: 12px; font-weight: 700; letter-spacing: .20em; text-transform: uppercase; }
+    .qa-lens-list li:before { content: ''; position: absolute; left: 12px; top: 50%; width: 12px; height: 12px; border: 1px solid rgba(240,214,160,.82); border-radius: 999px; background: #050505; box-shadow: 0 0 0 4px rgba(214,168,94,.045); transform: translateY(-50%); }
+    .qa-output-list { padding-top: 32px; display: grid; gap: 0; }
+    .qa-output-list:before { content: ''; position: absolute; left: 32px; top: 38px; height: 220px; width: 1px; background: linear-gradient(180deg, rgba(214,168,94,.26), rgba(214,168,94,.06)); }
+    .qa-output-list li { position: relative; display: grid; grid-template-columns: 28px 1fr; align-items: start; min-height: 92px; border-bottom: 1px solid rgba(247,242,232,.065); color: rgba(247,242,232,.62); font-size: 11px; letter-spacing: .18em; line-height: 1.55; text-transform: uppercase; }
+    .output-diamond { width: 11px; height: 11px; margin-top: 5px; border: 1px solid rgba(240,214,160,.74); background: #050505; transform: rotate(45deg); box-shadow: 0 0 0 4px rgba(214,168,94,.035); }
+    .qa-output-note { position: relative; z-index: 2; margin: 34px 24px 0; padding-top: 26px; border-top: 1px solid rgba(247,242,232,.055); color: rgba(247,242,232,.62); font-size: 13px; line-height: 1.45; max-width: 300px; }
+    .qa-connector { position: absolute; z-index: 3; top: 98px; bottom: 118px; width: 26px; pointer-events: none; }
+    .qa-connector.left { left: calc(33.333% - 17px); }
+    .qa-connector.right { left: calc(66.666% - 8px); }
+    .qa-connector:before, .qa-connector:after { content: ''; position: absolute; top: 20px; bottom: 0; width: 1px; background: linear-gradient(180deg, transparent, rgba(214,168,94,.25), transparent); }
+    .qa-connector:before { left: 5px; } .qa-connector:after { right: 5px; }
+    .qa-node { position: absolute; left: 50%; width: 4px; height: 4px; margin-left: -2px; border-radius: 50%; background: rgba(214,168,94,.72); box-shadow: 0 0 0 3px rgba(214,168,94,.05); }
+    .qa-node.n1 { top: 30%; } .qa-node.n2 { top: 50%; } .qa-node.n3 { top: 70%; }
+    .qa-connector-line { position: absolute; left: 0; right: 0; height: 1px; background: rgba(214,168,94,.14); }
+    .qa-connector-line.l1 { top: 30%; } .qa-connector-line.l2 { top: 50%; } .qa-connector-line.l3 { top: 70%; }
     .governance-note { max-width: 760px; margin: clamp(24px, 4vh, 40px) 0 0 auto; color: rgba(247,242,232,.62); font-size: 14px; line-height: 1.7; }
-    .intelligence-field-section:not(.is-visible) .capability-label,
-    .intelligence-field-section:not(.is-visible) .qualified-card,
-    .intelligence-field-section:not(.is-visible) .qualified-path { opacity: 1; }
-    .intelligence-field-section.is-visible .capability-label { animation: resolveIn .8s ease both; }
-    .intelligence-field-section.is-visible .qualified-card { animation: resolveIn .9s ease .18s both; }
-    @keyframes resolveIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-    .mobile-field-copy { display: none; }
     .intelligence-reduced-copy { position: absolute; left: -9999px; }
     @media (max-width: 980px) {
       .intelligence-field-section { padding: 84px 20px 72px; }
-      .intelligence-field-header h2 { font-size: clamp(38px, 10vw, 72px); }
-      .intelligence-map { min-height: auto; border: 0; }
-      .map-visual.desktop-map, .field-labels, .capability-labels, .qualified-final { display: none; }
-      .map-visual.mobile-map { display: block; position: absolute; inset: 88px 0 auto 0; height: 430px; opacity: .62; }
-      .mobile-field-copy { display: block; position: relative; z-index: 3; }
-      .mobile-field-step { margin: 0 0 8px; max-width: 348px; }
-      .mobile-field-step:nth-child(2) { margin-left: auto; }
-      .market-stage-id, .lens-stage-id, .qualified-stage-id, .zone-rule { display: none; }
-      .mobile-field-step h3 { font-size: 21px; line-height: 1.05; margin-bottom: 7px; }
-      .mobile-field-step p { margin: 0; color: rgba(247,242,232,.68); font-size: 11.5px; line-height: 1.3; }
-      .mobile-qualified-output { margin-top: 18px; max-width: 348px; }
-      .mobile-qualified-output h3 { font-size: 21px; line-height: 1.05; margin-bottom: 12px; }
-      .mobile-resolution-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
-      .mobile-resolution-list li { position: relative; padding-left: 20px; color: rgba(247,242,232,.78); font-size: 11.5px; line-height: 1.28; }
-      .mobile-resolution-list li:before { content: ''; position: absolute; left: 0; top: .36em; width: 6px; height: 6px; border: 1px solid rgba(240,214,160,.88); border-radius: 999px; background: rgba(214,168,94,.30); }
-      .mobile-resolution-note { margin: 10px 0 0; color: rgba(240,214,160,.70); font-size: 11.5px; line-height: 1.32; }
+      .intelligence-field-header { grid-template-columns: 1fr; gap: 18px; margin-bottom: 32px; }
+      .intelligence-field-header h2 { font-size: clamp(38px, 10vw, 58px); }
+      .intelligence-field-header .lead { max-width: 520px; }
+      .qualification-architecture { padding: 18px; }
+      .qualification-panels { grid-template-columns: 1fr; gap: 16px; }
+      .qualification-panel { min-height: auto; }
+      .qa-panel-heading { min-height: 62px; }
+      .qa-panel-kicker { display: none; }
+      .qa-market-list, .qa-lens-list, .qa-output-list { padding: 20px 18px; }
+      .qa-market-list li { min-height: 48px; }
+      .qa-lens-list li { min-height: 54px; font-size: 11px; letter-spacing: .16em; }
+      .qa-output-list li { min-height: 78px; font-size: 10.5px; }
+      .qa-connector { display: none; }
       .governance-note { margin: 26px 0 0; font-size: 13px; }
     }
-    @media (min-width: 981px) { .map-visual.mobile-map { display: none; } }
     @media (prefers-reduced-motion: reduce) {
       * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
-      .intelligence-field-section:not(.is-visible) .capability-label,
-      .intelligence-field-section:not(.is-visible) .qualified-card,
-      .intelligence-field-section:not(.is-visible) .qualified-path { opacity: 1; }
     }
 
     .access-section { background: linear-gradient(180deg, #050505, #090705); }
@@ -324,106 +342,64 @@
     <section id="intelligence" class="intelligence-field-section" aria-labelledby="intelligence-title">
       <div class="intelligence-field-shell">
         <div class="intelligence-field-header">
-          <div class="eyebrow">PROPRIETARY INTELLIGENCE</div>
-          <h2 id="intelligence-title">A proprietary intelligence environment.<br />Built for off-market origination.</h2>
-          <p class="lead section-intro">Clearline Capital has invested significant time and resources in a purpose-built agentic intelligence platform for the work behind an acquisition. Specialized agents map fragmented markets, research ownership, monitor operating and transaction indicators, coordinate diligence, challenge assumptions, and preserve institutional memory across assignments.</p>
-          <p class="body section-intro">The platform can plan multistep work, pursue parallel research paths, and surface non-obvious connections or risk factors that conventional workflows may miss. It changes how Clearline Capital develops and evaluates proprietary deal flow by expanding the firm’s field of view and accelerating synthesis.</p>
+          <div>
+            <div class="eyebrow">QUALIFICATION ARCHITECTURE</div>
+            <h2 id="intelligence-title">Filtering market complexity into qualified situations.</h2>
+          </div>
         </div>
 
-        <div class="intelligence-map" aria-label="Clearline Capital intelligence field resolving into qualified situations">
-          <div class="market-stage-id" aria-hidden="true">01 Market Universe</div>
-          <div class="lens-stage-id" aria-hidden="true">02 Intelligence Lenses</div>
-          <div class="qualified-stage-id" aria-hidden="true">03 Qualified Situations</div>
-          <div class="zone-rule left" aria-hidden="true"></div>
-          <div class="zone-rule right" aria-hidden="true"></div>
-            <svg class="map-visual desktop-map" viewBox="0 0 1440 780" role="img" aria-labelledby="desktop-map-title" focusable="false">
-              <title id="desktop-map-title">Market universe inputs moving through intelligence lenses into qualified situations</title>
-              <g class="field-grid" aria-hidden="true" stroke="rgba(247,242,232,.12)" stroke-width=".6">
-                <path d="M70 126 C190 104 300 122 450 104" />
-                <path d="M72 286 C190 268 320 292 452 270" />
-                <path d="M88 472 C220 492 315 448 452 482" />
-                <path d="M216 70 C196 210 224 352 206 548" />
-                <path d="M590 94 C570 226 606 392 586 548" />
-                <path d="M810 112 C790 236 832 382 812 536" />
-              </g>
-              <g class="field-contours" aria-hidden="true" fill="none" stroke="rgba(247,242,232,.17)" stroke-width=".75">
-                <path d="M96 228 C142 108 334 92 434 178 C526 258 454 404 292 400 C142 396 46 344 96 228Z" />
-                <path d="M136 244 C178 164 324 152 392 214 C456 272 400 352 288 350 C186 348 104 314 136 244Z" />
-                <path d="M500 248 C560 142 752 132 874 222 C984 304 900 452 700 450 C540 448 432 370 500 248Z" />
-                <path d="M550 282 C610 206 742 198 822 258 C894 312 828 394 704 392 C604 390 502 346 550 282Z" />
-              </g>
-              <g aria-hidden="true" fill="rgba(247,242,232,.58)">
-                <circle class="market-point" cx="118" cy="182" r="1.3"/><circle class="market-point" cx="184" cy="142" r="1.1"/><circle class="market-point irrelevant" cx="254" cy="166" r="1.1"/><circle class="market-point" cx="344" cy="218" r="1.3"/><circle class="market-point" cx="412" cy="292" r="1.1"/><circle class="market-point" cx="142" cy="356" r="1.2"/><circle class="market-point irrelevant" cx="228" cy="414" r="1.1"/><circle class="market-point" cx="326" cy="466" r="1.2"/><circle class="market-point" cx="444" cy="388" r="1.1"/>
-                <circle class="market-point irrelevant" cx="530" cy="196" r="1.0"/><circle class="market-point irrelevant" cx="632" cy="232" r="1.0"/><circle class="market-point irrelevant" cx="740" cy="344" r="1.0"/><circle class="market-point irrelevant" cx="858" cy="274" r="1.0"/>
-              </g>
-              <g aria-hidden="true" fill="none" stroke="rgb(214, 168, 94)" stroke-opacity="0.62" stroke-width="1.4" stroke-linecap="round">
-                <path class="qualified-path" d="M166 204 C258 244 414 244 520 252 C662 324 860 262 1120 279" />
-                <path class="qualified-path" d="M176 356 C306 414 430 382 520 336 C668 382 868 360 1120 329" />
-                <path class="qualified-path" d="M324 466 C420 506 470 430 520 390 C650 324 850 340 1120 379" />
-              </g>
-            </svg>
+        <div class="qualification-architecture" aria-label="Clearline qualification architecture">
+          <div class="qualification-panels">
+            <section class="qualification-panel market-panel" aria-labelledby="market-panel-title">
+              <div class="qa-panel-heading">
+                <span class="qa-icon market" aria-hidden="true"></span>
+                <h3 id="market-panel-title">Market Universe</h3>
+                <span class="qa-panel-kicker">Inputs</span>
+              </div>
+              <ul class="qa-market-list">
+                <li><span class="market-line-icon" aria-hidden="true"></span><span>Businesses</span></li>
+                <li><span class="market-line-icon" aria-hidden="true"></span><span>Assets</span></li>
+                <li><span class="market-line-icon" aria-hidden="true"></span><span>Ownership Structures</span></li>
+                <li><span class="market-line-icon" aria-hidden="true"></span><span>Operating Indicators</span></li>
+                <li><span class="market-line-icon" aria-hidden="true"></span><span>Transaction Activity</span></li>
+                <li><span class="market-line-icon" aria-hidden="true"></span><span>Relationship Context</span></li>
+                <li><span class="market-line-icon" aria-hidden="true"></span><span>Risk Indicators</span></li>
+              </ul>
+            </section>
 
-            <svg class="map-visual mobile-map" viewBox="0 0 390 1020" aria-hidden="true" focusable="false">
-              <g fill="none" stroke="rgba(247,242,232,.16)" stroke-width=".75">
-                <path d="M54 160 C84 80 226 76 302 146 C358 198 316 286 198 286 C92 286 28 234 54 160Z"/>
-                <path d="M66 448 C112 354 282 354 332 430 C374 494 304 570 188 552 C82 536 28 500 66 448Z"/>
-              </g>
-              <g fill="rgba(247,242,232,.55)">
-                <circle class="market-point" cx="78" cy="140" r="1.2"/><circle class="market-point" cx="132" cy="120" r="1.1"/><circle class="market-point" cx="210" cy="148" r="1.2"/><circle class="market-point" cx="292" cy="196" r="1.2"/><circle class="market-point" cx="164" cy="242" r="1.2"/>
-              </g>
-              <g fill="none" stroke="rgb(214, 168, 94)" stroke-opacity="0.62" stroke-width="1.4" stroke-linecap="round">
-                <path class="qualified-path" d="M-235 389 C-229 389 -221 389 -213 389"/>
-                <path class="qualified-path" d="M-235 443 C-229 443 -221 443 -213 443"/>
-                <path class="qualified-path" d="M-235 497 C-229 497 -221 497 -213 497"/>
-              </g>
-            </svg>
+            <section class="qualification-panel lens-panel" aria-labelledby="lens-panel-title">
+              <div class="qa-panel-heading">
+                <span class="qa-icon lens" aria-hidden="true"></span>
+                <h3 id="lens-panel-title">Intelligence Lenses</h3>
+                <span class="qa-panel-kicker">Screening</span>
+              </div>
+              <ul class="qa-lens-list">
+                <li>Origination Intelligence</li>
+                <li>Market Mapping</li>
+                <li>Ownership Research</li>
+                <li>Diligence Coordination</li>
+                <li>Risk and Scenario Analysis</li>
+                <li>Institutional Memory</li>
+              </ul>
+            </section>
 
-          <div class="field-copy field-labels" aria-hidden="true">
-            <span class="field-label" style="left:6%;top:16%;">Businesses</span>
-            <span class="field-label" style="left:18%;top:23%;">Assets</span>
-            <span class="field-label" style="left:9%;top:33%;">Ownership structures</span>
-            <span class="field-label" style="left:21%;top:43%;">Operating indicators</span>
-            <span class="field-label" style="left:7%;top:54%;">Transaction activity</span>
-            <span class="field-label" style="left:18%;top:64%;">Relationship context</span>
-            <span class="field-label" style="left:8%;top:75%;">Risk Indicators</span>
+            <section class="qualification-panel output-panel" aria-labelledby="output-panel-title">
+              <div class="qa-panel-heading">
+                <span class="qa-icon output" aria-hidden="true"></span>
+                <h3 id="output-panel-title">Qualified Situations</h3>
+                <span class="qa-panel-kicker">Output</span>
+              </div>
+              <ul class="qa-output-list">
+                <li><span class="output-diamond" aria-hidden="true"></span><span>Ownership context established</span></li>
+                <li><span class="output-diamond" aria-hidden="true"></span><span>Path to engagement identified</span></li>
+                <li><span class="output-diamond" aria-hidden="true"></span><span>Strategic and preliminary underwriting fit supported</span></li>
+              </ul>
+              <p class="qa-output-note">Only situations meeting all three conditions advance to deeper evaluation.</p>
+            </section>
           </div>
-          <div class="field-copy capability-labels" aria-hidden="true">
-            <span class="capability-label" style="left:40%;top:18%;">Origination Intelligence</span>
-            <span class="capability-label" style="left:50%;top:27%;">Market Mapping</span>
-            <span class="capability-label" style="left:42%;top:38%;">Ownership Research</span>
-            <span class="capability-label" style="left:42%;top:49%;">Diligence Coordination</span>
-            <span class="capability-label emphasis" style="left:40%;top:60%;">Risk and Scenario Analysis</span>
-            <span class="capability-label" style="left:43%;top:71%;">Institutional Memory</span>
-          </div>
-          <div class="qualified-final" aria-hidden="true">
-            <div class="qualified-resolution">
-              <ol class="resolution-list">
-                <li>Ownership context established</li>
-                <li>Path to engagement identified</li>
-                <li>Strategic and preliminary underwriting fit supported</li>
-              </ol>
-              <p class="resolution-note">Only situations meeting all three conditions advance to deeper evaluation.</p>
-            </div>
-          </div>
-          <div class="mobile-field-copy">
-            <div class="mobile-field-step" style="padding-top:16px;">
-              <h3>01 Market Universe</h3>
-              <p>Businesses, assets, ownership structures, operating indicators, transaction activity, relationship context, and risk indicators begin unresolved.</p>
-            </div>
-            <div class="mobile-field-step" style="padding-top:20px;">
-              <h3>02 Intelligence Lenses</h3>
-              <p>Origination intelligence, market mapping, ownership research, diligence coordination, risk and scenario analysis, and institutional memory clarify the field.</p>
-            </div>
-            <div class="mobile-qualified-output" style="margin-top:20px;">
-              <h3>03 Qualified Situations</h3>
-              <ol class="mobile-resolution-list">
-                <li>Ownership context established</li>
-                <li>Path to engagement identified</li>
-                <li>Strategic and preliminary underwriting fit supported</li>
-              </ol>
-              <p class="mobile-resolution-note">Only situations meeting all three conditions advance to deeper evaluation.</p>
-            </div>
-          </div>        </div>
+          <div class="qa-connector left" aria-hidden="true"><span class="qa-connector-line l1"></span><span class="qa-connector-line l2"></span><span class="qa-connector-line l3"></span><span class="qa-node n1"></span><span class="qa-node n2"></span><span class="qa-node n3"></span></div>
+          <div class="qa-connector right" aria-hidden="true"><span class="qa-connector-line l1"></span><span class="qa-connector-line l2"></span><span class="qa-connector-line l3"></span><span class="qa-node n1"></span><span class="qa-node n2"></span><span class="qa-node n3"></span></div>
+        </div>
         <p class="governance-note">The platform expands visibility and accelerates analysis. Investment decisions and transaction authority remain with Clearline Capital’s investment professionals and operating partners.</p>
         <p class="intelligence-reduced-copy">The intelligence field combines broad private-market inputs with proprietary agentic analysis, resolves toward qualified situations, and transitions directly into Access.</p>
       </div>
