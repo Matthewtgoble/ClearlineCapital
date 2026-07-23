@@ -21,7 +21,7 @@ const year = new Date().getFullYear();
   </head>
   <body>
 
-    <div class="fade-overlay visible" id="fade-overlay"></div>
+    <div class="fade-overlay" id="fade-overlay"></div>
     <div class="page">
 
       <main class="contact">
@@ -142,49 +142,7 @@ const year = new Date().getFullYear();
 
   </body>
 
-  <script>
-    const overlay = document.getElementById('fade-overlay');
-    const url = new URL(window.location.href);
-    if (url.searchParams.has('token') || url.searchParams.has('code')) {
-      url.searchParams.delete('token');
-      url.searchParams.delete('code');
-      window.history.replaceState({}, '', url.pathname + url.search + url.hash);
-    }
-
-    overlay.classList.remove('visible');
-    fetch('/api/validate-token', { method: 'POST', credentials: 'same-origin' })
-      .then(r => r.json())
-      .then(({ valid }) => {
-        if (!valid) {
-          overlay.classList.add('visible');
-          setTimeout(() => window.location.replace('/'), 250);
-        }
-      })
-      .catch(() => window.location.replace('/'));
-
-    document.querySelectorAll('[data-source-page-url]').forEach((field) => { field.value = window.location.href; });
-    document.querySelectorAll('[data-submission-nonce]').forEach((field) => { field.value = crypto.randomUUID(); });
-    document.querySelector('.contact-form').addEventListener('submit', async function (event) {
-      event.preventDefault();
-      const error = this.querySelector('.form-error');
-      if (!this.reportValidity()) {
-        if (error) error.textContent = 'Please complete all required fields and acknowledge the required terms before submitting.';
-        return;
-      }
-      const button = this.querySelector('button[type="submit"]');
-      const original = button?.textContent || '';
-      if (button) { button.disabled = true; button.textContent = 'Submitting'; }
-      try {
-        const response = await fetch(this.action, { method: 'POST', body: new FormData(this), credentials: 'same-origin' });
-        const payload = await response.json();
-        if (!response.ok || !payload.accepted) throw new Error(payload.error || 'Submission could not be accepted.');
-        window.location.href = payload.redirect || '/thank-you';
-      } catch (submitError) {
-        if (error) error.textContent = submitError.message || 'Submission could not be accepted.';
-        if (button) { button.disabled = false; button.textContent = original; }
-      }
-    });
-  </script>
+  <script type="module" src="/js/clearline-contact.js"></script>
 </html>
 
 <style>

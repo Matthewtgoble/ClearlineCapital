@@ -630,6 +630,7 @@
           <p class="body">Submissions are screened for mandate fit, source quality, and strategic relevance. Only qualified matters advance.</p>
           <form name="access-request" method="POST" action="/api/access-submit" class="form-shell" data-access-form>
             <input type="hidden" name="form-name" value="Access" />
+            <input type="hidden" name="submission_nonce" value="" data-submission-nonce />
             <input type="hidden" name="source_page_url" value="" data-source-page-url />
             <input type="hidden" name="legal_acceptance_required" value="true" />
             <input type="hidden" name="legal_acceptance_text" value="I acknowledge the Privacy Policy and agree to the Terms of Use and Submission Terms. I understand that submitting this form does not create a confidential relationship, transaction commitment, exclusivity, compensation right, or obligation for Clearline Capital to respond or proceed." />
@@ -675,71 +676,6 @@
     </div>
   </footer>
 
-  <script>
-    const nav = document.querySelector('.site-nav');
-    function setNavState() { nav?.classList.toggle('is-scrolled', window.scrollY > 24); }
-    setNavState();
-    window.addEventListener('scroll', setNavState, { passive: true });
-
-    const inviteInput = document.getElementById('invite-code');
-    const inviteButton = document.getElementById('invite-submit');
-    async function validateInvite() {
-      const code = inviteInput?.value.trim();
-      if (!code || !inviteButton) return;
-      const originalText = inviteButton.textContent;
-      inviteButton.textContent = 'Checking';
-      inviteButton.disabled = true;
-      try {
-        const response = await fetch('/api/validate-code', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ code }) });
-        const { valid, redirect } = await response.json();
-        if (valid) { window.location.href = redirect || '/contact'; return; }
-        inviteInput.value = '';
-        inviteInput.placeholder = 'Code not recognized';
-      } catch (error) {
-        inviteInput.placeholder = 'Unable to validate';
-      } finally {
-        inviteButton.textContent = originalText;
-        inviteButton.disabled = false;
-      }
-    }
-    inviteButton?.addEventListener('click', validateInvite);
-    inviteInput?.addEventListener('keydown', (event) => { if (event.key === 'Enter') validateInvite(); });
-
-    document.querySelectorAll('[data-source-page-url]').forEach((field) => { field.value = window.location.href; });
-    document.querySelectorAll('[data-access-form]').forEach((form) => {
-      form.addEventListener('submit', async (event) => {
-        event.preventDefault();
-        const error = form.querySelector('.form-error');
-        if (!form.reportValidity()) {
-          if (error) error.textContent = 'Please complete all required fields and acknowledge the required terms before submitting.';
-          return;
-        }
-        const button = form.querySelector('button[type="submit"]');
-        const original = button?.textContent || '';
-        if (button) { button.disabled = true; button.textContent = 'Submitting'; }
-        try {
-          const response = await fetch(form.action, { method: 'POST', body: new FormData(form), credentials: 'same-origin' });
-          const payload = await response.json();
-          if (!response.ok || !payload.accepted) throw new Error(payload.error || 'Submission could not be accepted.');
-          window.location.href = payload.redirect || '/thank-you';
-        } catch (submitError) {
-          if (error) error.textContent = submitError.message || 'Submission could not be accepted.';
-          if (button) { button.disabled = false; button.textContent = original; }
-        }
-      });
-    });
-
-    const intelligenceSection = document.querySelector('.intelligence-field-section');
-    if (intelligenceSection && 'IntersectionObserver' in window) {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) intelligenceSection.classList.add('is-visible');
-        });
-      }, { threshold: 0.22 });
-      observer.observe(intelligenceSection);
-    } else {
-      intelligenceSection?.classList.add('is-visible');
-    }
-  </script>
+  <script type="module" src="/js/clearline-home.js"></script>
 </body>
 </html>

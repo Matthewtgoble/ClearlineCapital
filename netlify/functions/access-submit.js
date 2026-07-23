@@ -1,4 +1,5 @@
 import { getStore } from '@netlify/blobs';
+import { getContext } from '@netlify/functions';
 import {
   accessCookieName,
   isExplicitLocalDevelopmentFallbackAllowed,
@@ -66,7 +67,7 @@ function sanitizeSourcePageUrl(raw) {
   if (!raw) return '';
   try {
     const url = new URL(raw);
-    ['token', 'code', 'invite', 'invitation', 'invitation_code', 'submission_id', 'email', 'name'].forEach((key) => url.searchParams.delete(key));
+    ['token', 'code', 'invite', 'invitation', 'invitation_code', 'submission_id', 'email', 'name', 'auth', 'authorization', 'signature', 'secret', 'cookie', 'clearline_access_session'].forEach((key) => url.searchParams.delete(key));
     return url.toString();
   } catch {
     return '';
@@ -90,16 +91,35 @@ function validateLengths(data) {
   return { valid: true };
 }
 
-function resolveRuntime() {
+function activeRequestContext(handlerContext) {
+  if (handlerContext?.deploy) return handlerContext;
+  try {
+    return getContext();
+  } catch {
+    return null;
+  }
+}
+
+function deployMetadata(context) {
+  return {
+    deploy_id: context?.deploy?.id || '',
+    deploy_published: typeof context?.deploy?.published === 'boolean' ? context.deploy.published : null,
+  };
+}
+
+function resolveRuntime(handlerContext) {
   if (globalThis.__clearlineMockRuntime) return globalThis.__clearlineMockRuntime;
 
-  const context = process.env.CONTEXT || '';
-  const deployedNetlifyContext = process.env.NETLIFY === 'true';
+  const requestContext = activeRequestContext(handlerContext);
+  const context = requestContext?.deploy?.context || '';
+  const metadata = deployMetadata(requestContext);
 
   if (isExplicitLocalDevelopmentFallbackAllowed()) {
     return {
       valid: true,
       deploy_context: 'local-qa',
+      deploy_id: 'local-qa',
+      deploy_published: false,
       is_test_submission: true,
       site_url: process.env.URL || 'http://localhost',
       store_name: 'explicit-local-memory',
@@ -107,7 +127,7 @@ function resolveRuntime() {
     };
   }
 
-  if (!deployedNetlifyContext || !context) {
+  if (!context) {
     return { valid: false, status: 'missing_deploy_context' };
   }
 
@@ -115,6 +135,7 @@ function resolveRuntime() {
     return {
       valid: true,
       deploy_context: context,
+      ...metadata,
       is_test_submission: false,
       site_url: process.env.URL || '',
       store_name: productionStoreName,
@@ -126,6 +147,7 @@ function resolveRuntime() {
     return {
       valid: true,
       deploy_context: context,
+      ...metadata,
       is_test_submission: true,
       site_url: process.env.DEPLOY_PRIME_URL || process.env.DEPLOY_URL || process.env.URL || '',
       store_name: previewStoreName,
@@ -254,7 +276,7 @@ function structuredLog(event, details) {
   console.log(JSON.stringify({ event, ...details }));
 }
 
-export default async (req) => {
+export default async (req, context) => {
   if (req.method !== 'POST') return json({ accepted: false, error: 'Method not allowed.' }, 405);
 
   const data = await parseSubmission(req);
@@ -263,7 +285,7 @@ export default async (req) => {
     return json({ accepted: false, error: 'Submission rejected.' }, 400);
   }
 
-  const runtime = resolveRuntime();
+  const runtime = resolveRuntime(context);
   if (!runtime.valid) {
     structuredLog('clearline_submission_context_rejected', { deploy_context_status: runtime.status });
     return json({ accepted: false, error: 'Trusted deploy context is required.', deploy_context_status: runtime.status }, 503);
@@ -318,6 +340,8 @@ export default async (req) => {
     authoritative_store: runtime.store_name,
     store_name: runtime.store_name,
     deploy_context: runtime.deploy_context,
+    deploy_id: runtime.deploy_id,
+    deploy_published: runtime.deploy_published,
     is_test_submission: runtime.is_test_submission,
     site_url: runtime.site_url,
     operational_form_name: operationalFormName,
