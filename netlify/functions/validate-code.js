@@ -1,25 +1,50 @@
 import { getStore } from '@netlify/blobs';
-import { accessCookieMaxAgeSeconds, accessCookieName, json, makeSessionCookie, normalizeInviteCodes, sha256 } from './session-utils.js';
+import { accessCookieMaxAgeSeconds, accessCookieName, json, makeSessionCookie, normalizeInviteCodes, requireSessionSecret, resolveUsedCodesRuntime, sha256 } from './session-utils.js';
 
-async function alreadyUsed(codeHash) {
+function usedCodeStore(runtime) {
+  if (globalThis.__clearlineMockUsedCodeStores) return globalThis.__clearlineMockUsedCodeStores[runtime.used_codes_store_name];
+  if (runtime.local_memory) return null;
+  return getStore(runtime.used_codes_store_name);
+}
+
+async function alreadyUsed(store, codeHash, runtime) {
+  if (runtime.local_memory) {
+    globalThis.__clearlineLocalUsedCodes ||= new Map();
+    return globalThis.__clearlineLocalUsedCodes.has(codeHash);
+  }
+
   try {
-    return Boolean(await getStore('used-codes').get(codeHash));
+    return Boolean(await store.get(codeHash));
   } catch {
-    return false;
+    throw new Error('used-code store unavailable');
   }
 }
 
-async function markUsed(codeHash) {
+async function markUsed(store, codeHash, runtime) {
+  if (runtime.local_memory) {
+    globalThis.__clearlineLocalUsedCodes ||= new Map();
+    globalThis.__clearlineLocalUsedCodes.set(codeHash, 'used');
+    return;
+  }
+
   try {
-    await getStore('used-codes').set(codeHash, 'used');
+    await store.set(codeHash, 'used');
   } catch {
-    // Used-code durability is helpful but not release-critical for local routing QA.
-    // Access submission is still enforced by the signed access-session cookie.
+    throw new Error('used-code store unavailable');
   }
 }
 
-export default async (req) => {
+export default async (req, context) => {
   if (req.method !== 'POST') return json({ valid: false }, 405);
+
+  const runtime = resolveUsedCodesRuntime(context);
+  if (!runtime.valid) {
+    return json({ valid: false, error: 'Access temporarily unavailable.' }, 503);
+  }
+
+  if (!requireSessionSecret().valid) {
+    return json({ valid: false, error: 'Access temporarily unavailable.' }, 503);
+  }
 
   let payload = {};
   try {
@@ -36,12 +61,23 @@ export default async (req) => {
   }
 
   const codeHash = await sha256(normalized);
-  if (await alreadyUsed(codeHash)) {
-    return json({ valid: false });
+  const store = usedCodeStore(runtime);
+  try {
+    if (await alreadyUsed(store, codeHash, runtime)) {
+      return json({ valid: false });
+    }
+
+    await markUsed(store, codeHash, runtime);
+  } catch {
+    return json({ valid: false, error: 'Access temporarily unavailable.' }, 503);
   }
 
-  await markUsed(codeHash);
-  const sessionCookie = await makeSessionCookie(codeHash);
+  let sessionCookie;
+  try {
+    sessionCookie = await makeSessionCookie(codeHash);
+  } catch {
+    return json({ valid: false, error: 'Access temporarily unavailable.' }, 503);
+  }
 
   return json(
     { valid: true, redirect: '/contact' },

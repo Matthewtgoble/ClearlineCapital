@@ -1,7 +1,12 @@
+import { getContext } from '@netlify/functions';
+
 export const accessCookieName = 'clearline_access_session';
 export const accessCookieMaxAgeSeconds = 1800;
 export const thankYouCookieName = 'clearline_submission_received';
 export const thankYouCookieMaxAgeSeconds = 600;
+
+export const productionUsedCodesStoreName = 'used-codes';
+export const previewUsedCodesStoreName = 'used-codes-preview';
 
 const textEncoder = new TextEncoder();
 
@@ -30,8 +35,82 @@ export function readCookie(req, name) {
     ?.slice(name.length + 1) || '';
 }
 
-function sessionSecret() {
-  return process.env.ACCESS_SESSION_SECRET || process.env.INVITE_CODES || 'clearline-local-session-secret';
+export function isExplicitLocalDevelopmentFallbackAllowed() {
+  const explicit = process.env.CLEARLINE_ALLOW_LOCAL_MEMORY_FALLBACK === 'true';
+  const runningInsideNetlify = process.env.NETLIFY === 'true';
+  return explicit && !runningInsideNetlify;
+}
+
+function activeRequestContext(handlerContext) {
+  if (handlerContext?.deploy) return handlerContext;
+  try {
+    return getContext();
+  } catch {
+    return null;
+  }
+}
+
+function deployMetadata(context) {
+  return {
+    deploy_id: context?.deploy?.id || '',
+    deploy_published: typeof context?.deploy?.published === 'boolean' ? context.deploy.published : null,
+  };
+}
+
+export function resolveUsedCodesRuntime(handlerContext) {
+  if (globalThis.__clearlineMockUsedCodesRuntime) return globalThis.__clearlineMockUsedCodesRuntime;
+
+  const requestContext = activeRequestContext(handlerContext);
+  const context = requestContext?.deploy?.context || '';
+
+  if (isExplicitLocalDevelopmentFallbackAllowed()) {
+    return {
+      valid: true,
+      deploy_context: 'local-qa',
+      deploy_id: 'local-qa',
+      deploy_published: false,
+      used_codes_store_name: 'explicit-local-memory',
+      local_memory: true,
+    };
+  }
+
+  if (!context) {
+    return { valid: false, status: 'missing_deploy_context' };
+  }
+
+  if (context === 'production') {
+    return {
+      valid: true,
+      deploy_context: context,
+      ...deployMetadata(requestContext),
+      used_codes_store_name: productionUsedCodesStoreName,
+      local_memory: false,
+    };
+  }
+
+  if (context === 'deploy-preview' || context === 'branch-deploy') {
+    return {
+      valid: true,
+      deploy_context: context,
+      ...deployMetadata(requestContext),
+      used_codes_store_name: previewUsedCodesStoreName,
+      local_memory: false,
+    };
+  }
+
+  return { valid: false, status: 'unknown_deploy_context' };
+}
+
+export function requireSessionSecret() {
+  const deployedSecret = (process.env.ACCESS_SESSION_SECRET || '').trim();
+  if (deployedSecret) return { valid: true, value: deployedSecret, source: 'access_session_secret' };
+
+  if (isExplicitLocalDevelopmentFallbackAllowed()) {
+    const localSecret = (process.env.CLEARLINE_LOCAL_QA_SESSION_SECRET || '').trim();
+    if (localSecret) return { valid: true, value: localSecret, source: 'explicit_local_qa_session_secret' };
+  }
+
+  return { valid: false, status: 'missing_access_session_secret' };
 }
 
 export function normalizeInviteCodes() {
@@ -53,7 +132,9 @@ export function revokedInviteCodeHashes() {
 }
 
 export async function signPayload(payload) {
-  return sha256(`${payload}.${sessionSecret()}`);
+  const secret = requireSessionSecret();
+  if (!secret.valid) throw new Error(secret.status);
+  return sha256(`${payload}.${secret.value}`);
 }
 
 export async function makeSessionCookie(codeHash, nowMs = Date.now()) {
@@ -68,6 +149,9 @@ export async function makeSessionCookie(codeHash, nowMs = Date.now()) {
 }
 
 export async function verifySessionCookie(value, nowMs = Date.now()) {
+  const secret = requireSessionSecret();
+  if (!secret.valid) return { valid: false, status: secret.status };
+
   if (!value) return { valid: false, status: 'missing' };
   if (typeof value !== 'string' || !value.includes('.')) return { valid: false, status: 'malformed' };
 
@@ -97,12 +181,6 @@ export async function verifySessionCookie(value, nowMs = Date.now()) {
   if (revokedInviteCodeHashes().includes(parsed.code_hash)) return { valid: false, status: 'revoked_invitation_state' };
 
   return { valid: true, status: 'valid', session: parsed };
-}
-
-export function isExplicitLocalDevelopmentFallbackAllowed() {
-  const explicit = process.env.CLEARLINE_ALLOW_LOCAL_MEMORY_FALLBACK === 'true';
-  const runningInsideNetlify = process.env.NETLIFY === 'true';
-  return explicit && !runningInsideNetlify;
 }
 
 export function json(payload, status = 200, headers = {}) {

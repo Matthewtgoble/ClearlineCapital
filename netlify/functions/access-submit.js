@@ -5,6 +5,7 @@ import {
   isExplicitLocalDevelopmentFallbackAllowed,
   json,
   readCookie,
+  requireSessionSecret,
   sha256,
   thankYouCookieMaxAgeSeconds,
   thankYouCookieName,
@@ -75,6 +76,13 @@ function sanitizeSourcePageUrl(raw) {
 }
 
 function rejectInvalidSession(status) {
+  if (status === 'missing_access_session_secret') {
+    return json(
+      { accepted: false, error: 'Access temporarily unavailable.', invitation_status: 'unavailable' },
+      503
+    );
+  }
+
   const responseStatus = status === 'missing' ? 401 : 403;
   return json(
     { accepted: false, error: 'Valid invitation session is required.', invitation_status: status },
@@ -209,7 +217,9 @@ async function updateAuthoritativeRecord(store, submissionId, record, runtime) {
 }
 
 async function keyedDigest(value) {
-  const keyMaterial = new TextEncoder().encode(process.env.ACCESS_SESSION_SECRET || 'clearline-local-session-secret');
+  const secret = requireSessionSecret();
+  if (!secret.valid) throw new Error(secret.status);
+  const keyMaterial = new TextEncoder().encode(secret.value);
   const key = await crypto.subtle.importKey('raw', keyMaterial, { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
   const signature = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(value));
   return Array.from(new Uint8Array(signature)).map((byte) => byte.toString(16).padStart(2, '0')).join('');
