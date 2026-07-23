@@ -19,14 +19,14 @@ function page() {
 </head>
 <body>
   <div class="page">
-    <div class="content">
+    <main class="content">
       <a href="/" aria-label="Clearline Capital home" class="logo"><img src="/logo-white.png" alt="Clearline Capital" class="logo-img" /></a>
       <div class="divider"></div>
       <p class="eyebrow">Introduction received</p>
       <h1>Thank you for introducing yourself.</h1>
       <p class="body">If there is a clear reason to continue, the firm will respond directly.</p>
       <a href="/" class="back-link">Return to site</a>
-    </div>
+    </main>
     <footer><p>Copyright &copy; 2026 Clearline Capital, LLC</p></footer>
   </div>
 </body>
