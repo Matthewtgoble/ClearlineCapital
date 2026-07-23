@@ -1,32 +1,12 @@
-import { getStore } from '@netlify/blobs';
+import { accessCookieName, json, readCookie, verifySessionCookie } from './session-utils.js';
 
 export default async (req) => {
-  const { token } = await req.json();
+  if (req.method !== 'POST') return json({ valid: false }, 405);
 
-  if (!token) {
-    return new Response(JSON.stringify({ valid: false }), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' },
-    });
-  }
+  const sessionCookie = readCookie(req, accessCookieName);
+  const verification = await verifySessionCookie(sessionCookie);
 
-  const store = getStore('access-tokens');
-  const entry = await store.get(token);
-
-  if (!entry) {
-    return new Response(JSON.stringify({ valid: false }), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' },
-    });
-  }
-
-  // Token is single-use — delete it immediately
-  await store.delete(token);
-
-  return new Response(JSON.stringify({ valid: true }), {
-    status: 200,
-    headers: { 'Content-Type': 'application/json' },
-  });
+  return json({ valid: verification.valid });
 };
 
 export const config = { path: '/api/validate-token' };
