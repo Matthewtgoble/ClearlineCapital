@@ -10,8 +10,11 @@ import {
   verifySessionCookie,
 } from './session-utils.js';
 
-const storeName = 'access-submissions';
+const productionStoreName = 'access-submissions';
+const previewStoreName = 'access-submissions-preview';
 const operationalFormName = 'clearline-access-request';
+const maxNetlifyFormsDeliveryAttempts = 3;
+const submissionNoncePattern = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const legalAcceptanceText = 'I acknowledge the Privacy Policy and agree to the Terms of Use and Submission Terms. I understand that submitting this form does not create a confidential relationship, transaction commitment, exclusivity, compensation right, or obligation for Clearline Capital to respond or proceed.';
 
 const requiredValues = {
@@ -40,6 +43,7 @@ const fieldLimits = {
   'why-you': 2000,
   context: 2000,
   source_page_url: 500,
+  submission_nonce: 36,
 };
 
 async function parseSubmission(req) {
@@ -86,13 +90,61 @@ function validateLengths(data) {
   return { valid: true };
 }
 
-function submissionStore() {
+function resolveRuntime() {
+  if (globalThis.__clearlineMockRuntime) return globalThis.__clearlineMockRuntime;
+
+  const context = process.env.CONTEXT || '';
+  const deployedNetlifyContext = process.env.NETLIFY === 'true';
+
+  if (isExplicitLocalDevelopmentFallbackAllowed()) {
+    return {
+      valid: true,
+      deploy_context: 'local-qa',
+      is_test_submission: true,
+      site_url: process.env.URL || 'http://localhost',
+      store_name: 'explicit-local-memory',
+      local_memory: true,
+    };
+  }
+
+  if (!deployedNetlifyContext || !context) {
+    return { valid: false, status: 'missing_deploy_context' };
+  }
+
+  if (context === 'production') {
+    return {
+      valid: true,
+      deploy_context: context,
+      is_test_submission: false,
+      site_url: process.env.URL || '',
+      store_name: productionStoreName,
+      local_memory: false,
+    };
+  }
+
+  if (context === 'deploy-preview' || context === 'branch-deploy') {
+    return {
+      valid: true,
+      deploy_context: context,
+      is_test_submission: true,
+      site_url: process.env.DEPLOY_PRIME_URL || process.env.DEPLOY_URL || process.env.URL || '',
+      store_name: previewStoreName,
+      local_memory: false,
+    };
+  }
+
+  return { valid: false, status: 'unknown_deploy_context' };
+}
+
+function submissionStore(runtime) {
+  if (globalThis.__clearlineMockSubmissionStores) return globalThis.__clearlineMockSubmissionStores[runtime.store_name];
   if (globalThis.__clearlineMockSubmissionStore) return globalThis.__clearlineMockSubmissionStore;
-  return getStore(storeName);
+  if (runtime.local_memory) return null;
+  return getStore(runtime.store_name);
 }
 
 async function readStoredRecord(store, submissionId) {
-  if (!store.get) return null;
+  if (!store?.get) return null;
   try {
     return await store.get(submissionId, { type: 'json' });
   } catch {
@@ -100,20 +152,12 @@ async function readStoredRecord(store, submissionId) {
   }
 }
 
-async function writeAuthoritativeRecord(store, submissionId, record) {
+async function writeAuthoritativeRecord(store, submissionId, record, runtime) {
   if (process.env.CLEARLINE_FORCE_STORAGE_FAILURE === 'true') {
     throw new Error('forced storage failure');
   }
 
-  try {
-    const result = await store.setJSON(submissionId, record, { onlyIfNew: true });
-    if (result?.modified === false) {
-      const existing = await readStoredRecord(store, submissionId);
-      return { record: existing, created: false, storage_status: 'existing_authoritative_record' };
-    }
-    return { record, created: true, storage_status: 'netlify_blobs' };
-  } catch (error) {
-    if (!isExplicitLocalDevelopmentFallbackAllowed()) throw error;
+  if (runtime.local_memory) {
     globalThis.__clearlineLocalSubmissions ||= new Map();
     if (globalThis.__clearlineLocalSubmissions.has(submissionId)) {
       return {
@@ -125,25 +169,38 @@ async function writeAuthoritativeRecord(store, submissionId, record) {
     globalThis.__clearlineLocalSubmissions.set(submissionId, record);
     return { record, created: true, storage_status: 'explicit_local_memory_fallback' };
   }
+
+  const result = await store.setJSON(submissionId, record, { onlyIfNew: true });
+  if (result?.modified === false) {
+    const existing = await readStoredRecord(store, submissionId);
+    return { record: existing, created: false, storage_status: 'existing_authoritative_record' };
+  }
+  return { record, created: true, storage_status: 'netlify_blobs' };
 }
 
-async function updateAuthoritativeRecord(store, submissionId, record) {
-  if (globalThis.__clearlineLocalSubmissions?.has(submissionId)) {
+async function updateAuthoritativeRecord(store, submissionId, record, runtime) {
+  if (runtime.local_memory || globalThis.__clearlineLocalSubmissions?.has(submissionId)) {
     globalThis.__clearlineLocalSubmissions.set(submissionId, record);
     return;
   }
   await store.setJSON(submissionId, record);
 }
 
-async function deterministicSubmissionId(invitation, data) {
-  const identityName = (data['full-name'] || data.name || '').trim().toLowerCase();
-  const email = (data.email || '').trim().toLowerCase();
-  const contextText = (data['why-you'] || data.context || '').trim();
-  const fingerprint = await sha256([
+async function keyedDigest(value) {
+  const keyMaterial = new TextEncoder().encode(process.env.ACCESS_SESSION_SECRET || 'clearline-local-session-secret');
+  const key = await crypto.subtle.importKey('raw', keyMaterial, { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+  const signature = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(value));
+  return Array.from(new Uint8Array(signature)).map((byte) => byte.toString(16).padStart(2, '0')).join('');
+}
+
+async function deterministicSubmissionId(invitation, data, runtime) {
+  const nonce = (data.submission_nonce || '').trim().toLowerCase();
+  const fingerprint = await keyedDigest([
+    'clearline-access-submission-v2',
+    runtime.deploy_context,
+    runtime.store_name,
     invitation.session.sid,
-    identityName,
-    email,
-    contextText,
+    nonce,
     requiredValues.combined_legal_package_version,
   ].join('|'));
   return `clearline-${fingerprint.slice(0, 32)}`;
@@ -206,6 +263,12 @@ export default async (req) => {
     return json({ accepted: false, error: 'Submission rejected.' }, 400);
   }
 
+  const runtime = resolveRuntime();
+  if (!runtime.valid) {
+    structuredLog('clearline_submission_context_rejected', { deploy_context_status: runtime.status });
+    return json({ accepted: false, error: 'Trusted deploy context is required.', deploy_context_status: runtime.status }, 503);
+  }
+
   const sessionCookie = readCookie(req, accessCookieName);
   const invitation = await verifySessionCookie(sessionCookie);
   if (!invitation.valid) {
@@ -238,15 +301,25 @@ export default async (req) => {
     return json({ accepted: false, error: 'Required submission fields are missing.' }, 400);
   }
 
-  const store = submissionStore();
-  const submissionId = await deterministicSubmissionId(invitation, data);
+  if (!submissionNoncePattern.test((data.submission_nonce || '').trim())) {
+    return json({ accepted: false, error: 'Valid submission nonce is required.' }, 400);
+  }
+
+  const store = submissionStore(runtime);
+  const submissionId = await deterministicSubmissionId(invitation, data, runtime);
+  const nonceHash = await sha256((data.submission_nonce || '').trim().toLowerCase());
   const now = new Date().toISOString().replace(/\.\d{3}Z$/, 'Z');
   const sourcePageUrl = sanitizeSourcePageUrl(data.source_page_url || req.headers.get('referer') || '');
   const baseRecord = {
     submission_id: submissionId,
+    submission_nonce_hash: nonceHash,
     submission_timestamp_utc: now,
     form_name: 'Access',
-    authoritative_store: storeName,
+    authoritative_store: runtime.store_name,
+    store_name: runtime.store_name,
+    deploy_context: runtime.deploy_context,
+    is_test_submission: runtime.is_test_submission,
+    site_url: runtime.site_url,
     operational_form_name: operationalFormName,
     submission_route: '/api/access-submit',
     legal_acceptance_required: true,
@@ -286,16 +359,36 @@ export default async (req) => {
 
   let authoritative;
   try {
-    authoritative = await writeAuthoritativeRecord(store, submissionId, baseRecord);
+    authoritative = await writeAuthoritativeRecord(store, submissionId, baseRecord, runtime);
   } catch {
-    structuredLog('clearline_submission_storage_failed', { submission_id: submissionId, storage_status: 'failed_closed' });
+    structuredLog('clearline_submission_storage_failed', { submission_id: submissionId, deploy_context: runtime.deploy_context, store_name: runtime.store_name, storage_status: 'failed_closed' });
     return json({ accepted: false, error: 'Submission storage unavailable.', storage_status: 'failed_closed' }, 503);
   }
 
   let record = authoritative.record || baseRecord;
+  if (!record) {
+    structuredLog('clearline_submission_existing_record_unavailable', { submission_id: submissionId, deploy_context: runtime.deploy_context, store_name: runtime.store_name });
+    return json({ accepted: false, error: 'Authoritative submission record unavailable.', storage_status: 'failed_closed' }, 503);
+  }
+
   if (record.netlify_forms_delivery_status === 'delivered') {
     return json(
       { accepted: true, redirect: '/thank-you', storage_status: authoritative.storage_status, netlify_forms_delivery_status: 'delivered', idempotent: true },
+      200,
+      { 'Set-Cookie': `${thankYouCookieName}=${submissionId}; Path=/thank-you; HttpOnly; Secure; SameSite=Lax; Max-Age=${thankYouCookieMaxAgeSeconds}` }
+    );
+  }
+
+  if ((record.netlify_forms_delivery_attempts || 0) >= maxNetlifyFormsDeliveryAttempts) {
+    structuredLog('clearline_submission_forms_delivery_attempt_limit', {
+      submission_id: submissionId,
+      deploy_context: runtime.deploy_context,
+      store_name: runtime.store_name,
+      netlify_forms_delivery_status: record.netlify_forms_delivery_status,
+      netlify_forms_delivery_attempts: record.netlify_forms_delivery_attempts || 0,
+    });
+    return json(
+      { accepted: true, redirect: '/thank-you', storage_status: authoritative.storage_status, netlify_forms_delivery_status: record.netlify_forms_delivery_status, idempotent: !authoritative.created },
       200,
       { 'Set-Cookie': `${thankYouCookieName}=${submissionId}; Path=/thank-you; HttpOnly; Secure; SameSite=Lax; Max-Age=${thankYouCookieMaxAgeSeconds}` }
     );
@@ -317,28 +410,23 @@ export default async (req) => {
   };
 
   try {
-    await updateAuthoritativeRecord(store, submissionId, record);
+    await updateAuthoritativeRecord(store, submissionId, record, runtime);
   } catch {
-    structuredLog('clearline_submission_delivery_status_update_failed', { submission_id: submissionId, delivery_status: record.netlify_forms_delivery_status });
+    structuredLog('clearline_submission_delivery_status_update_failed', { submission_id: submissionId, deploy_context: runtime.deploy_context, store_name: runtime.store_name, delivery_status: record.netlify_forms_delivery_status });
     return json({ accepted: false, error: 'Submission delivery status could not be recorded.', netlify_forms_delivery_status: 'pending' }, 503);
   }
 
   structuredLog('clearline_submission_forms_delivery', {
     submission_id: submissionId,
+    deploy_context: runtime.deploy_context,
+    store_name: runtime.store_name,
     netlify_forms_delivery_status: record.netlify_forms_delivery_status,
     netlify_forms_last_status_code: record.netlify_forms_last_status_code,
+    netlify_forms_delivery_attempts: record.netlify_forms_delivery_attempts,
   });
 
-  if (!delivery.ok) {
-    return json(
-      { accepted: true, redirect: '/thank-you', storage_status: authoritative.storage_status, netlify_forms_delivery_status: 'failed', idempotent: !authoritative.created },
-      200,
-      { 'Set-Cookie': `${thankYouCookieName}=${submissionId}; Path=/thank-you; HttpOnly; Secure; SameSite=Lax; Max-Age=${thankYouCookieMaxAgeSeconds}` }
-    );
-  }
-
   return json(
-    { accepted: true, redirect: '/thank-you', storage_status: authoritative.storage_status, netlify_forms_delivery_status: 'delivered', idempotent: !authoritative.created },
+    { accepted: true, redirect: '/thank-you', storage_status: authoritative.storage_status, netlify_forms_delivery_status: record.netlify_forms_delivery_status, idempotent: !authoritative.created },
     200,
     { 'Set-Cookie': `${thankYouCookieName}=${submissionId}; Path=/thank-you; HttpOnly; Secure; SameSite=Lax; Max-Age=${thankYouCookieMaxAgeSeconds}` }
   );

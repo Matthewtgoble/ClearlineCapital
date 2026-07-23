@@ -101,8 +101,8 @@ export async function verifySessionCookie(value, nowMs = Date.now()) {
 
 export function isExplicitLocalDevelopmentFallbackAllowed() {
   const explicit = process.env.CLEARLINE_ALLOW_LOCAL_MEMORY_FALLBACK === 'true';
-  const deployedNetlifyContext = process.env.NETLIFY === 'true' && ['production', 'deploy-preview', 'branch-deploy'].includes(process.env.CONTEXT || '');
-  return explicit && !deployedNetlifyContext;
+  const runningInsideNetlify = process.env.NETLIFY === 'true';
+  return explicit && !runningInsideNetlify;
 }
 
 export function json(payload, status = 200, headers = {}) {

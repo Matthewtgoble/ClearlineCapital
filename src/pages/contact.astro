@@ -40,6 +40,7 @@ const year = new Date().getFullYear();
             data-access-form
           >
             <input type="hidden" name="form-name" value="Access" />
+            <input type="hidden" name="submission_nonce" value="" data-submission-nonce />
             <input type="hidden" name="source_page_url" value="" data-source-page-url />
             <input type="hidden" name="legal_acceptance_required" value="true" />
             <input type="hidden" name="legal_acceptance_text" value="I acknowledge the Privacy Policy and agree to the Terms of Use and Submission Terms. I understand that submitting this form does not create a confidential relationship, transaction commitment, exclusivity, compensation right, or obligation for Clearline Capital to respond or proceed." />
@@ -162,6 +163,7 @@ const year = new Date().getFullYear();
       .catch(() => window.location.replace('/'));
 
     document.querySelectorAll('[data-source-page-url]').forEach((field) => { field.value = window.location.href; });
+    document.querySelectorAll('[data-submission-nonce]').forEach((field) => { field.value = crypto.randomUUID(); });
     document.querySelector('.contact-form').addEventListener('submit', async function (event) {
       event.preventDefault();
       const error = this.querySelector('.form-error');
