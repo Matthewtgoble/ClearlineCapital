@@ -20,7 +20,7 @@ function page() {
 <body>
   <div class="page">
     <main class="content">
-      <a href="/" aria-label="Clearline Capital home" class="logo"><img src="/logo-white.png" alt="Clearline Capital" class="logo-img" /></a>
+      <a href="/" aria-label="Clearline Capital home" class="logo"><img src="/logo-champagne-132.webp" srcset="/logo-champagne-132.webp 132w, /logo-champagne-264.webp 264w, /logo-champagne-528.webp 528w" sizes="132px" width="132" height="83" alt="Clearline Capital" class="logo-img" /></a>
       <div class="divider"></div>
       <p class="eyebrow">Introduction received</p>
       <h1>Thank you for introducing yourself.</h1>
